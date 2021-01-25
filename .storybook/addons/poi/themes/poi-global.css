@@ -1,0 +1,242 @@
+
+/**
+ * @see https://github.com/poooi/poi/blob/baa35b29d16c4e1eb5f2dee21929a68dc1641ef0/assets/css/global.css
+ */
+
+ ::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
+
+:root {
+  --poi-red: #d50000;
+  --poi-orange: #f57c00;
+  --poi-yellow: #fbc02d;
+  --poi-green: #4caf50;
+}
+
+*,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: "Ubuntu", "Helvetica Neue", "Helvetica", "Arial", "WenQuanYi Micro Hei", "Microsoft YaHei", "Droid Sans Fallback", sans-serif;
+}
+
+hr {
+  display: none;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+body {
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.42857143;
+  overflow: hidden;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+table {
+  table-layout: fixed;
+}
+
+span,
+img,
+a,
+.panel-heading,
+.table tbody tr td {
+  cursor: default;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+input + span {
+  cursor: inherit;
+}
+
+button > span {
+  cursor: inherit;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+.table tbody tr td {
+  padding: 8px;
+}
+
+.div-col {
+  display: flex;
+  flex-flow: column;
+}
+
+.poi-ship-cond {
+  margin-right: 0.85em;
+  position: relative;
+}
+
+.poi-ship-cond::after {
+  height: 1em;
+  width: 0.7em;
+  position: absolute;
+  right: -0.85em;
+  top: calc(50% - 0.5em);
+  border: 1px #00000080 solid;
+  border-radius: 2px;
+  content: ' ';
+}
+
+/* cond 0~19  */
+.poi-ship-cond-0 {
+  font-weight: bold;
+}
+
+.poi-ship-cond-0::after {
+  background-color: #dd514c;
+}
+
+/* cond 20~29 */
+.poi-ship-cond-20::after {
+  background-color: #f37b1d;
+}
+
+/* cond 30~39 */
+.poi-ship-cond-30::after {
+  background-color: #ffc880;
+}
+
+/* cond 40~48 */
+.poi-ship-cond-40::after {
+  background-color: #fff;
+}
+
+/* cond 49 */
+.poi-ship-cond-49::after {
+  background-color: #fff;
+}
+
+/* cond 50~52 */
+.poi-ship-cond-50::after {
+  background-color: #fe0;
+}
+
+/* cond 53~100 */
+.poi-ship-cond-53 {
+  font-weight: bold;
+}
+
+.poi-ship-cond-53::after {
+  background-color: #ffff40;
+}
+
+.undecided-checkbox-inside label {
+  cursor: help;
+}
+
+.undecided-checkbox-inside label input[type="checkbox"] {
+  cursor: help;
+}
+
+.undecided-checkbox-inside input[type="checkbox"]:not(:checked)::after {
+  content: "?";
+  text-align: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.no-transition {
+  transition: 0s;
+}
+
+.transparent {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* progress bar */
+.bp3-intent-red.bp3-intent-red.bp3-intent-red .bp3-progress-meter {
+  background-color: var(--poi-red);
+}
+
+.bp3-intent-orange.bp3-intent-orange.bp3-intent-orange .bp3-progress-meter {
+  background-color: var(--poi-orange);
+}
+
+.bp3-intent-yellow.bp3-intent-yellow.bp3-intent-yellow .bp3-progress-meter {
+  background-color: var(--poi-yellow);
+}
+
+.bp3-intent-green.bp3-intent-green.bp3-intent-green .bp3-progress-meter {
+  background-color: var(--poi-green);
+}
+
+/* FIXME: remove after droping rb */
+.progress-bar-red {
+  background-color: var(--poi-red);
+}
+
+.progress-bar-orange {
+  background-color: var(--poi-orange);
+}
+
+.progress-bar-yellow {
+  background-color: var(--poi-yellow);
+}
+
+.progress-bar-green {
+  background-color: var(--poi-green);
+}
+
+.material-icon {
+  height: 18px;
+  width: 18px;
+}
+
+a:focus,
+[role='tab']:focus,
+button:focus {
+  outline: none !important;
+}
+
+.react-grid-item.react-grid-placeholder {
+  background: #2196f3 !important;
+}
+
+.react-resizable-handle {
+  filter: opacity(0.5) drop-shadow(0 0 0 white);
+}
+
+.alert {
+  border-radius: 0;
+  font-size: 12px;
+  margin-bottom: 1px;
+  padding: 3px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dialog-footer button + button {
+  margin-left: 1em;
+}
