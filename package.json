@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "downloadKcanotifyData": "ts-node scripts/download-kcanotify-gamedata.ts",
+    "downloadKcanotifyData": "ts-node scripts/downloadKcanotifyGamedata.ts",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf build",
     "test": "jest",
