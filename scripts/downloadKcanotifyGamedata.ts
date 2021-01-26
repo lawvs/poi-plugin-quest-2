@@ -4,7 +4,7 @@ import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs'
 
 // See https://github.com/antest1/kcanotify-gamedata
 
-const OUTPUT_PATH = path.resolve('build', 'kcanotify-gamedata')
+const OUTPUT_PATH = path.resolve('build', 'kcanotifyGamedata')
 const URL_PREFIX =
   'https://raw.githubusercontent.com/antest1/kcanotify-gamedata/master'
 const VERSION_URL = `${URL_PREFIX}/DATA_VERSION`
