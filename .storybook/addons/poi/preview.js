@@ -1,4 +1,7 @@
-const { withPoiTheme, POI_THEMES } = require('./themes')
+// @ts-check
+import { useEffect } from 'react'
+import { withPoiTheme, POI_THEMES } from './themes'
+import i18n from './i18n'
 
 let MINIMAL_VIEWPORTS
 try {
@@ -7,7 +10,7 @@ try {
   MINIMAL_VIEWPORTS = {}
 }
 
-module.exports.parameters = {
+export const parameters = {
   viewport: {
     defaultViewport: 'poiFullHDCanvas100%',
     viewports: {
@@ -30,4 +33,30 @@ module.exports.parameters = {
   },
 }
 
-module.exports.decorators = [withPoiTheme()]
+export const globalTypes = {
+  locale: {
+    name: 'Locale',
+    description: 'Internationalization locale',
+    defaultValue: 'en-US',
+    toolbar: {
+      icon: 'globe',
+      items: [
+        { value: 'zh-CN', right: '🇨🇳', title: '简体中文' },
+        { value: 'zh-TW', right: '🇹🇼', title: '正體中文' },
+        { value: 'ja-JP', right: '🇯🇵', title: '日本語' },
+        { value: 'en-US', right: '🇺🇸', title: 'English' },
+        { value: 'ko-KR', right: '🇰🇷', title: '한국어' },
+      ],
+    },
+  },
+}
+
+const withI18n = (Story, context) => {
+  const locale = context.globals.locale
+  useEffect(() => {
+    i18n.changeLanguage(locale)
+  }, [locale])
+  return <Story {...context} />
+}
+
+export const decorators = [withPoiTheme(), withI18n]
