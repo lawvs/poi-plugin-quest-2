@@ -26,6 +26,8 @@ const CardWithMedia = styled(Card)`
 `
 
 const CardMedia = styled.img`
+  width: 78px;
+  height: 78px;
   grid-area: media;
 `
 
@@ -50,8 +52,8 @@ const getIcon = (code: string): string => {
     case code.startsWith('G'):
       return IconModernization
     default:
-      // TODO unknown quest icon
-      return ''
+      // transparent GIF pixel
+      return 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
   }
 }
 
