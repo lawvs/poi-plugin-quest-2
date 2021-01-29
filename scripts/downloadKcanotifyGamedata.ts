@@ -9,8 +9,8 @@ const URL_PREFIX =
   'https://raw.githubusercontent.com/antest1/kcanotify-gamedata/master'
 const VERSION_URL = `${URL_PREFIX}/DATA_VERSION`
 const DATA_URL = `${URL_PREFIX}/files`
-const LANGS = ['en', 'jp', 'scn', 'tcn'] as const
-const LOCALES = ['en-US', 'ja-JP', 'zh-CN', 'zh-TW'] as const
+const LANGS = ['scn', 'tcn', 'jp', 'en', 'ko'] as const
+const LOCALES = ['zh-CN', 'zh-TW', 'ja-JP', 'en-US', 'ko-KR'] as const
 
 const prepare = () => {
   if (!existsSync(OUTPUT_PATH)) {
