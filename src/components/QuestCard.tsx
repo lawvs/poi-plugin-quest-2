@@ -60,7 +60,7 @@ const getIcon = (code: string): string => {
 export const QuestCard: React.FC<{
   code: string
   name: string
-  desc: string
+  desc: string | JSX.Element
 }> = ({ code, name, desc }) => {
   const icon = getIcon(code)
   return (

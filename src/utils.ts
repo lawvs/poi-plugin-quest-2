@@ -48,3 +48,5 @@ export const useThrottle = <T>(value: T, ms: number = 200) => {
 
   return state
 }
+
+export const IS_POI = 'POI_VERSION' in window
