@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import nodeFetch from 'node-fetch'
 import type { Agent } from 'http'
 import { HttpsProxyAgent } from 'https-proxy-agent'

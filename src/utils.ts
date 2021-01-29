@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, EffectCallback } from 'react'
 // https://github.com/streamich/react-use
 
 const useEffectOnce = (effect: EffectCallback) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(effect, [])
 }
 
@@ -17,7 +18,7 @@ const useUnmount = (fn: () => any): void => {
   useEffectOnce(() => () => fnRef.current())
 }
 
-export const useThrottle = <T>(value: T, ms: number = 200) => {
+export const useThrottle = <T>(value: T, ms = 200) => {
   const [state, setState] = useState<T>(value)
   const timeout = useRef<ReturnType<typeof setTimeout>>()
   const nextValue = useRef(null) as any
@@ -40,6 +41,7 @@ export const useThrottle = <T>(value: T, ms: number = 200) => {
       nextValue.current = value
       hasNextValue.current = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   useUnmount(() => {

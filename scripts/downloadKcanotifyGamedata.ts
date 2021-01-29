@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { fetch } from './proxyFetch'
 import path from 'path'
 import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs'

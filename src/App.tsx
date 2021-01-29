@@ -63,7 +63,7 @@ const useSearch = () => {
         type="text"
       />
     ),
-    []
+    [handleChange]
   )
 
   return {
@@ -105,7 +105,12 @@ export const App: React.FC = () => {
             .map(([gameId, val]) => ({ gameId, ...val }))
             .filter((i) => filterString(`${i.code} ${i.name} ${i.desc}`))
             .map(({ code, name, desc }) => (
-              <QuestCard code={code} name={name} desc={desc}></QuestCard>
+              <QuestCard
+                key={code}
+                code={code}
+                name={name}
+                desc={desc}
+              ></QuestCard>
             ))}
         </QuestCardWrapper>
       </Container>

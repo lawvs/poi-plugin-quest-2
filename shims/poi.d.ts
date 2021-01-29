@@ -2,7 +2,7 @@
 // @see https://github.com/poooi/poi/issues/2219
 
 declare module 'views/components/etc/window-env' {
-  import { Context, Component } from 'react'
+  import { Context } from 'react'
 
   export const WindowEnv: Context<{ window: Window }>
 }
@@ -21,7 +21,7 @@ declare module 'views/utils/selectors' {
     APIMstShipgraph,
     APIMstStype,
     APIMstMaparea,
-    APIMstMapinfo
+    APIMstMapinfo,
   } from 'kcsapi/api_start2/getData/response'
   import { Selector } from 'reselect'
   interface Dictionary<T> {
@@ -54,7 +54,9 @@ declare module 'views/utils/selectors' {
   export const constSelector: Selector<any, IConstState>
   export const extensionSelectorFactory: (id: string) => Selector<any, any>
   export const fcdSelector: Selector<any, IFCD>
-  export const fleetInExpeditionSelectorFactory: (id: number) => Selector<any, any>
+  export const fleetInExpeditionSelectorFactory: (
+    id: number
+  ) => Selector<any, any>
   export const fleetShipsIdSelectorFactory: (id: number) => Selector<any, any>
   export const inRepairShipsIdSelector: Selector<any, any>
   export const shipDataSelectorFactory: (id: number) => Selector<any, IShipData>
@@ -84,7 +86,13 @@ declare module 'views/components/etc/icon' {
 }
 
 declare module 'views/utils/ship-img' {
-  export const getShipImgPath: (id: number, type: string, damagaed: boolean, ip?: string, version?: number) => string
+  export const getShipImgPath: (
+    id: number,
+    type: string,
+    damagaed: boolean,
+    ip?: string,
+    version?: number
+  ) => string
 }
 
 declare module 'views/create-store' {
@@ -94,5 +102,5 @@ declare module 'views/create-store' {
 // extra
 
 declare module 'views/services/plugin-manager/utils' {
-  export function getNpmConfig (prefix: string): any
+  export function getNpmConfig(prefix: string): any
 }
