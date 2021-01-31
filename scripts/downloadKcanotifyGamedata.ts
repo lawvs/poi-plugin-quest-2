@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
-import { fetch } from './proxyFetch'
 import path from 'path'
 import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs'
+import pangu from 'pangu'
+import { fetch } from './proxyFetch'
 
 // See https://github.com/antest1/kcanotify-gamedata
 
@@ -86,12 +87,27 @@ const main = async () => {
         console.error(`Fetch Error!\nurl: ${resp.url}\nstatus: ${resp.status}`)
         return
       }
-      const data = await resp.text()
+      let text = await resp.text()
+      // TODO fix source file
+      // Remove BOM(U+FEFF) from the header of the quests-ko.json
+      text = text.trim()
+
+      const json = JSON.parse(text) as {
+        [gameId: string]: { code: string; name: string; desc: string }
+      }
+      for (const gameId in json) {
+        const { name, desc } = json[gameId]
+        json[gameId].name = pangu.spacing(name)
+        json[gameId].desc = pangu.spacing(desc)
+      }
+
+      const data = JSON.stringify(json, undefined, 2)
       writeFileSync(`${OUTPUT_PATH}/${filename}`, data)
-      const ts = genTS(remoteVersion)
-      writeFileSync(`${OUTPUT_PATH}/index.ts`, ts)
     })
   )
+
+  const ts = genTS(remoteVersion)
+  writeFileSync(`${OUTPUT_PATH}/index.ts`, ts)
 
   // Finally record the version number
   writeFileSync(`${OUTPUT_PATH}/DATA_VERSION`, remoteVersion)
