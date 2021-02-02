@@ -1,11 +1,11 @@
-import { Card, Elevation, H5 } from '@blueprintjs/core'
+import { Card, Elevation, H5, Text } from '@blueprintjs/core'
 import styled from 'styled-components'
 // @ts-ignore Fix me
 import IconComposition from '../../assets/IconComposition.png'
 // @ts-ignore Fix me
 import IconExpedition from '../../assets/IconExpedition.png'
 // @ts-ignore Fix me
-import IconFactory from '../../assets/IconFactory.png'
+import IconArsenal from '../../assets/IconArsenal.png'
 // @ts-ignore Fix me
 import IconModernization from '../../assets/IconModernization.png'
 // @ts-ignore Fix me
@@ -48,7 +48,7 @@ const getIcon = (code: string): string => {
     case code.startsWith('E'):
       return IconSupplyDocking
     case code.startsWith('F'):
-      return IconFactory
+      return IconArsenal
     case code.startsWith('G'):
       return IconModernization
     default:
@@ -64,10 +64,10 @@ export const QuestCard: React.FC<{
 }> = ({ code, name, desc }) => {
   const icon = getIcon(code)
   return (
-    <CardWithMedia interactive={true} elevation={Elevation.TWO}>
+    <CardWithMedia elevation={Elevation.TWO}>
       <CardMedia src={icon}></CardMedia>
       <H5>{[code, name].filter((i) => i != undefined).join(' ')}</H5>
-      <p>{desc}</p>
+      <Text>{desc}</Text>
     </CardWithMedia>
   )
 }
