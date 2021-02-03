@@ -51,7 +51,7 @@ const genTS = (version: string) => {
   ).join('\n')
 
   const exportCode =
-    'export default {\n' +
+    'export const QuestData = {\n' +
     LOCALES.map((locale) => `  '${locale}': ${locale.replace('-', '_')},`).join(
       '\n'
     ) +
