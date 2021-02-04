@@ -6,12 +6,15 @@ import {
   useContext,
   useState,
 } from 'react'
-import { TAG_ALL } from './tags'
+import { ALL_TYPE_TAG, ALL_CATEGORY_TAG } from './tags'
 
 export const initialState = {
   searchInput: '',
-  activatedTags: {
-    [TAG_ALL.name]: true,
+  typeTags: {
+    [ALL_TYPE_TAG.name]: true,
+  } as Record<string, boolean>,
+  categoryTags: {
+    [ALL_CATEGORY_TAG.name]: true,
   } as Record<string, boolean>,
 }
 

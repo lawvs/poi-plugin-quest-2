@@ -1,5 +1,6 @@
 import { Card, Elevation, H5, Text } from '@blueprintjs/core'
 import styled from 'styled-components'
+import { getQuestCategory, QUEST_CATEGORY } from '../questHelper'
 // @ts-ignore Fix me
 import IconComposition from '../../assets/IconComposition.png'
 // @ts-ignore Fix me
@@ -31,31 +32,20 @@ const CardMedia = styled.img`
   grid-area: media;
 `
 
-/**
- * TODO use api.category
- * See https://github.com/poooi/poi/blob/da75b507e8f67615a39dc4fdb466e34ff5b5bdcf/views/components/main/parts/task-panel.es#L48-L71
- */
-const getIcon = (code: string): string => {
-  switch (true) {
-    case code.startsWith('A'):
-      return IconComposition
-    case code.startsWith('B'):
-      return IconSortie
-    case code.startsWith('C'):
-      return IconExercise
-    case code.startsWith('D'):
-      return IconExpedition
-    case code.startsWith('E'):
-      return IconSupplyDocking
-    case code.startsWith('F'):
-      return IconArsenal
-    case code.startsWith('G'):
-      return IconModernization
-    default:
-      // transparent GIF pixel
-      return 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
-  }
-}
+const questIconMap = {
+  [QUEST_CATEGORY.Composition]: IconComposition,
+  [QUEST_CATEGORY.Sortie]: IconSortie,
+  [QUEST_CATEGORY.Exercise]: IconExercise,
+  [QUEST_CATEGORY.Expedition]: IconExpedition,
+  [QUEST_CATEGORY.SupplyOrDocking]: IconSupplyDocking,
+  [QUEST_CATEGORY.Arsenal]: IconArsenal,
+  [QUEST_CATEGORY.Modernization]: IconModernization,
+  // transparent GIF pixel
+  [QUEST_CATEGORY.Unknown]:
+    'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
+} as const
+
+const getIcon = (code: string): string => questIconMap[getQuestCategory(code)]
 
 export const QuestCard: React.FC<{
   code: string

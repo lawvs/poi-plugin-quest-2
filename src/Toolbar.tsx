@@ -1,13 +1,19 @@
 import { InputGroup, Tag } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import styled from 'styled-components'
-import { ChangeEvent, useCallback } from 'react'
+import { useCallback } from 'react'
+import type { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useThrottle } from './utils'
-
-import type { KcanotifyQuestWithGameId } from './types'
 import { useStore } from './store'
-import { TAG_ALL, TAGS } from './tags'
+import {
+  ALL_TYPE_TAG,
+  ALL_CATEGORY_TAG,
+  TYPE_TAGS,
+  CATEGORY_TAGS,
+  ALL_TAGS,
+} from './tags'
+import type { KcanotifyQuestWithGameId } from './questHelper'
 
 const ToolbarWrapper = styled.div`
   display: flex;
@@ -50,34 +56,54 @@ export const SearchInput: React.FC = () => {
 const Tags = () => {
   const { t } = useTranslation()
   const {
-    store: { activatedTags },
+    store: { typeTags, categoryTags },
     updateStore,
   } = useStore()
   const withHandleClickTag = useCallback(
-    (tagName: string) => () =>
-      updateStore({ activatedTags: { [tagName]: true } }),
+    (tagName: string, key: 'typeTags' | 'categoryTags') => () =>
+      updateStore({ [key]: { [tagName]: true } }),
     [updateStore]
   )
 
   return (
-    <TagsWrapper>
-      {TAGS.map(({ name }) => (
-        <Tag
-          onClick={withHandleClickTag(name)}
-          intent={
-            activatedTags[name]
-              ? name === TAG_ALL.name
-                ? 'success'
-                : 'primary'
-              : 'none'
-          }
-          interactive={true}
-          key={name}
-        >
-          {t(name)}
-        </Tag>
-      ))}
-    </TagsWrapper>
+    <>
+      <TagsWrapper>
+        {CATEGORY_TAGS.map(({ name }) => (
+          <Tag
+            onClick={withHandleClickTag(name, 'categoryTags')}
+            intent={
+              categoryTags[name]
+                ? name === ALL_CATEGORY_TAG.name
+                  ? 'success'
+                  : 'primary'
+                : 'none'
+            }
+            interactive={true}
+            key={name}
+          >
+            {t(name)}
+          </Tag>
+        ))}
+      </TagsWrapper>
+      <TagsWrapper>
+        {TYPE_TAGS.map(({ name }) => (
+          <Tag
+            onClick={withHandleClickTag(name, 'typeTags')}
+            intent={
+              typeTags[name]
+                ? name === ALL_TYPE_TAG.name
+                  ? 'success'
+                  : 'primary'
+                : 'none'
+            }
+            interactive={true}
+            key={name}
+          >
+            {t(name)}
+          </Tag>
+        ))}
+      </TagsWrapper>
+    </>
   )
 }
 
@@ -92,9 +118,10 @@ export const Toolbar = () => {
 
 export const useToolbarFilter = () => {
   const {
-    store: { searchInput, activatedTags },
+    store: { searchInput, typeTags, categoryTags },
   } = useStore()
-  const activatedTagsName = TAGS.filter((tag) => activatedTags[tag.name])
+  const activatedTags = { ...typeTags, ...categoryTags }
+  const activatedTagsName = ALL_TAGS.filter((tag) => activatedTags[tag.name])
   const tagsFilter = activatedTagsName.map((tag) => tag.filter)
 
   const throttledSearchInput = useThrottle(searchInput)
