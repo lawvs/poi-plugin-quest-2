@@ -1,7 +1,5 @@
 // @ts-check
-import { useEffect } from 'react'
 import { withPoiTheme, POI_THEMES } from './themes'
-import i18n from './i18n'
 
 let MINIMAL_VIEWPORTS
 try {
@@ -51,12 +49,4 @@ export const globalTypes = {
   },
 }
 
-const withI18n = (Story, context) => {
-  const locale = context.globals.locale
-  useEffect(() => {
-    i18n.changeLanguage(locale)
-  }, [locale])
-  return <Story {...context} />
-}
-
-export const decorators = [withPoiTheme(), withI18n]
+export const decorators = [withPoiTheme()]
