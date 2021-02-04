@@ -14,6 +14,7 @@ import {
   ALL_TAGS,
 } from './tags'
 import type { KcanotifyQuestWithGameId } from './questHelper'
+import { QuestData } from '../build/kcanotifyGamedata'
 
 const ToolbarWrapper = styled.div`
   display: flex;
@@ -116,7 +117,7 @@ export const Toolbar = () => {
   )
 }
 
-export const useToolbarFilter = () => {
+const useToolbarFilter = () => {
   const {
     store: { searchInput, typeTags, categoryTags },
   } = useStore()
@@ -150,4 +151,20 @@ export const useToolbarFilter = () => {
   )
 
   return toolbarFilter
+}
+
+const DEFAULT_LANG = 'ja-JP'
+
+export const useFilterQuest = () => {
+  const { i18n } = useTranslation()
+  const toolbarFilter = useToolbarFilter()
+
+  const LANGUAGE =
+    i18n.language in QuestData
+      ? (i18n.language as keyof typeof QuestData)
+      : DEFAULT_LANG
+
+  return Object.entries(QuestData[LANGUAGE])
+    .map(([gameId, val]) => ({ gameId, ...val }))
+    .filter(toolbarFilter)
 }

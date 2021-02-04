@@ -1,9 +1,7 @@
 import styled from 'styled-components'
 import { StrictMode } from 'react'
-import { useTranslation } from 'react-i18next'
 import { QuestCard } from './components/QuestCard'
-import { QuestData } from '../build/kcanotifyGamedata'
-import { Toolbar, useToolbarFilter } from './Toolbar'
+import { Toolbar, useFilterQuest } from './Toolbar'
 import { StoreProvider } from './store'
 
 const Container = styled.div`
@@ -28,32 +26,16 @@ const QuestCardWrapper = styled.div`
   }
 `
 
-const DEFAULT_LANG = 'ja-JP'
-
 const Main: React.FC = () => {
-  const { i18n } = useTranslation()
-  const toolbarFilter = useToolbarFilter()
-
-  const LANGUAGE =
-    i18n.language in QuestData
-      ? (i18n.language as keyof typeof QuestData)
-      : DEFAULT_LANG
+  const quests = useFilterQuest()
 
   return (
     <>
       <Toolbar></Toolbar>
       <QuestCardWrapper>
-        {Object.entries(QuestData[LANGUAGE])
-          .map(([gameId, val]) => ({ gameId, ...val }))
-          .filter(toolbarFilter)
-          .map(({ code, name, desc }) => (
-            <QuestCard
-              key={code}
-              code={code}
-              name={name}
-              desc={desc}
-            ></QuestCard>
-          ))}
+        {quests.map(({ code, name, desc }) => (
+          <QuestCard key={code} code={code} name={name} desc={desc}></QuestCard>
+        ))}
       </QuestCardWrapper>
     </>
   )
