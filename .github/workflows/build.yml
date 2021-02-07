@@ -1,0 +1,51 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-version: [14.x]
+        os: [ubuntu-latest]
+
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install node modules
+        uses: bahmutov/npm-install@v1
+
+      - name: Download KcanotifyData
+        run: npm run downloadKcanotifyData
+
+      - name: Lint
+        run: npm run lint --max-warnings=0
+
+      - name: Type check
+        run: npm run typecheck
+
+      # - name: Test
+      #   run: npm run test --coverage
+
+      - name: Build storybook
+        run: npm run build-storybook
+
+      - name: Deploy GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: storybook-static
+          force_orphan: true
