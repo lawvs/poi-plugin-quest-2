@@ -1,20 +1,13 @@
 import { Card, Elevation, H5, Text } from '@blueprintjs/core'
 import styled from 'styled-components'
 import { getQuestCategory, QUEST_CATEGORY } from '../questHelper'
-// @ts-ignore Fix me
-import IconComposition from '../../assets/IconComposition.png'
-// @ts-ignore Fix me
-import IconExpedition from '../../assets/IconExpedition.png'
-// @ts-ignore Fix me
-import IconArsenal from '../../assets/IconArsenal.png'
-// @ts-ignore Fix me
-import IconModernization from '../../assets/IconModernization.png'
-// @ts-ignore Fix me
-import IconExercise from '../../assets/IconExercise.png'
-// @ts-ignore Fix me
-import IconSortie from '../../assets/IconSortie.png'
-// @ts-ignore Fix me
-import IconSupplyDocking from '../../assets/IconSupplyDocking.png'
+import { IconComposition } from '../../build/assets'
+import { IconExpedition } from '../../build/assets'
+import { IconArsenal } from '../../build/assets'
+import { IconModernization } from '../../build/assets'
+import { IconExercise } from '../../build/assets'
+import { IconSortie } from '../../build/assets'
+import { IconSupplyDocking } from '../../build/assets'
 
 const CardWithMedia = styled(Card)`
   display: grid;

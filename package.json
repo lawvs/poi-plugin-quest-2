@@ -7,10 +7,12 @@
   "author": "lawvs",
   "main": "src/index.ts",
   "scripts": {
+    "build": "npm run convertAssets && npm run downloadKcanotifyData",
     "build-storybook": "build-storybook",
     "clean": "rm -rf build",
     "downloadKcanotifyData": "ts-node scripts/downloadKcanotifyGamedata.ts",
     "downloadSprites": "ts-node scripts/downloadSprites.ts",
+    "convertAssets": "ts-node scripts/convertAssets.ts",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "storybook": "BROWSER=none start-storybook -p 6006",
