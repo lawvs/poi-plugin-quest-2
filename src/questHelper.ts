@@ -88,3 +88,10 @@ export const isModernizationQuest = ({ code }: KcanotifyQuestWithGameId) =>
   getQuestCategory(code) === QUEST_CATEGORY.Modernization
 export const isUnknownCategoryQuest = ({ code }: KcanotifyQuestWithGameId) =>
   getQuestCategory(code) === QUEST_CATEGORY.Unknown
+
+export enum QUEST_STATUS {
+  Locked,
+  Default,
+  InProgress,
+  Completed,
+}
