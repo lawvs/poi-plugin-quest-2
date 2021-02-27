@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { StrictMode } from 'react'
+import React, { StrictMode } from 'react'
 import { QuestCard } from './components/QuestCard'
 import { Toolbar, useFilterQuest } from './Toolbar'
 import { StoreProvider } from './store'

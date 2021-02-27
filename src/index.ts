@@ -7,4 +7,4 @@ export const windowMode = false
 export const pluginDidLoad = () => {}
 export const pluginWillUnload = () => {}
 export { App as reactClass } from './App'
-export const reducer = (state: any) => state
+export const reducer = (state = null) => state

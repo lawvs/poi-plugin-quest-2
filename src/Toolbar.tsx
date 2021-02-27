@@ -1,7 +1,7 @@
 import { InputGroup, Tag } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import styled from 'styled-components'
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 import type { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useThrottle } from './utils'

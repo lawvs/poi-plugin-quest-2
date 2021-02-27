@@ -1,5 +1,6 @@
 import { Card, Elevation, H5, Text, Tooltip, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
+import React from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { getQuestCategory, QUEST_CATEGORY, QUEST_STATUS } from '../questHelper'
