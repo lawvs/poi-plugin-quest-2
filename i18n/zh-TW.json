@@ -15,5 +15,9 @@
   "Weekly": "每週",
   "Monthly": "每月",
   "Quarterly": "每季",
-  "Yearly": "每年"
+  "Yearly": "每年",
+  "Locked": "未解鎖",
+  "In Progress": "進行中",
+  "Completed": "已完成",
+  "": ""
 }

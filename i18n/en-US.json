@@ -15,5 +15,9 @@
   "Weekly": "Weekly",
   "Monthly": "Monthly",
   "Quarterly": "Quarterly",
-  "Yearly": "Yearly"
+  "Yearly": "Yearly",
+  "Locked": "Locked",
+  "In Progress": "In Progress",
+  "Completed": "Completed",
+  "": ""
 }

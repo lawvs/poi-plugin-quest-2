@@ -15,5 +15,9 @@
   "Weekly": "ウィークリー",
   "Monthly": "マンスリー",
   "Quarterly": "クォータリー",
-  "Yearly": "イヤーリー"
+  "Yearly": "イヤーリー",
+  "Locked": "ロック中",
+  "In Progress": "進行中",
+  "Completed": "完了",
+  "": ""
 }

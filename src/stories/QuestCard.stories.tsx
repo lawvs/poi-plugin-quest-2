@@ -18,6 +18,9 @@ Composition.args = {
   code: 'A1',
   name: 'はじめての「編成」！',
   desc: '2隻以上の艦で編成される「艦隊」を編成せよ！',
+  // The default parameter must be retained
+  // See https://github.com/storybookjs/storybook/issues/12076#thread-subscription-status
+  status: QUEST_STATUS.Default,
 }
 
 export const Sortie = Template.bind({})
