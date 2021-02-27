@@ -8,3 +8,8 @@ export const pluginDidLoad = () => {}
 export const pluginWillUnload = () => {}
 export { App as reactClass } from './App'
 export const reducer = (state = null) => state
+
+/**
+ * Game response URI list for poi to switch to the plugin.
+ */
+export const switchPluginPath = ['/kcsapi/api_get_member/questlist']
