@@ -19,5 +19,6 @@
   "Locked": "Locked",
   "In Progress": "In Progress",
   "Completed": "Completed",
+  "TotalQuests": "Total {{count}} quests",
   "": ""
 }

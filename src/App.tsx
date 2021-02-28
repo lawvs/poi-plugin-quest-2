@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import React, { StrictMode } from 'react'
+import { Text } from '@blueprintjs/core'
+import { useTranslation } from 'react-i18next'
 import { QuestCard } from './components/QuestCard'
 import { Toolbar, useFilterQuest } from './Toolbar'
 import { StoreProvider } from './store'
@@ -15,6 +17,10 @@ const Container = styled.div`
   }
 `
 
+const CountText = styled(Text)`
+  margin: 0 8px;
+`
+
 const QuestCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,11 +33,13 @@ const QuestCardWrapper = styled.div`
 `
 
 const Main: React.FC = () => {
+  const { t } = useTranslation()
   const quests = useFilterQuest()
 
   return (
     <>
       <Toolbar></Toolbar>
+      <CountText>{t('TotalQuests', { count: quests.length })}</CountText>
       <QuestCardWrapper>
         {quests.map(({ code, name, desc }) => (
           <QuestCard key={code} code={code} name={name} desc={desc}></QuestCard>

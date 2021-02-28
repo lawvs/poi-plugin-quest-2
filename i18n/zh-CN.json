@@ -19,5 +19,6 @@
   "Locked": "未解锁",
   "In Progress": "进行中",
   "Completed": "已完成",
+  "TotalQuests": "一共 {{count}} 个任务",
   "": ""
 }
