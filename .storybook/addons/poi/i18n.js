@@ -12,6 +12,7 @@ import { initReactI18next } from 'react-i18next'
 const createI18n = (options = {}) => {
   i18next.use(initReactI18next).init({
     lng: 'en-US',
+    fallbackLng: 'en-US',
     keySeparator: false,
     interpolation: {
       escapeValue: false,
