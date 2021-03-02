@@ -1,5 +1,3 @@
-import { store } from 'views/create-store'
-
 // See https://github.com/poooi/poi/blob/master/views/redux/info/quests.es
 export type GameQuest = {
   // 1 Default
@@ -66,10 +64,14 @@ type Store<S> = {
 // state.info.quests.activeQuests
 export type PoiQuestState = Record<number, { time: number; detail: GameQuest }>
 
+export const IN_POI = 'POI_VERSION' in globalThis
+
+const noop = () => {}
+
 /**
  * See https://redux.js.org/api/store#subscribelistener
  */
-export const observeStore = <State = any, SelectedState = any>(
+const observeStore = <State = unknown, SelectedState = unknown>(
   store: Store<State>,
   selector: (state: State) => SelectedState,
   onChange: (state: SelectedState) => void
@@ -88,9 +90,24 @@ export const observeStore = <State = any, SelectedState = any>(
   return unsubscribe
 }
 
-export const IN_POI = 'POI_VERSION' in globalThis
+export const observePoiStore = <SelectedState = unknown>(
+  selector: (state: PoiState) => SelectedState,
+  onChange: (state: SelectedState) => void
+) => {
+  let valid = true
+  let unsubscribe = noop
+  getGlobalStore().then((store) => {
+    if (!valid) {
+      return
+    }
+    unsubscribe = observeStore(store, selector, onChange)
+  })
 
-const noop = () => {}
+  return () => {
+    valid = false
+    unsubscribe()
+  }
+}
 
 // export const getPluginStore: () => PluginState = (globalThis as any).getStore || noop
 
@@ -125,9 +142,7 @@ export const getGlobalStore: () => Promise<Store<PoiState>> = async () => {
   return fallbackStore
 }
 
-export const activeQuestsSelector = (
-  state: PoiState
-): Record<number, { time: number; detail: GameQuest }> =>
+export const activeQuestsSelector = (state: PoiState): PoiQuestState =>
   state?.info?.quests?.activeQuests ?? {}
 
 export const getActiveQuests = async () =>

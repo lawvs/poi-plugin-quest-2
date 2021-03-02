@@ -7,12 +7,7 @@ import React, {
   useEffect,
   useState,
 } from 'react'
-import {
-  activeQuestsSelector,
-  getGlobalStore,
-  observeStore,
-  PoiQuestState,
-} from './poi'
+import { activeQuestsSelector, observePoiStore, PoiQuestState } from './poi'
 import { ALL_TYPE_TAG, ALL_CATEGORY_TAG } from './tags'
 
 export const initialState = {
@@ -57,11 +52,8 @@ export const useActiveQuests = () => {
     const listener = (activeQuests: PoiQuestState) => {
       updateActiveQuests(activeQuests)
     }
-    let unsubscribe = () => {}
-    getGlobalStore().then((store) => {
-      unsubscribe = observeStore(store, activeQuestsSelector, listener)
-    })
-    return () => unsubscribe()
+    const unsubscribe = observePoiStore(activeQuestsSelector, listener)
+    return unsubscribe
   })
 
   return activeQuests
