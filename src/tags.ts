@@ -32,7 +32,7 @@ export const CATEGORY_TAGS = [
   { name: 'Supply / Docking', filter: isSupplyOrDockingQuest },
   { name: 'Arsenal', filter: isArsenalQuest },
   { name: 'Modernization', filter: isModernizationQuest },
-  { name: 'Other', filter: isUnknownCategoryQuest },
+  { name: 'Others', filter: isUnknownCategoryQuest },
 ] as const
 
 export const TYPE_TAGS = [
