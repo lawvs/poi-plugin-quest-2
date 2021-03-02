@@ -4,7 +4,8 @@ import { Text } from '@blueprintjs/core'
 import { useTranslation } from 'react-i18next'
 import { QuestCard } from './components/QuestCard'
 import { Toolbar, useFilterQuest } from './Toolbar'
-import { StoreProvider } from './store'
+import { StoreProvider, useActiveQuests } from './store'
+import { QUEST_STATUS } from './questHelper'
 
 const Container = styled.div`
   display: flex;
@@ -35,14 +36,25 @@ const QuestCardWrapper = styled.div`
 const Main: React.FC = () => {
   const { t } = useTranslation()
   const quests = useFilterQuest()
+  const activeQuests = useActiveQuests()
 
   return (
     <>
       <Toolbar></Toolbar>
       <CountText>{t('TotalQuests', { count: quests.length })}</CountText>
       <QuestCardWrapper>
-        {quests.map(({ code, name, desc }) => (
-          <QuestCard key={code} code={code} name={name} desc={desc}></QuestCard>
+        {quests.map(({ gameId, code, name, desc }) => (
+          <QuestCard
+            key={gameId}
+            code={code}
+            name={name}
+            desc={desc}
+            status={
+              gameId in activeQuests
+                ? QUEST_STATUS.InProgress
+                : QUEST_STATUS.Default
+            }
+          ></QuestCard>
         ))}
       </QuestCardWrapper>
     </>

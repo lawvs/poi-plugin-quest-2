@@ -4,8 +4,15 @@ import React, {
   SetStateAction,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from 'react'
+import {
+  activeQuestsSelector,
+  getGlobalStore,
+  observeStore,
+  PoiQuestState,
+} from './poi'
 import { ALL_TYPE_TAG, ALL_CATEGORY_TAG } from './tags'
 
 export const initialState = {
@@ -16,6 +23,7 @@ export const initialState = {
   categoryTags: {
     [ALL_CATEGORY_TAG.name]: true,
   } as Record<string, boolean>,
+  syncWithGame: true,
 }
 
 export type State = typeof initialState
@@ -40,4 +48,21 @@ export const useStore = () => {
     [setStore, store]
   )
   return { store, setStore, updateStore }
+}
+
+export const useActiveQuests = () => {
+  const [activeQuests, updateActiveQuests] = useState<PoiQuestState>({})
+
+  useEffect(() => {
+    const listener = (activeQuests: PoiQuestState) => {
+      updateActiveQuests(activeQuests)
+    }
+    let unsubscribe = () => {}
+    getGlobalStore().then((store) => {
+      unsubscribe = observeStore(store, activeQuestsSelector, listener)
+    })
+    return () => unsubscribe()
+  })
+
+  return activeQuests
 }
