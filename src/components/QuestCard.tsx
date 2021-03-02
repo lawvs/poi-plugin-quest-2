@@ -22,9 +22,8 @@ const FlexCard = styled(Card)`
 `
 
 const CardMedia = styled.img`
-  width: 78px;
-  height: 78px;
-  grid-area: media;
+  width: 64px;
+  height: 64px;
 `
 
 const CardBody = styled.div`
@@ -37,6 +36,10 @@ const CardTail = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  img {
+    height: 20px;
+  }
 `
 
 // transparent GIF pixel
