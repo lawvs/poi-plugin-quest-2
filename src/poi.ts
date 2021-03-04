@@ -1,3 +1,6 @@
+import { name as PACKAGE_NAME } from '../package.json'
+import type { PluginState } from './reducer'
+
 // See https://github.com/poooi/poi/blob/master/views/redux/info/quests.es
 export type GameQuest = {
   // 1 Default
@@ -54,7 +57,13 @@ type OtherAction = {
 
 export type PoiAction = QuestListAction | OtherAction
 
-export type PoiState = Record<string, any>
+export type PoiState = {
+  ext: {
+    // TODO fix use constant PACKAGE_NAME
+    [packageName: string]: PluginState
+  }
+  [x: string]: any
+}
 
 type Store<S> = {
   getState: () => S
@@ -67,18 +76,19 @@ export type PoiQuestState = Record<number, { time: number; detail: GameQuest }>
 export const IN_POI = 'POI_VERSION' in globalThis
 
 const noop = () => {}
+const id = <T>(x: T) => x
 
 /**
  * See https://redux.js.org/api/store#subscribelistener
  */
-const observeStore = <State = unknown, SelectedState = unknown>(
+const observeStore = <State, SelectedState = State>(
   store: Store<State>,
-  selector: (state: State) => SelectedState,
-  onChange: (state: SelectedState) => void
+  onChange: (state: SelectedState) => void,
+  selector: (s: State) => SelectedState = id as any
 ) => {
   let currentState: SelectedState
 
-  function handleChange() {
+  const handleChange = () => {
     const nextState = selector(store.getState())
     if (nextState !== currentState) {
       currentState = nextState
@@ -87,20 +97,21 @@ const observeStore = <State = unknown, SelectedState = unknown>(
   }
 
   const unsubscribe = store.subscribe(handleChange)
+  handleChange()
   return unsubscribe
 }
 
-export const observePoiStore = <SelectedState = unknown>(
-  selector: (state: PoiState) => SelectedState,
-  onChange: (state: SelectedState) => void
+export const observePoiStore = <SelectedState = PoiState>(
+  onChange: (state: SelectedState) => void,
+  selector: (state: PoiState) => SelectedState = id as any
 ) => {
   let valid = true
   let unsubscribe = noop
-  getGlobalStore().then((store) => {
+  getPoiStore().then((store) => {
     if (!valid) {
       return
     }
-    unsubscribe = observeStore(store, selector, onChange)
+    unsubscribe = observeStore(store, onChange, selector)
   })
 
   return () => {
@@ -109,7 +120,10 @@ export const observePoiStore = <SelectedState = unknown>(
   }
 }
 
-// export const getPluginStore: () => PluginState = (globalThis as any).getStore || noop
+export const observePluginStore = <SelectedState = PluginState>(
+  onChange: (state: SelectedState) => void,
+  selector: (state: PluginState) => SelectedState = id as any
+) => observePoiStore(onChange, (s) => selector(s?.ext[PACKAGE_NAME]))
 
 const fallbackStore: Store<PoiState> = {
   getState: noop as () => PoiState,
@@ -120,7 +134,7 @@ let globalStore: Store<PoiState> | null = null
 /**
  * Get poi global Store if in poi env
  */
-export const getGlobalStore: () => Promise<Store<PoiState>> = async () => {
+export const getPoiStore: () => Promise<Store<PoiState>> = async () => {
   if (globalStore !== null) {
     return globalStore
   }
@@ -144,6 +158,3 @@ export const getGlobalStore: () => Promise<Store<PoiState>> = async () => {
 
 export const activeQuestsSelector = (state: PoiState): PoiQuestState =>
   state?.info?.quests?.activeQuests ?? {}
-
-export const getActiveQuests = async () =>
-  activeQuestsSelector(await getGlobalStore())
