@@ -4,11 +4,9 @@ import React, {
   SetStateAction,
   useCallback,
   useContext,
-  useEffect,
   useState,
 } from 'react'
-import { activeQuestsSelector, observePoiStore, PoiQuestState } from './poi'
-import { ALL_TYPE_TAG, ALL_CATEGORY_TAG } from './tags'
+import { ALL_TYPE_TAG, ALL_CATEGORY_TAG } from '../tags'
 
 export const initialState = {
   searchInput: '',
@@ -43,18 +41,4 @@ export const useStore = () => {
     [setStore, store]
   )
   return { store, setStore, updateStore }
-}
-
-export const useActiveQuests = () => {
-  const [activeQuests, updateActiveQuests] = useState<PoiQuestState>({})
-
-  useEffect(() => {
-    const listener = (activeQuests: PoiQuestState) => {
-      updateActiveQuests(activeQuests)
-    }
-    const unsubscribe = observePoiStore(activeQuestsSelector, listener)
-    return unsubscribe
-  })
-
-  return activeQuests
 }
