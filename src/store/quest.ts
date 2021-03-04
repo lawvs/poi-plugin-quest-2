@@ -30,7 +30,7 @@ const useActiveQuest = () => {
       setActiveQuests(activeQuests)
 
     return observePoiStore(listener, activeQuestsSelector)
-  })
+  }, [])
 
   return activeQuests
 }
@@ -45,7 +45,7 @@ const useGameQuest = () => {
   useEffect(() => {
     const listener = (quests: GameQuest[] | null) => setQuests(quests)
     return observePluginStore(listener, (i) => i._.questList)
-  })
+  }, [])
   return quests
 }
 
