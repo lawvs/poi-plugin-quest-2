@@ -9,7 +9,10 @@ export type KcanotifyQuest = {
   tracking?: number[][]
 }
 
-export type KcanotifyQuestWithGameId = KcanotifyQuest & { gameId: string }
+export type KcanotifyQuestExt = KcanotifyQuest & {
+  gameId: string
+  active?: boolean
+}
 
 const questStartsFilter = (str: string) =>
   Object.entries(QuestData['zh-CN'])
@@ -23,15 +26,15 @@ export const quarterlyQuest = questStartsFilter('(季任)')
 // (年任) (年任 / x 月)
 export const yearlyQuest = questStartsFilter('(年任')
 
-export const isDailyQuest = (quest: KcanotifyQuestWithGameId) =>
+export const isDailyQuest = (quest: KcanotifyQuestExt) =>
   dailyQuest.includes(quest.gameId)
-export const isWeeklyQuest = (quest: KcanotifyQuestWithGameId) =>
+export const isWeeklyQuest = (quest: KcanotifyQuestExt) =>
   weeklyQuest.includes(quest.gameId)
-export const isMonthlyQuest = (quest: KcanotifyQuestWithGameId) =>
+export const isMonthlyQuest = (quest: KcanotifyQuestExt) =>
   monthlyQuest.includes(quest.gameId)
-export const isQuarterlyQuest = (quest: KcanotifyQuestWithGameId) =>
+export const isQuarterlyQuest = (quest: KcanotifyQuestExt) =>
   quarterlyQuest.includes(quest.gameId)
-export const isYearlyQuest = (quest: KcanotifyQuestWithGameId) =>
+export const isYearlyQuest = (quest: KcanotifyQuestExt) =>
   yearlyQuest.includes(quest.gameId)
 
 export enum QUEST_CATEGORY {
@@ -72,21 +75,21 @@ export const getQuestCategory = (wikiId: string): QUEST_CATEGORY => {
   }
 }
 
-export const isCompositionQuest = ({ code }: KcanotifyQuestWithGameId) =>
+export const isCompositionQuest = ({ code }: KcanotifyQuestExt) =>
   getQuestCategory(code) === QUEST_CATEGORY.Composition
-export const isSortieQuest = ({ code }: KcanotifyQuestWithGameId) =>
+export const isSortieQuest = ({ code }: KcanotifyQuestExt) =>
   getQuestCategory(code) === QUEST_CATEGORY.Sortie
-export const isExerciseQuest = ({ code }: KcanotifyQuestWithGameId) =>
+export const isExerciseQuest = ({ code }: KcanotifyQuestExt) =>
   getQuestCategory(code) === QUEST_CATEGORY.Exercise
-export const isExpeditionQuest = ({ code }: KcanotifyQuestWithGameId) =>
+export const isExpeditionQuest = ({ code }: KcanotifyQuestExt) =>
   getQuestCategory(code) === QUEST_CATEGORY.Expedition
-export const isSupplyOrDockingQuest = ({ code }: KcanotifyQuestWithGameId) =>
+export const isSupplyOrDockingQuest = ({ code }: KcanotifyQuestExt) =>
   getQuestCategory(code) === QUEST_CATEGORY.SupplyOrDocking
-export const isArsenalQuest = ({ code }: KcanotifyQuestWithGameId) =>
+export const isArsenalQuest = ({ code }: KcanotifyQuestExt) =>
   getQuestCategory(code) === QUEST_CATEGORY.Arsenal
-export const isModernizationQuest = ({ code }: KcanotifyQuestWithGameId) =>
+export const isModernizationQuest = ({ code }: KcanotifyQuestExt) =>
   getQuestCategory(code) === QUEST_CATEGORY.Modernization
-export const isUnknownCategoryQuest = ({ code }: KcanotifyQuestWithGameId) =>
+export const isUnknownCategoryQuest = ({ code }: KcanotifyQuestExt) =>
   getQuestCategory(code) === QUEST_CATEGORY.Unknown
 
 export enum QUEST_STATUS {

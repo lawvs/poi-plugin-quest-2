@@ -13,7 +13,7 @@ import {
   CATEGORY_TAGS,
   ALL_TAGS,
 } from './tags'
-import type { KcanotifyQuestWithGameId } from './questHelper'
+import type { KcanotifyQuestExt } from './questHelper'
 
 const ToolbarWrapper = styled.div`
   display: flex;
@@ -151,7 +151,7 @@ const useToolbarFilter = () => {
     .map((i) => i.toUpperCase())
 
   const stringFilter = useCallback(
-    (quest: KcanotifyQuestWithGameId) => {
+    (quest: KcanotifyQuestExt) => {
       const text = `${quest.code} ${quest.name} ${quest.desc}`
       if (!searchKeywords) {
         return true
@@ -164,7 +164,7 @@ const useToolbarFilter = () => {
   )
 
   const toolbarFilter = useCallback(
-    (quest: KcanotifyQuestWithGameId) => {
+    (quest: KcanotifyQuestExt) => {
       return [...tagsFilter, stringFilter].every((filter) => filter(quest))
     },
     [stringFilter, tagsFilter]

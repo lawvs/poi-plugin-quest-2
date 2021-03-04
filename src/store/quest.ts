@@ -8,6 +8,7 @@ import {
   observePoiStore,
   PoiQuestState,
 } from '../poi'
+import type { KcanotifyQuestExt } from '../questHelper'
 import { useStore } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
@@ -39,13 +40,6 @@ const useKcanotifyQuestMap = () => {
   return QuestData[lang]
 }
 
-const useKcanotifyQuest = () => {
-  return Object.entries(useKcanotifyQuestMap()).map(([gameId, val]) => ({
-    gameId,
-    ...val,
-  }))
-}
-
 const useGameQuest = () => {
   const [quests, setQuests] = useState<GameQuest[] | null>(null)
   useEffect(() => {
@@ -55,13 +49,48 @@ const useGameQuest = () => {
   return quests
 }
 
-export const useQuest = () => {
+export const useQuest = (): KcanotifyQuestExt[] => {
   const activeQuest = useActiveQuest()
-  const kcanotifyQuest = useKcanotifyQuest()
+  const kcanotifyQuestMap = useKcanotifyQuestMap()
+  const gameQuest = useGameQuest()
+  const {
+    store: { syncWithGame },
+  } = useStore()
 
-  return kcanotifyQuest.map(({ gameId, ...rest }) => ({
-    gameId,
-    active: gameId in activeQuest,
-    ...rest,
-  }))
+  if (syncWithGame) {
+    if (gameQuest == null) {
+      // TODO tip use to sync quest data
+      return []
+    }
+    return gameQuest.map((quest) => {
+      const gameId = String(quest.api_no)
+      const active = gameId in activeQuest
+      if (gameId in kcanotifyQuestMap) {
+        return {
+          gameId,
+          active,
+          ...kcanotifyQuestMap[
+            (gameId as unknown) as keyof typeof kcanotifyQuestMap
+          ],
+        }
+      }
+
+      // Not yet recorded quest
+      // May be a new quest
+      return {
+        gameId,
+        active,
+        code: '?',
+        name: quest.api_title,
+        desc: quest.api_detail,
+      }
+    })
+  } else {
+    // Return all recorded quests
+    return Object.entries(kcanotifyQuestMap).map(([gameId, val]) => ({
+      gameId,
+      active: gameId in activeQuest,
+      ...val,
+    }))
+  }
 }
