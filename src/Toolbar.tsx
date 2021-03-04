@@ -1,4 +1,4 @@
-import { InputGroup, Tag } from '@blueprintjs/core'
+import { Button, InputGroup, Intent, Tag, Tooltip } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import styled from 'styled-components'
 import React, { useCallback } from 'react'
@@ -34,6 +34,26 @@ const TagsWrapper = styled.div`
   }
 `
 
+const SyncButton = () => {
+  const { t } = useTranslation()
+  const {
+    store: { syncWithGame },
+    updateStore,
+  } = useStore()
+  const handleClick = useCallback(() => {
+    updateStore({ syncWithGame: !syncWithGame })
+  }, [syncWithGame, updateStore])
+  return (
+    <Tooltip content={t('Sync with game')}>
+      <Button
+        icon={IconNames.EXCHANGE}
+        intent={syncWithGame ? Intent.SUCCESS : Intent.NONE}
+        onClick={handleClick}
+      />
+    </Tooltip>
+  )
+}
+
 export const SearchInput: React.FC = () => {
   const { t } = useTranslation()
   const { updateStore } = useStore()
@@ -49,6 +69,7 @@ export const SearchInput: React.FC = () => {
       onChange={handleChange}
       placeholder={t('Search')}
       leftIcon={IconNames.SEARCH}
+      rightElement={<SyncButton></SyncButton>}
       type="text"
     />
   )
