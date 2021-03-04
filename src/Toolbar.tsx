@@ -5,7 +5,7 @@ import React, { useCallback } from 'react'
 import type { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useThrottle } from './utils'
-import { useStore } from './store'
+import { useQuest, useStore } from './store'
 import {
   ALL_TYPE_TAG,
   ALL_CATEGORY_TAG,
@@ -14,7 +14,6 @@ import {
   ALL_TAGS,
 } from './tags'
 import type { KcanotifyQuestWithGameId } from './questHelper'
-import { QuestData } from '../build/kcanotifyGamedata'
 
 const ToolbarWrapper = styled.div`
   display: flex;
@@ -174,18 +173,7 @@ const useToolbarFilter = () => {
   return toolbarFilter
 }
 
-const DEFAULT_LANG = 'ja-JP'
-
 export const useFilterQuest = () => {
-  const { i18n } = useTranslation()
   const toolbarFilter = useToolbarFilter()
-
-  const LANGUAGE =
-    i18n.language in QuestData
-      ? (i18n.language as keyof typeof QuestData)
-      : DEFAULT_LANG
-
-  return Object.entries(QuestData[LANGUAGE])
-    .map(([gameId, val]) => ({ gameId, ...val }))
-    .filter(toolbarFilter)
+  return useQuest().filter(toolbarFilter)
 }
