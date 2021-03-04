@@ -7,8 +7,7 @@ export const windowMode = false
 export const pluginDidLoad = () => {}
 export const pluginWillUnload = () => {}
 export { App as reactClass } from './App'
-export const reducer = (state = null) => state
-
+export { reducer } from './reducer'
 /**
  * Game response URI list for poi to switch to the plugin.
  */
