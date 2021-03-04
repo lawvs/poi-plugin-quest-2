@@ -20,5 +20,6 @@
   "In Progress": "进行中",
   "Completed": "已完成",
   "TotalQuests": "一共 {{count}} 个任务",
+  "Sync with game": "与游戏同步",
   "": ""
 }
