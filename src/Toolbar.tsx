@@ -47,6 +47,7 @@ const SyncButton = () => {
       <Button
         icon={IconNames.EXCHANGE}
         intent={syncWithGame ? Intent.SUCCESS : Intent.NONE}
+        disabled={!IN_POI}
         onClick={handleClick}
       />
     </Tooltip>

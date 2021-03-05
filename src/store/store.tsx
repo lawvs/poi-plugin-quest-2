@@ -6,6 +6,7 @@ import React, {
   useContext,
   useState,
 } from 'react'
+import { IN_POI } from '../poi'
 import { ALL_TYPE_TAG, ALL_CATEGORY_TAG } from '../tags'
 
 export const initialState = {
@@ -16,7 +17,7 @@ export const initialState = {
   categoryTags: {
     [ALL_CATEGORY_TAG.name]: true,
   } as Record<string, boolean>,
-  syncWithGame: true,
+  syncWithGame: IN_POI,
 }
 
 export type State = typeof initialState
