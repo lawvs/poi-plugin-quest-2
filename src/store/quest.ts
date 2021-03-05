@@ -44,7 +44,7 @@ const useGameQuest = () => {
   const [quests, setQuests] = useState<GameQuest[] | null>(null)
   useEffect(() => {
     const listener = (quests: GameQuest[] | null) => setQuests(quests)
-    return observePluginStore(listener, (i) => i._.questList)
+    return observePluginStore(listener, (i) => i?._?.questList)
   }, [])
   return quests
 }
