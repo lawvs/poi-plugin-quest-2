@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import React, { StrictMode } from 'react'
 import { Text } from '@blueprintjs/core'
-import { useTranslation } from 'react-i18next'
 import { QuestCard } from './components/QuestCard'
 import { Toolbar, useFilterQuest } from './Toolbar'
 import { StoreProvider } from './store'
 import { QUEST_STATUS } from './questHelper'
+import { usePluginTranslation } from './poi'
 
 const Container = styled.div`
   display: flex;
@@ -34,7 +34,7 @@ const QuestCardWrapper = styled.div`
 `
 
 const Main: React.FC = () => {
-  const { t } = useTranslation()
+  const { t } = usePluginTranslation()
   const quests = useFilterQuest()
 
   return (

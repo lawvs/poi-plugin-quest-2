@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { name as PACKAGE_NAME } from '../package.json'
 import type { PluginState } from './reducer'
 
@@ -158,3 +159,7 @@ export const getPoiStore: () => Promise<Store<PoiState>> = async () => {
 
 export const activeQuestsSelector = (state: PoiState): PoiQuestState =>
   state?.info?.quests?.activeQuests ?? {}
+
+export const usePluginTranslation = () => {
+  return useTranslation(PACKAGE_NAME)
+}

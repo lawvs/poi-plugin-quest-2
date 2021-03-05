@@ -2,7 +2,7 @@ import { Card, Elevation, H5, Text, Tooltip, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import React from 'react'
 import styled from 'styled-components'
-import { useTranslation } from 'react-i18next'
+import { usePluginTranslation } from 'react-i18next'
 import { getQuestCategory, QUEST_CATEGORY, QUEST_STATUS } from '../questHelper'
 import { IconComposition } from '../../build/assets'
 import { IconExpedition } from '../../build/assets'
@@ -59,7 +59,7 @@ const questIconMap = {
 
 const questStatusMap = {
   [QUEST_STATUS.Locked]: function Locked() {
-    const { t } = useTranslation()
+    const { t } = usePluginTranslation()
     return (
       <Tooltip content={t('Locked')}>
         <Icon icon={IconNames.LOCK} iconSize={Icon.SIZE_LARGE}></Icon>
@@ -69,7 +69,7 @@ const questStatusMap = {
   // Display nothing
   [QUEST_STATUS.Default]: () => null,
   [QUEST_STATUS.InProgress]: function InProgress() {
-    const { t } = useTranslation()
+    const { t } = usePluginTranslation()
     return (
       <Tooltip content={t('In Progress')}>
         <img src={IconInProgress}></img>
@@ -77,7 +77,7 @@ const questStatusMap = {
     )
   },
   [QUEST_STATUS.Completed]: function Completed() {
-    const { t } = useTranslation()
+    const { t } = usePluginTranslation()
     return (
       <Tooltip content={t('Completed')}>
         <Icon icon={IconNames.TICK} iconSize={Icon.SIZE_LARGE}></Icon>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { QuestData } from '../../build/kcanotifyGamedata'
 import {
   activeQuestsSelector,
@@ -7,6 +6,7 @@ import {
   observePluginStore,
   observePoiStore,
   PoiQuestState,
+  usePluginTranslation,
 } from '../poi'
 import type { KcanotifyQuestExt } from '../questHelper'
 import { useStore } from './store'
@@ -14,7 +14,7 @@ import { useStore } from './store'
 const DEFAULT_LANG = 'ja-JP'
 
 export const useLanguage = () => {
-  const { i18n } = useTranslation()
+  const { i18n } = usePluginTranslation()
   const language =
     i18n.language in QuestData
       ? (i18n.language as keyof typeof QuestData)

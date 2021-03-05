@@ -3,7 +3,6 @@ import { IconNames } from '@blueprintjs/icons'
 import styled from 'styled-components'
 import React, { useCallback } from 'react'
 import type { ChangeEvent } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useThrottle } from './utils'
 import { useQuest, useStore } from './store'
 import {
@@ -14,6 +13,7 @@ import {
   ALL_TAGS,
 } from './tags'
 import type { KcanotifyQuestExt } from './questHelper'
+import { IN_POI, usePluginTranslation } from './poi'
 
 const ToolbarWrapper = styled.div`
   display: flex;
@@ -34,7 +34,7 @@ const TagsWrapper = styled.div`
 `
 
 const SyncButton = () => {
-  const { t } = useTranslation()
+  const { t } = usePluginTranslation()
   const {
     store: { syncWithGame },
     updateStore,
@@ -54,7 +54,7 @@ const SyncButton = () => {
 }
 
 export const SearchInput: React.FC = () => {
-  const { t } = useTranslation()
+  const { t } = usePluginTranslation()
   const { updateStore } = useStore()
 
   const handleChange = useCallback(
@@ -75,7 +75,7 @@ export const SearchInput: React.FC = () => {
 }
 
 const Tags = () => {
-  const { t } = useTranslation()
+  const { t } = usePluginTranslation()
   const {
     store: { typeTags, categoryTags },
     updateStore,
