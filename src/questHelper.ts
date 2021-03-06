@@ -52,46 +52,103 @@ export enum QUEST_CATEGORY {
 }
 
 /**
- * TODO use api.category
- * See https://github.com/poooi/poi/blob/da75b507e8f67615a39dc4fdb466e34ff5b5bdcf/views/components/main/parts/task-panel.es#L48-L71
+ * Ported from https://github.com/poooi/poi/blob/da75b507e8f67615a39dc4fdb466e34ff5b5bdcf/views/components/main/parts/task-panel.es#L48-L71
  */
-export const getQuestCategory = (wikiId: string): QUEST_CATEGORY => {
-  switch (true) {
-    case wikiId.startsWith('A'):
-      return QUEST_CATEGORY.Composition
-    case wikiId.startsWith('B'):
-      return QUEST_CATEGORY.Sortie
-    case wikiId.startsWith('C'):
-      return QUEST_CATEGORY.Exercise
-    case wikiId.startsWith('D'):
-      return QUEST_CATEGORY.Expedition
-    case wikiId.startsWith('E'):
-      return QUEST_CATEGORY.SupplyOrDocking
-    case wikiId.startsWith('F'):
-      return QUEST_CATEGORY.Arsenal
-    case wikiId.startsWith('G'):
-      return QUEST_CATEGORY.Modernization
+export const getCategory = (api_category: number) => {
+  switch (api_category) {
+    case 1:
+      return {
+        type: QUEST_CATEGORY.Composition,
+        wikiSymbol: 'A',
+        color: '#19BB2E',
+      }
+    case 2:
+    case 8:
+    case 9:
+      return { type: QUEST_CATEGORY.Sortie, wikiSymbol: 'B', color: '#e73939' }
+    case 3:
+      return {
+        type: QUEST_CATEGORY.Exercise,
+        wikiSymbol: 'C',
+        color: '#87da61',
+      }
+    case 4:
+      return {
+        type: QUEST_CATEGORY.Expedition,
+        wikiSymbol: 'D',
+        color: '#16C2A3',
+      }
+    case 5:
+      return {
+        type: QUEST_CATEGORY.SupplyOrDocking,
+        wikiSymbol: 'E',
+        color: '#E2C609',
+      }
+    case 6:
+      return { type: QUEST_CATEGORY.Arsenal, wikiSymbol: 'F', color: '#805444' }
+    case 7:
+      return {
+        type: QUEST_CATEGORY.Modernization,
+        wikiSymbol: 'G',
+        color: '#c792e8',
+      }
+    case 0:
+    // Unknown, fall through
     default:
+      return {
+        type: QUEST_CATEGORY.Unknown,
+        wikiSymbol: '?',
+        color: '#fff',
+      }
+  }
+}
+
+/**
+ * See https://wikiwiki.jp/kancolle/
+ */
+export const guessQuestCategory = (wikiId: string): QUEST_CATEGORY => {
+  if (!wikiId || !wikiId.length) {
+    return QUEST_CATEGORY.Unknown
+  }
+  switch (true) {
+    case wikiId[0] === 'A':
+      return QUEST_CATEGORY.Composition
+    case wikiId[0] === 'B':
+      return QUEST_CATEGORY.Sortie
+    case wikiId[0] === 'C':
+      return QUEST_CATEGORY.Exercise
+    case wikiId[0] === 'D':
+      return QUEST_CATEGORY.Expedition
+    case wikiId[0] === 'E':
+      return QUEST_CATEGORY.SupplyOrDocking
+    case wikiId[0] === 'F':
+      return QUEST_CATEGORY.Arsenal
+    case wikiId[0] === 'G':
+      return QUEST_CATEGORY.Modernization
+    case wikiId[0] === '?':
       return QUEST_CATEGORY.Unknown
+    default:
+      // Try parse SB01, WA01
+      return guessQuestCategory(wikiId[1])
   }
 }
 
 export const isCompositionQuest = ({ code }: KcanotifyQuestExt) =>
-  getQuestCategory(code) === QUEST_CATEGORY.Composition
+  guessQuestCategory(code) === QUEST_CATEGORY.Composition
 export const isSortieQuest = ({ code }: KcanotifyQuestExt) =>
-  getQuestCategory(code) === QUEST_CATEGORY.Sortie
+  guessQuestCategory(code) === QUEST_CATEGORY.Sortie
 export const isExerciseQuest = ({ code }: KcanotifyQuestExt) =>
-  getQuestCategory(code) === QUEST_CATEGORY.Exercise
+  guessQuestCategory(code) === QUEST_CATEGORY.Exercise
 export const isExpeditionQuest = ({ code }: KcanotifyQuestExt) =>
-  getQuestCategory(code) === QUEST_CATEGORY.Expedition
+  guessQuestCategory(code) === QUEST_CATEGORY.Expedition
 export const isSupplyOrDockingQuest = ({ code }: KcanotifyQuestExt) =>
-  getQuestCategory(code) === QUEST_CATEGORY.SupplyOrDocking
+  guessQuestCategory(code) === QUEST_CATEGORY.SupplyOrDocking
 export const isArsenalQuest = ({ code }: KcanotifyQuestExt) =>
-  getQuestCategory(code) === QUEST_CATEGORY.Arsenal
+  guessQuestCategory(code) === QUEST_CATEGORY.Arsenal
 export const isModernizationQuest = ({ code }: KcanotifyQuestExt) =>
-  getQuestCategory(code) === QUEST_CATEGORY.Modernization
+  guessQuestCategory(code) === QUEST_CATEGORY.Modernization
 export const isUnknownCategoryQuest = ({ code }: KcanotifyQuestExt) =>
-  getQuestCategory(code) === QUEST_CATEGORY.Unknown
+  guessQuestCategory(code) === QUEST_CATEGORY.Unknown
 
 export enum QUEST_STATUS {
   Locked,

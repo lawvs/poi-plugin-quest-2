@@ -3,7 +3,11 @@ import { IconNames } from '@blueprintjs/icons'
 import React from 'react'
 import styled from 'styled-components'
 import { usePluginTranslation } from '../poi'
-import { getQuestCategory, QUEST_CATEGORY, QUEST_STATUS } from '../questHelper'
+import {
+  guessQuestCategory,
+  QUEST_CATEGORY,
+  QUEST_STATUS,
+} from '../questHelper'
 import { IconComposition } from '../../build/assets'
 import { IconExpedition } from '../../build/assets'
 import { IconArsenal } from '../../build/assets'
@@ -86,7 +90,7 @@ const questStatusMap = {
   },
 }
 
-const getIcon = (code: string): string => questIconMap[getQuestCategory(code)]
+const getIcon = (code: string): string => questIconMap[guessQuestCategory(code)]
 
 export const QuestCard: React.FC<{
   code: string

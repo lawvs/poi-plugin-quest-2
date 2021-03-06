@@ -8,7 +8,7 @@ import {
   PoiQuestState,
   usePluginTranslation,
 } from '../poi'
-import type { KcanotifyQuestExt } from '../questHelper'
+import { getCategory, KcanotifyQuestExt } from '../questHelper'
 import { useStore } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
@@ -80,7 +80,7 @@ export const useQuest = (): KcanotifyQuestExt[] => {
       return {
         gameId,
         active,
-        code: '?',
+        code: `${getCategory(quest.api_category).wikiSymbol}?`,
         name: quest.api_title,
         desc: quest.api_detail,
       }
