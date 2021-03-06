@@ -12,6 +12,7 @@ import {
   isArsenalQuest,
   isModernizationQuest,
   isUnknownCategoryQuest,
+  isInProgressQuest,
 } from './questHelper'
 
 const yes = () => true as const
@@ -37,6 +38,7 @@ export const CATEGORY_TAGS = [
 
 export const TYPE_TAGS = [
   ALL_TYPE_TAG,
+  { name: 'In Progress', filter: isInProgressQuest },
   { name: 'Daily', filter: isDailyQuest },
   { name: 'Weekly', filter: isWeeklyQuest },
   { name: 'Monthly', filter: isMonthlyQuest },

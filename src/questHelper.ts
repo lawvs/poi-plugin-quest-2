@@ -26,6 +26,7 @@ export const quarterlyQuest = questStartsFilter('(季任)')
 // (年任) (年任 / x 月)
 export const yearlyQuest = questStartsFilter('(年任')
 
+export const isInProgressQuest = (quest: KcanotifyQuestExt) => quest.active
 export const isDailyQuest = (quest: KcanotifyQuestExt) =>
   dailyQuest.includes(quest.gameId)
 export const isWeeklyQuest = (quest: KcanotifyQuestExt) =>
