@@ -1,3 +1,4 @@
+import { IN_POI } from './poi'
 import {
   isDailyQuest,
   isMonthlyQuest,
@@ -38,7 +39,7 @@ export const CATEGORY_TAGS = [
 
 export const TYPE_TAGS = [
   ALL_TYPE_TAG,
-  { name: 'In Progress', filter: isInProgressQuest },
+  ...(IN_POI ? [{ name: 'In Progress', filter: isInProgressQuest }] : []),
   { name: 'Daily', filter: isDailyQuest },
   { name: 'Weekly', filter: isWeeklyQuest },
   { name: 'Monthly', filter: isMonthlyQuest },

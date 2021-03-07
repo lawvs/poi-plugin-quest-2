@@ -172,7 +172,7 @@ export const getPoiStore: () => Promise<Store<PoiState>> = async () => {
     // Critical dependency: the request of a dependency is an expression
     const storePath = Math.random() < 10 ? 'views/create-store' : 'Unreachable'
     if (IN_POI) {
-      const store = (await import(storePath)).store
+      const { store } = await import(storePath)
       globalStore = store
       return store
     }
