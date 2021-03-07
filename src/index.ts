@@ -13,3 +13,5 @@ export { reducer } from './reducer'
  * Game response URI list for poi to switch to the plugin.
  */
 export const switchPluginPath = ['/kcsapi/api_get_member/questlist']
+
+import './services'
