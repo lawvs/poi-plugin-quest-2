@@ -10,7 +10,6 @@ const config: Config.InitialOptions = {
   moduleFileExtensions: ['js', 'json', 'ts', 'tsx'],
   testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
   testPathIgnorePatterns: ['<rootDir>/cypress'],
-  setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
   collectCoverageFrom: ['<rootDir>/src/*.ts'],
 }
 

@@ -13,11 +13,11 @@
     "downloadKcanotifyData": "ts-node scripts/downloadKcanotifyGamedata.ts",
     "downloadSprites": "ts-node scripts/downloadSprites.ts",
     "convertAssets": "ts-node scripts/convertAssets.ts",
-    "lint": "eslint .",
+    "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "npm run lint -- --fix",
     "storybook": "BROWSER=none start-storybook -p 6006",
-    "test": "jest",
-    "typecheck": "tsc --noEmit"
+    "test": "jest --passWithNoTests",
+    "typeCheck": "tsc --noEmit"
   },
   "dependencies": {},
   "devDependencies": {
