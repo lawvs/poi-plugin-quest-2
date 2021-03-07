@@ -1,0 +1,45 @@
+name: publish
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-version: [14.x]
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install node modules
+        uses: bahmutov/npm-install@v1
+
+      - name: Build
+        run: npm run build
+
+      - name: Lint
+        run: npm run lint --max-warnings=0
+
+      - name: Type check
+        run: npm run typeCheck
+
+      - name: Test
+        run: npm test
+
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
