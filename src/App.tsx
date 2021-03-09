@@ -43,12 +43,13 @@ const Main: React.FC = () => {
       <Toolbar></Toolbar>
       <CountText>{t('TotalQuests', { count: quests.length })}</CountText>
       <QuestCardWrapper>
-        {quests.map(({ gameId, code, name, desc, active }) => (
+        {quests.map(({ gameId, code, name, desc, memo, active }) => (
           <QuestCard
             key={gameId}
             code={code}
             name={name}
             desc={desc}
+            tips={memo}
             status={active ? QUEST_STATUS.InProgress : QUEST_STATUS.Default}
           ></QuestCard>
         ))}

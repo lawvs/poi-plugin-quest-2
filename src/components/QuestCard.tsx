@@ -46,6 +46,10 @@ const CardTail = styled.div`
   }
 `
 
+const IconWithMargin = styled(Icon)`
+  margin-left: 8px;
+`
+
 // transparent GIF pixel
 const PLACEHOLDER =
   'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
@@ -96,17 +100,27 @@ export const QuestCard: React.FC<{
   code: string
   name: string
   desc: string | JSX.Element
+  tips?: string
   status?: QUEST_STATUS
-}> = ({ code, name, desc, status = QUEST_STATUS.Default }) => {
+}> = ({ code, name, desc, tips, status = QUEST_STATUS.Default }) => {
   const icon = getIcon(code)
   const TailIcon = questStatusMap[status]
   return (
     <FlexCard elevation={Elevation.TWO}>
       <CardMedia src={icon}></CardMedia>
+
       <CardBody>
-        <H5>{[code, name].filter((i) => i != undefined).join(' ')}</H5>
+        <H5>
+          {[code, name].filter((i) => i != undefined).join(' ')}
+          {tips && (
+            <Tooltip content={tips}>
+              <IconWithMargin icon={IconNames.INFO_SIGN}></IconWithMargin>
+            </Tooltip>
+          )}
+        </H5>
         <Text>{desc}</Text>
       </CardBody>
+
       <CardTail>
         <TailIcon></TailIcon>
       </CardTail>
