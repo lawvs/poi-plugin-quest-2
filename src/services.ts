@@ -1,5 +1,5 @@
 import { name as PACKAGE_NAME } from '../package.json'
-import { IN_POI } from './poi'
+import { importFromPoi, IN_POI } from './poi'
 import { QuestData } from '../build/kcanotifyGamedata'
 
 /**
@@ -57,14 +57,7 @@ const patchLegacyQuestPluginReducer = async () => {
   }
 
   try {
-    // Prevent webpack early error
-    // Module not found: Error: Can't resolve 'views/create-store'
-    // TODO fix webpack warn
-    // Critical dependency: the request of a dependency is an expression
-    const extendReducerPath =
-      Math.random() < 10 ? 'views/create-store' : 'Unreachable'
-
-    const { extendReducer } = await import(extendReducerPath)
+    const { extendReducer } = await importFromPoi('views/create-store')
     extendReducer('poi-plugin-quest-info', reducer)
   } catch (e) {
     console.warn('Hack quest plugin reducer error', e)

@@ -46,6 +46,14 @@ export type GameQuest = {
   // 1: 50%: [0.5, 0.8)
   // 2: 80%: [0.8, 1.0)
   api_progress_flag: 0 | 1 | 2
+  api_select_rewards?: [
+    {
+      api_count: number
+      api_kind: number
+      api_mst_id: number
+      api_no: number
+    }[]
+  ]
   api_voice_id: 0
   api_bonus_flag: 1
 }
@@ -104,6 +112,21 @@ export const IN_POI = 'POI_VERSION' in globalThis
 
 const noop = () => {}
 const id = <T>(x: T) => x
+
+/**
+ * Prevent webpack early error
+ * Module not found: Error: Can't resolve 'views/create-store'
+ * TODO fix webpack warn
+ * Critical dependency: the request of a dependency is an expression
+ */
+export const importFromPoi = <T = any>(path: string): Promise<T> => {
+  if (!IN_POI) {
+    return new Promise(() => {
+      // Never resolve
+    })
+  }
+  return import(path)
+}
 
 /**
  * See https://redux.js.org/api/store#subscribelistener
@@ -165,19 +188,14 @@ export const getPoiStore: () => Promise<Store<PoiState>> = async () => {
   if (globalStore !== null) {
     return globalStore
   }
-  try {
-    // Prevent webpack early error
-    // Module not found: Error: Can't resolve 'views/create-store'
-    // TODO fix webpack warn
-    // Critical dependency: the request of a dependency is an expression
-    const storePath = Math.random() < 10 ? 'views/create-store' : 'Unreachable'
-    if (IN_POI) {
-      const { store } = await import(storePath)
+  if (IN_POI) {
+    try {
+      const { store } = await importFromPoi('views/create-store')
       globalStore = store
       return store
+    } catch (error) {
+      console.warn('Load global store error', error)
     }
-  } catch (error) {
-    console.warn('Load global store error', error)
   }
   globalStore = fallbackStore
   return fallbackStore
