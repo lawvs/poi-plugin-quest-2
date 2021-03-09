@@ -10,6 +10,7 @@ import { usePluginTranslation } from './poi'
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  max-height: 100%;
   overflow: hidden;
   user-select: text;
 
