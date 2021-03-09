@@ -21,5 +21,8 @@
   "Completed": "完了",
   "TotalQuests": "全て {{count}} 個の任務",
   "Sync with game": "ゲーム一致になり",
+  "Version": "バージョン: {{version}}",
+  "Data Version": "データ バージョン: {{version}}",
+  "View source code on GitHub": "GitHubでソースコードを表示",
   "": ""
 }

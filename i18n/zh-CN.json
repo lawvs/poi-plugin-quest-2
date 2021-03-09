@@ -21,5 +21,8 @@
   "Completed": "已完成",
   "TotalQuests": "一共 {{count}} 个任务",
   "Sync with game": "与游戏同步",
+  "Version": "版本: {{version}}",
+  "Data Version": "数据版本: {{version}}",
+  "View source code on GitHub": "去 GitHub 查看源码",
   "": ""
 }

@@ -6,5 +6,8 @@
   "Locked": "잠김",
   "In Progress": "진행 중",
   "Completed": "완료",
+  "Version": "버전: {{version}}",
+  "Data Version": "데이터 버전: {{version}}",
+  "View source code on GitHub": "GitHub에서 소스코드를 알아보세요",
   "": ""
 }
