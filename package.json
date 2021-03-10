@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "description": "show quest info",
-  "homepage": "https://lawvs.github.io/poi-plugin-quest-2/",
+  "homepage": "https://github.com/lawvs/poi-plugin-quest-2/",
   "bugs": {
     "url": "https://github.com/lawvs/poi-plugin-quest-2/issues"
   },
@@ -12,7 +12,10 @@
     "url": "git+https://github.com/lawvs/poi-plugin-quest-2.git"
   },
   "license": "MIT",
-  "author": "白水",
+  "author": {
+    "name": "白水",
+    "links": "https://github.com/lawvs"
+  },
   "main": "src/index.ts",
   "scripts": {
     "build": "npm run convertAssets && npm run downloadKcanotifyData",
