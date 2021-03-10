@@ -128,8 +128,8 @@ export const guessQuestCategory = (wikiId: string): QUEST_CATEGORY => {
     case wikiId[0] === '?':
       return QUEST_CATEGORY.Unknown
     default:
-      // Try parse SB01, WA01
-      return guessQuestCategory(wikiId[1])
+      // Try parse SB01, WA01, 2103B1
+      return guessQuestCategory(wikiId.slice(1))
   }
 }
 
@@ -148,7 +148,8 @@ export const isArsenalQuest = ({ code }: KcanotifyQuestExt) =>
 export const isModernizationQuest = ({ code }: KcanotifyQuestExt) =>
   guessQuestCategory(code) === QUEST_CATEGORY.Modernization
 export const isUnknownCategoryQuest = ({ code }: KcanotifyQuestExt) =>
-  guessQuestCategory(code) === QUEST_CATEGORY.Unknown
+  // Starts with unknown character
+  /^[^ABCDEFG]/.test(code)
 
 export enum QUEST_STATUS {
   Locked,
