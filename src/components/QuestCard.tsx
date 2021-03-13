@@ -65,7 +65,7 @@ const questIconMap = {
   [QUEST_CATEGORY.Unknown]: PLACEHOLDER,
 } as const
 
-const questStatusMap = {
+const questStatusMap: Record<QUEST_STATUS, React.FC> = {
   [QUEST_STATUS.Locked]: function Locked() {
     const { t } = usePluginTranslation()
     return (
@@ -88,13 +88,22 @@ const questStatusMap = {
     const { t } = usePluginTranslation()
     return (
       <Tooltip content={t('Completed')}>
+        <img src={IconCompleted}></img>
+      </Tooltip>
+    )
+  },
+  [QUEST_STATUS.AlreadyCompleted]: function AlreadyCompleted() {
+    const { t } = usePluginTranslation()
+    return (
+      <Tooltip content={t('Already Completed')}>
         <Icon icon={IconNames.TICK} iconSize={Icon.SIZE_LARGE}></Icon>
       </Tooltip>
     )
   },
 }
 
-const getIcon = (code: string): string => questIconMap[guessQuestCategory(code)]
+const getIcon = (code: string): string =>
+  questIconMap[guessQuestCategory(code).type]
 
 export const QuestCard: React.FC<{
   code: string
