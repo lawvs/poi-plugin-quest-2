@@ -1,6 +1,6 @@
 import { Card, Elevation, H5, Text, Tooltip, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { usePluginTranslation } from '../poi'
 import {
@@ -16,9 +16,11 @@ import { IconExercise } from '../../build/assets'
 import { IconSortie } from '../../build/assets'
 import { IconSupplyDocking } from '../../build/assets'
 import { IconInProgress } from '../../build/assets'
+import { IconCompleted } from '../../build/assets'
 
 const FlexCard = styled(Card)`
   display: flex;
+  align-items: center;
 
   & > * + * {
     margin-left: 8px;
@@ -28,6 +30,12 @@ const FlexCard = styled(Card)`
 const CardMedia = styled.img`
   width: 64px;
   height: 64px;
+`
+
+const CatIndicator = styled.span<{ color: string }>`
+  height: 1em;
+  width: 4px;
+  background-color: ${({ color }) => color};
 `
 
 const CardBody = styled.div`
@@ -102,8 +110,47 @@ const questStatusMap: Record<QUEST_STATUS, React.FC> = {
   },
 }
 
-const getIcon = (code: string): string =>
-  questIconMap[guessQuestCategory(code).type]
+const NormalBody: React.FC<{
+  code: string
+  name: string
+  desc: string | JSX.Element
+  tips?: string
+}> = ({ code, name, tips, desc }) => (
+  <CardBody>
+    <H5>
+      {[code, name].filter((i) => i != undefined).join(' - ')}
+      {tips && (
+        <Tooltip content={tips}>
+          <IconWithMargin icon={IconNames.INFO_SIGN}></IconWithMargin>
+        </Tooltip>
+      )}
+    </H5>
+    <Text>{desc}</Text>
+  </CardBody>
+)
+
+const MinimalBody: React.FC<{
+  code: string
+  name: string
+  desc: string | JSX.Element
+  tips?: string
+}> = ({ code, name, tips, desc }) => (
+  <CardBody>
+    <Text>
+      <Tooltip
+        content={
+          <>
+            {desc}
+            <br />
+            {tips}
+          </>
+        }
+      >
+        {[code, name].filter((i) => i != undefined).join(' - ')}
+      </Tooltip>
+    </Text>
+  </CardBody>
+)
 
 export const QuestCard: React.FC<{
   code: string
@@ -112,23 +159,38 @@ export const QuestCard: React.FC<{
   tips?: string
   status?: QUEST_STATUS
 }> = ({ code, name, desc, tips, status = QUEST_STATUS.Default }) => {
-  const icon = getIcon(code)
+  const [minimal, setMinial] = useState(true)
+  const indicatorColor = guessQuestCategory(code).color
+  const headIcon = questIconMap[guessQuestCategory(code).type]
   const TailIcon = questStatusMap[status]
-  return (
-    <FlexCard elevation={Elevation.TWO}>
-      <CardMedia src={icon}></CardMedia>
 
-      <CardBody>
-        <H5>
-          {[code, name].filter((i) => i != undefined).join(' ')}
-          {tips && (
-            <Tooltip content={tips}>
-              <IconWithMargin icon={IconNames.INFO_SIGN}></IconWithMargin>
-            </Tooltip>
-          )}
-        </H5>
-        <Text>{desc}</Text>
-      </CardBody>
+  return (
+    <FlexCard
+      elevation={Elevation.ZERO}
+      interactive={true}
+      onClick={() => setMinial(!minimal)}
+    >
+      {minimal ? (
+        <>
+          <CatIndicator color={indicatorColor}></CatIndicator>
+          <MinimalBody
+            code={code}
+            name={name}
+            desc={desc}
+            tips={tips}
+          ></MinimalBody>
+        </>
+      ) : (
+        <>
+          <CardMedia src={headIcon}></CardMedia>
+          <NormalBody
+            code={code}
+            name={name}
+            desc={desc}
+            tips={tips}
+          ></NormalBody>
+        </>
+      )}
 
       <CardTail>
         <TailIcon></TailIcon>

@@ -6,7 +6,8 @@ import type { PluginState } from './reducer'
 export type GameQuest = {
   // 1 Default
   // 2 In progress
-  api_state: 1 | 2
+  // 3 Completed
+  api_state: 1 | 2 | 3
   api_no: number
   api_title: string
   api_detail: string
