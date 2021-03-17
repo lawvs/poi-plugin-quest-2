@@ -114,3 +114,7 @@ const main = async () => {
 }
 
 main()
+
+process.on('unhandledRejection', (up) => {
+  throw up
+})
