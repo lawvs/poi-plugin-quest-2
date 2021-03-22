@@ -164,33 +164,36 @@ export const QuestCard: React.FC<{
   const headIcon = questIconMap[guessQuestCategory(code).type]
   const TailIcon = questStatusMap[status]
 
+  if (minimal) {
+    return (
+      <FlexCard
+        elevation={Elevation.ZERO}
+        interactive={true}
+        onClick={() => setMinial(!minimal)}
+      >
+        <CatIndicator color={indicatorColor}></CatIndicator>
+        <MinimalBody
+          code={code}
+          name={name}
+          desc={desc}
+          tips={tips}
+        ></MinimalBody>
+
+        <CardTail>
+          <TailIcon></TailIcon>
+        </CardTail>
+      </FlexCard>
+    )
+  }
+
   return (
     <FlexCard
       elevation={Elevation.ZERO}
       interactive={true}
       onClick={() => setMinial(!minimal)}
     >
-      {minimal ? (
-        <>
-          <CatIndicator color={indicatorColor}></CatIndicator>
-          <MinimalBody
-            code={code}
-            name={name}
-            desc={desc}
-            tips={tips}
-          ></MinimalBody>
-        </>
-      ) : (
-        <>
-          <CardMedia src={headIcon}></CardMedia>
-          <NormalBody
-            code={code}
-            name={name}
-            desc={desc}
-            tips={tips}
-          ></NormalBody>
-        </>
-      )}
+      <CardMedia src={headIcon}></CardMedia>
+      <NormalBody code={code} name={name} desc={desc} tips={tips}></NormalBody>
 
       <CardTail>
         <TailIcon></TailIcon>
