@@ -26,7 +26,8 @@ const ToolbarWrapper = styled.div`
 `
 
 const TagsWrapper = styled.div`
-  padding: -4px;
+  margin-left: -4px;
+  margin-right: -4px;
 
   & > * {
     margin: 4px;
