@@ -1,6 +1,6 @@
 import { Card, Elevation, H5, Text, Tooltip, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { usePluginTranslation } from '../poi'
 import {
@@ -110,34 +110,23 @@ const questStatusMap: Record<QUEST_STATUS, React.FC> = {
   },
 }
 
-const NormalBody: React.FC<{
+export const QuestCard: React.FC<{
   code: string
   name: string
   desc: string | JSX.Element
   tips?: string
-}> = ({ code, name, tips, desc }) => (
-  <CardBody>
-    <H5>
-      {[code, name].filter((i) => i != undefined).join(' - ')}
-      {tips && (
-        <Tooltip content={tips}>
-          <IconWithMargin icon={IconNames.INFO_SIGN}></IconWithMargin>
-        </Tooltip>
-      )}
-    </H5>
-    <Text>{desc}</Text>
-  </CardBody>
-)
+  status?: QUEST_STATUS
+}> = ({ code, name, desc, tips, status = QUEST_STATUS.Default }) => {
+  const [minimal, setMinimal] = useState(true)
+  const indicatorColor = guessQuestCategory(code).color
+  const headIcon = questIconMap[guessQuestCategory(code).type]
+  const TailIcon = questStatusMap[status]
+  const toggleMinimal = useCallback(() => setMinimal(!minimal), [minimal])
 
-const MinimalBody: React.FC<{
-  code: string
-  name: string
-  desc: string | JSX.Element
-  tips?: string
-}> = ({ code, name, tips, desc }) => (
-  <CardBody>
-    <Text>
+  if (minimal) {
+    return (
       <Tooltip
+        targetTagName="div"
         content={
           <>
             {desc}
@@ -146,43 +135,23 @@ const MinimalBody: React.FC<{
           </>
         }
       >
-        {[code, name].filter((i) => i != undefined).join(' - ')}
+        <FlexCard
+          elevation={Elevation.ZERO}
+          interactive={true}
+          onClick={toggleMinimal}
+        >
+          <CatIndicator color={indicatorColor}></CatIndicator>
+          <CardBody>
+            <Text>
+              {[code, name].filter((i) => i != undefined).join(' - ')}
+            </Text>
+          </CardBody>
+
+          <CardTail>
+            <TailIcon></TailIcon>
+          </CardTail>
+        </FlexCard>
       </Tooltip>
-    </Text>
-  </CardBody>
-)
-
-export const QuestCard: React.FC<{
-  code: string
-  name: string
-  desc: string | JSX.Element
-  tips?: string
-  status?: QUEST_STATUS
-}> = ({ code, name, desc, tips, status = QUEST_STATUS.Default }) => {
-  const [minimal, setMinial] = useState(true)
-  const indicatorColor = guessQuestCategory(code).color
-  const headIcon = questIconMap[guessQuestCategory(code).type]
-  const TailIcon = questStatusMap[status]
-
-  if (minimal) {
-    return (
-      <FlexCard
-        elevation={Elevation.ZERO}
-        interactive={true}
-        onClick={() => setMinial(!minimal)}
-      >
-        <CatIndicator color={indicatorColor}></CatIndicator>
-        <MinimalBody
-          code={code}
-          name={name}
-          desc={desc}
-          tips={tips}
-        ></MinimalBody>
-
-        <CardTail>
-          <TailIcon></TailIcon>
-        </CardTail>
-      </FlexCard>
     )
   }
 
@@ -190,10 +159,20 @@ export const QuestCard: React.FC<{
     <FlexCard
       elevation={Elevation.ZERO}
       interactive={true}
-      onClick={() => setMinial(!minimal)}
+      onClick={toggleMinimal}
     >
       <CardMedia src={headIcon}></CardMedia>
-      <NormalBody code={code} name={name} desc={desc} tips={tips}></NormalBody>
+      <CardBody>
+        <Tooltip content={tips} placement="top">
+          <H5>
+            {[code, name].filter((i) => i != undefined).join(' - ')}
+            {tips && (
+              <IconWithMargin icon={IconNames.INFO_SIGN}></IconWithMargin>
+            )}
+          </H5>
+        </Tooltip>
+        <Text>{desc}</Text>
+      </CardBody>
 
       <CardTail>
         <TailIcon></TailIcon>
