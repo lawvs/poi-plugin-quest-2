@@ -1,1 +1,8 @@
-assets
+assets/
+storybook-static/
+__tests__/
+src/stories/
+coverage/
+.storybook/
+build/dutySprites/
+*.tgz
