@@ -110,57 +110,28 @@ const questStatusMap: Record<QUEST_STATUS, React.FC> = {
   },
 }
 
-export const QuestCard: React.FC<{
+type QuestCardProps = {
   code: string
   name: string
   desc: string | JSX.Element
   tips?: string
   status?: QUEST_STATUS
-}> = ({ code, name, desc, tips, status = QUEST_STATUS.Default }) => {
-  const [minimal, setMinimal] = useState(true)
-  const indicatorColor = guessQuestCategory(code).color
+  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+}
+
+export const LargeQuestCard: React.FC<QuestCardProps> = ({
+  code,
+  name,
+  desc,
+  tips,
+  status = QUEST_STATUS.Default,
+  onClick,
+}) => {
   const headIcon = questIconMap[guessQuestCategory(code).type]
   const TailIcon = questStatusMap[status]
-  const toggleMinimal = useCallback(() => setMinimal(!minimal), [minimal])
-
-  if (minimal) {
-    return (
-      <Tooltip
-        targetTagName="div"
-        content={
-          <>
-            {desc}
-            <br />
-            {tips}
-          </>
-        }
-      >
-        <FlexCard
-          elevation={Elevation.ZERO}
-          interactive={true}
-          onClick={toggleMinimal}
-        >
-          <CatIndicator color={indicatorColor}></CatIndicator>
-          <CardBody>
-            <Text>
-              {[code, name].filter((i) => i != undefined).join(' - ')}
-            </Text>
-          </CardBody>
-
-          <CardTail>
-            <TailIcon></TailIcon>
-          </CardTail>
-        </FlexCard>
-      </Tooltip>
-    )
-  }
 
   return (
-    <FlexCard
-      elevation={Elevation.ZERO}
-      interactive={true}
-      onClick={toggleMinimal}
-    >
+    <FlexCard elevation={Elevation.ZERO} interactive={true} onClick={onClick}>
       <CardMedia src={headIcon}></CardMedia>
       <CardBody>
         <Tooltip content={tips} placement="top">
@@ -178,5 +149,55 @@ export const QuestCard: React.FC<{
         <TailIcon></TailIcon>
       </CardTail>
     </FlexCard>
+  )
+}
+
+export const MinimalQuestCard: React.FC<QuestCardProps> = ({
+  code,
+  name,
+  desc,
+  tips,
+  status = QUEST_STATUS.Default,
+  onClick,
+}) => {
+  const indicatorColor = guessQuestCategory(code).color
+  const TailIcon = questStatusMap[status]
+
+  return (
+    <Tooltip
+      targetTagName="div"
+      content={
+        <>
+          {desc}
+          <br />
+          {tips}
+        </>
+      }
+    >
+      <FlexCard elevation={Elevation.ZERO} interactive={true} onClick={onClick}>
+        <CatIndicator color={indicatorColor}></CatIndicator>
+        <CardBody>
+          <Text>{[code, name].filter((i) => i != undefined).join(' - ')}</Text>
+        </CardBody>
+
+        <CardTail>
+          <TailIcon></TailIcon>
+        </CardTail>
+      </FlexCard>
+    </Tooltip>
+  )
+}
+
+export const QuestCard: React.FC<QuestCardProps> = (props) => {
+  const [largeCard, setLarge] = useState<string | null>()
+  const setMinimal = () => setLarge(null)
+  const setQuestCardLarge = useCallback(() => setLarge(gameId), [
+    gameId,
+    setLarge,
+  ])
+  return gameId === largeCard ? (
+    <LargeQuestCard onClick={setMinimal} {...props}></LargeQuestCard>
+  ) : (
+    <MinimalQuestCard onClick={setQuestCardLarge} {...props}></MinimalQuestCard>
   )
 }
