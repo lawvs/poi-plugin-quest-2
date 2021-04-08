@@ -17,6 +17,7 @@ export const initialState = {
   categoryTags: {
     [ALL_CATEGORY_TAG.name]: true,
   } as Record<string, boolean>,
+  largeCard: null as null | string,
   syncWithGame: IN_POI,
 }
 

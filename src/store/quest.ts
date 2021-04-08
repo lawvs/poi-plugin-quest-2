@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { QuestData } from '../../build/kcanotifyGamedata'
 import {
   activeQuestsSelector,
@@ -44,6 +44,7 @@ const useGameQuest = () => {
   const [quests, setQuests] = useState<GameQuest[] | null>(null)
   useEffect(() => {
     const listener = (quests: GameQuest[] | null) => setQuests(quests)
+    // See reducer.ts
     return observePluginStore(listener, (i) => i?._?.questList)
   }, [])
   return quests
@@ -92,5 +93,24 @@ export const useQuest = (): KcanotifyQuestExt[] => {
       active: gameId in activeQuest,
       ...val,
     }))
+  }
+}
+
+export const useLargeCard = () => {
+  const {
+    store: { largeCard },
+    updateStore,
+  } = useStore()
+  const setLarge = useCallback(
+    (gameId: string) => updateStore({ largeCard: gameId }),
+    [updateStore]
+  )
+  const setMinimal = useCallback(() => updateStore({ largeCard: null }), [
+    updateStore,
+  ])
+  return {
+    largeCard,
+    setLarge,
+    setMinimal,
   }
 }

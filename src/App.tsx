@@ -46,6 +46,7 @@ const Main: React.FC = () => {
         {quests.map(({ gameId, code, name, desc, memo, active }) => (
           <QuestCard
             key={gameId}
+            gameId={gameId}
             code={code}
             name={name}
             desc={desc}

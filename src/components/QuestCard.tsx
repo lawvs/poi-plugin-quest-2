@@ -1,6 +1,6 @@
 import { Card, Elevation, H5, Text, Tooltip, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { usePluginTranslation } from '../poi'
 import {
@@ -17,6 +17,7 @@ import { IconSortie } from '../../build/assets'
 import { IconSupplyDocking } from '../../build/assets'
 import { IconInProgress } from '../../build/assets'
 import { IconCompleted } from '../../build/assets'
+import { useLargeCard } from '../store/quest'
 
 const FlexCard = styled(Card)`
   display: flex;
@@ -188,9 +189,11 @@ export const MinimalQuestCard: React.FC<QuestCardProps> = ({
   )
 }
 
-export const QuestCard: React.FC<QuestCardProps> = (props) => {
-  const [largeCard, setLarge] = useState<string | null>()
-  const setMinimal = () => setLarge(null)
+export const QuestCard: React.FC<QuestCardProps & { gameId: string }> = ({
+  gameId,
+  ...props
+}) => {
+  const { largeCard, setLarge, setMinimal } = useLargeCard()
   const setQuestCardLarge = useCallback(() => setLarge(gameId), [
     gameId,
     setLarge,
