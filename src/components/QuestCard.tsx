@@ -118,6 +118,7 @@ type QuestCardProps = {
   tips?: string
   status?: QUEST_STATUS
   onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  style?: React.CSSProperties
 }
 
 export const LargeQuestCard: React.FC<QuestCardProps> = ({
@@ -127,12 +128,18 @@ export const LargeQuestCard: React.FC<QuestCardProps> = ({
   tips,
   status = QUEST_STATUS.Default,
   onClick,
+  style,
 }) => {
   const headIcon = questIconMap[guessQuestCategory(code).type]
   const TailIcon = questStatusMap[status]
 
   return (
-    <FlexCard elevation={Elevation.ZERO} interactive={true} onClick={onClick}>
+    <FlexCard
+      elevation={Elevation.ZERO}
+      interactive={true}
+      onClick={onClick}
+      style={style}
+    >
       <CardMedia src={headIcon}></CardMedia>
       <CardBody>
         <Tooltip content={tips} placement="top">
@@ -160,6 +167,7 @@ export const MinimalQuestCard: React.FC<QuestCardProps> = ({
   tips,
   status = QUEST_STATUS.Default,
   onClick,
+  style,
 }) => {
   const indicatorColor = guessQuestCategory(code).color
   const TailIcon = questStatusMap[status]
@@ -175,7 +183,12 @@ export const MinimalQuestCard: React.FC<QuestCardProps> = ({
         </>
       }
     >
-      <FlexCard elevation={Elevation.ZERO} interactive={true} onClick={onClick}>
+      <FlexCard
+        elevation={Elevation.ZERO}
+        interactive={true}
+        onClick={onClick}
+        style={style}
+      >
         <CatIndicator color={indicatorColor}></CatIndicator>
         <CardBody>
           <Text>{[code, name].filter((i) => i != undefined).join(' - ')}</Text>
