@@ -24,5 +24,6 @@
   "Version": "版本: {{version}}",
   "Data Version": "数据版本: {{version}}",
   "View source code on GitHub": "去 GitHub 查看源码",
+  "Restore defaults": "恢复默认设置",
   "": ""
 }

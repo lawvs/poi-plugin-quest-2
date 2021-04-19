@@ -24,5 +24,6 @@
   "Version": "Version: {{version}}",
   "Data Version": "Data Version: {{version}}",
   "View source code on GitHub": "View source code on GitHub",
+  "Restore defaults": "Restore defaults",
   "": ""
 }

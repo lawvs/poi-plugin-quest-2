@@ -1,10 +1,11 @@
-import React, { StrictMode } from 'react'
-import { AnchorButton, Text } from '@blueprintjs/core'
+import React, { StrictMode, useCallback } from 'react'
+import { Button, AnchorButton, Text } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
+import styled from 'styled-components'
 import { version as PACKAGE_VERSION, homepage } from '../package.json'
 import { version as DATA_VERSION } from '../build/kcanotifyGamedata'
 import { usePluginTranslation } from './poi'
-import styled from 'styled-components'
+import { removeStorage } from './store'
 
 const Container = styled.div`
   display: flex;
@@ -19,6 +20,7 @@ const Container = styled.div`
 
 export const Settings = () => {
   const { t } = usePluginTranslation()
+  const handleClearCache = useCallback(() => removeStorage(), [])
   return (
     <StrictMode>
       <Container>
@@ -31,6 +33,11 @@ export const Settings = () => {
           href={homepage}
           target="_blank"
         ></AnchorButton>
+        <Button
+          icon={IconNames.TRASH}
+          text={t('Restore defaults')}
+          onClick={handleClearCache}
+        ></Button>
       </Container>
     </StrictMode>
   )

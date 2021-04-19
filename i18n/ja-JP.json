@@ -24,5 +24,6 @@
   "Version": "バージョン: {{version}}",
   "Data Version": "データ バージョン: {{version}}",
   "View source code on GitHub": "GitHubでソースコードを表示",
+  "Restore defaults": "デフォルトに戻す",
   "": ""
 }

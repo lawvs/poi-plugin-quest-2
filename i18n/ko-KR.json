@@ -9,5 +9,6 @@
   "Version": "버전: {{version}}",
   "Data Version": "데이터 버전: {{version}}",
   "View source code on GitHub": "GitHub에서 소스코드를 알아보세요",
+  "Restore defaults": "기본값 복원",
   "": ""
 }
