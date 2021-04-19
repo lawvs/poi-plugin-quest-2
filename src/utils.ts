@@ -9,6 +9,12 @@ const useEffectOnce = (effect: EffectCallback) => {
   useEffect(effect, [])
 }
 
+export const useMount = (fn: () => void) => {
+  useEffectOnce(() => {
+    fn()
+  })
+}
+
 const useUnmount = (fn: () => any): void => {
   const fnRef = useRef(fn)
 
