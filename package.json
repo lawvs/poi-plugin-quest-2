@@ -26,7 +26,7 @@
     "convertAssets": "ts-node scripts/convertAssets.ts",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "npm run lint -- --fix",
-    "storybook": "BROWSER=none start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006",
     "test": "jest",
     "typeCheck": "tsc --noEmit"
   },
