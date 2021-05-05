@@ -1,16 +1,34 @@
 import { name as PACKAGE_NAME } from '../package.json'
-import { importFromPoi, IN_POI } from './poi'
+import { getPoiStore, importFromPoi } from './poi'
 import { QuestData } from '../build/kcanotifyGamedata'
+
+const LEGACY_QUEST_PLUGIN_ID = 'poi-plugin-quest-info'
+const HACK_KEY = `__patched-from-${PACKAGE_NAME}`
+
+/**
+ * @env poi
+ */
+const isLegacyQuestPluginEnabled = async () => {
+  const poiStore = await getPoiStore()
+  const legacyQuestPlugin = poiStore
+    .getState()
+    .plugins.find((i) => i.id === LEGACY_QUEST_PLUGIN_ID)
+  if (legacyQuestPlugin && legacyQuestPlugin.enabled) {
+    return true
+  }
+  return false
+}
 
 /**
  * Patch the reducer of `poi-plugin-quest-info` for poi's task panel tips
  * See https://github.com/poooi/poi/blob/da75b507e8f67615a39dc4fdb466e34ff5b5bdcf/views/components/main/parts/task-panel.es#L243
+ * @env poi
  */
-const patchLegacyQuestPluginReducer = async () => {
-  if (!IN_POI) {
+export const patchLegacyQuestPluginReducer = async () => {
+  if (await isLegacyQuestPluginEnabled()) {
+    // no clear if legacy quest plugin enabled
     return
   }
-  const HACK_KEY = `__patched-from-${PACKAGE_NAME}`
 
   const getQuestState = (maybeLanguage: string) => {
     if (!(maybeLanguage in QuestData)) {
@@ -40,11 +58,9 @@ const patchLegacyQuestPluginReducer = async () => {
     state = initState,
     action: { type: string; [x: string]: any }
   ) => {
-    if (!state[HACK_KEY]) {
-      return state
-    }
     switch (action.type) {
       case '@@Config':
+        // change language
         if (action.path === 'poi.misc.language') {
           const newLanguage = action.value
           return {
@@ -58,12 +74,27 @@ const patchLegacyQuestPluginReducer = async () => {
 
   try {
     const { extendReducer } = await importFromPoi('views/create-store')
-    extendReducer('poi-plugin-quest-info', reducer)
+    extendReducer(LEGACY_QUEST_PLUGIN_ID, reducer)
   } catch (e) {
     console.warn('Hack quest plugin reducer error', e)
   }
 }
 
-patchLegacyQuestPluginReducer()
-// TODO clear hacked reducer after unload
-// See https://github.com/poooi/poi/blob/3beedfa93ae347db273b7f0a5160f5ea01e9b8b7/views/services/plugin-manager/utils.es#L458
+/**
+ * Clear hacked reducer after unload
+ * See https://github.com/poooi/poi/blob/3beedfa93ae347db273b7f0a5160f5ea01e9b8b7/views/services/plugin-manager/utils.es#L451
+ * @env poi
+ */
+export const clearPatchLegacyQuestPluginReducer = async () => {
+  if (await isLegacyQuestPluginEnabled()) {
+    // no clear if legacy quest plugin enabled
+    return
+  }
+  try {
+    const { extendReducer } = await importFromPoi('views/create-store')
+    const clearReducer = undefined
+    extendReducer('poi-plugin-quest-info', clearReducer)
+  } catch (e) {
+    console.warn('Clear hack quest plugin reducer error', e)
+  }
+}

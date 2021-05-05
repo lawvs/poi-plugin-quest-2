@@ -98,6 +98,7 @@ export type PoiState = {
     // TODO fix use constant PACKAGE_NAME
     [packageName: string]: PluginState
   }
+  plugins: { id: string; enabled: boolean; [x: string]: unknown }[]
   [x: string]: any
 }
 
