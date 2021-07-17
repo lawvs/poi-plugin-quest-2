@@ -57,7 +57,10 @@ const SyncButton = () => {
 
 export const SearchInput: React.FC = () => {
   const { t } = usePluginTranslation()
-  const { updateStore } = useStore()
+  const {
+    store: { searchInput },
+    updateStore,
+  } = useStore()
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
@@ -67,6 +70,7 @@ export const SearchInput: React.FC = () => {
 
   return (
     <InputGroup
+      value={searchInput}
       onChange={handleChange}
       placeholder={t('Search')}
       leftIcon={IconNames.SEARCH}
