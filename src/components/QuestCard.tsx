@@ -55,10 +55,6 @@ const CardTail = styled.div`
   }
 `
 
-const IconWithMargin = styled(Icon)`
-  margin-left: 8px;
-`
-
 // transparent GIF pixel
 const PLACEHOLDER =
   'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
@@ -142,15 +138,9 @@ export const LargeQuestCard: React.FC<QuestCardProps> = ({
     >
       <CardMedia src={headIcon}></CardMedia>
       <CardBody>
-        <Tooltip content={tips} placement="top">
-          <H5>
-            {[code, name].filter((i) => i != undefined).join(' - ')}
-            {tips && (
-              <IconWithMargin icon={IconNames.INFO_SIGN}></IconWithMargin>
-            )}
-          </H5>
-        </Tooltip>
+        <H5>{[code, name].filter((i) => i != undefined).join(' - ')}</H5>
         <Text>{desc}</Text>
+        <Text tagName="i">{tips}</Text>
       </CardBody>
 
       <CardTail>
