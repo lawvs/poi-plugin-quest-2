@@ -207,10 +207,10 @@ export const QuestCard: React.FC<QuestCardProps & { gameId: string }> = ({
   ...props
 }) => {
   const { largeCard, setLarge, setMinimal } = useLargeCard()
-  const setQuestCardLarge = useCallback(() => setLarge(gameId), [
-    gameId,
-    setLarge,
-  ])
+  const setQuestCardLarge = useCallback(
+    () => setLarge(gameId),
+    [gameId, setLarge]
+  )
   return gameId === largeCard ? (
     <LargeQuestCard onClick={setMinimal} {...props}></LargeQuestCard>
   ) : (

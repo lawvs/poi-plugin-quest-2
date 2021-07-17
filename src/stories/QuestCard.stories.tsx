@@ -32,17 +32,14 @@ export const Other = Template.bind({})
 Other.args = {
   code: 'WF01',
   name: '式の準備！(その壱)',
-  desc:
-    '式の準備をします！「工廠」で装備アイテムを2回「廃棄」して身の回りの整理を！',
+  desc: '式の準備をします！「工廠」で装備アイテムを2回「廃棄」して身の回りの整理を！',
   status: QUEST_STATUS.InProgress,
 }
 
 export const OverflowTest = Template.bind({})
 OverflowTest.args = {
   code: 'A0',
-  name:
-    'はじめての「編成」！はじめての「編成」！はじめての「編成」！はじめての「編成」！',
-  desc:
-    'TBF を秘書艦一番スロットに搭載、「13 号対空電探」x2「22 号対水上電探」x2 廃棄、開発資材 x40、改修資材 x10、弾薬 5,000、ボーキサイト 8,000、「新型航空兵装資材」x1、「熟練搭乗員」を用意せよ！',
+  name: 'はじめての「編成」！はじめての「編成」！はじめての「編成」！はじめての「編成」！',
+  desc: 'TBF を秘書艦一番スロットに搭載、「13 号対空電探」x2「22 号対水上電探」x2 廃棄、開発資材 x40、改修資材 x10、弾薬 5,000、ボーキサイト 8,000、「新型航空兵装資材」x1、「熟練搭乗員」を用意せよ！',
   status: QUEST_STATUS.Completed,
 }

@@ -71,7 +71,7 @@ export const useQuest = (): KcanotifyQuestExt[] => {
           gameId,
           active,
           ...kcanotifyQuestMap[
-            (gameId as unknown) as keyof typeof kcanotifyQuestMap
+            gameId as unknown as keyof typeof kcanotifyQuestMap
           ],
         }
       }
@@ -105,9 +105,10 @@ export const useLargeCard = () => {
     (gameId: string) => updateStore({ largeCard: gameId }),
     [updateStore]
   )
-  const setMinimal = useCallback(() => updateStore({ largeCard: null }), [
-    updateStore,
-  ])
+  const setMinimal = useCallback(
+    () => updateStore({ largeCard: null }),
+    [updateStore]
+  )
   return {
     largeCard,
     setLarge,
