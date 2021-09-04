@@ -1,5 +1,5 @@
 import { version } from '../../build/kcanotifyGamedata'
 
 test('should Kcanotify Game data version correct', () => {
-  expect(version).toMatchInlineSnapshot(`"5.2.4.1"`)
+  expect(version).toMatchInlineSnapshot(`"5.3.0.3"`)
 })
