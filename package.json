@@ -18,10 +18,11 @@
   },
   "main": "src/index.ts",
   "scripts": {
-    "build": "npm run convertAssets && npm run downloadKcanotifyData",
+    "build": "npm run convertAssets && npm run downloadKcanotifyData & npm run downloadKcQuestsData",
     "build-storybook": "build-storybook",
     "clean": "rm -rf build",
     "downloadKcanotifyData": "ts-node scripts/downloadKcanotifyGamedata.ts",
+    "downloadKcQuestsData": "ts-node scripts/downloadKcQuestsData.ts",
     "downloadSprites": "ts-node scripts/downloadSprites.ts",
     "convertAssets": "ts-node scripts/convertAssets.ts",
     "lint": "eslint . --ignore-path .gitignore",
@@ -63,10 +64,10 @@
     "react-dom": "^17.0.1",
     "react-i18next": "^11.8.5",
     "sharp": "^0.28.3",
-    "styled-components": "^5.3.0",
+    "styled-components": "^5.3.3",
     "ts-jest": "^27.0.3",
     "ts-node": "^9.1.1",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.4"
   },
   "poiPlugin": {
     "title": "Quest Information",

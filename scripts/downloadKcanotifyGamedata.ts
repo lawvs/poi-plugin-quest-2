@@ -38,11 +38,13 @@ const getLocalVersion = () => {
 
 /**
  * @example
+ * ```ts
  * import zh_CN from './quests-scn.json'
  * export default {
  *   'zh-CN': zh_CN,
  * }
  * export const version = '5.1.2.1'
+ * ```
  */
 const genTS = (version: string) => {
   const importCode = LOCALES.map(

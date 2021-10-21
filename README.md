@@ -15,3 +15,4 @@ Paste `poi-plugin-quest-info-2` in the plugins tab and click the install button.
 - [kcanotify-gamedata](https://github.com/antest1/kcanotify-gamedata)
 - [poi-plugin-tabex](https://github.com/momocow/poi-plugin-tabex)
 - [plugin-quest](https://github.com/poooi/plugin-quest)
+- [kcQuests](https://github.com/kcwikizh/kcQuests)
