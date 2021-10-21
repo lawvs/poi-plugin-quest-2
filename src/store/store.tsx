@@ -22,6 +22,7 @@ export const initialState = {
   } as Record<string, boolean>,
   largeCard: null as null | string,
   syncWithGame: IN_POI,
+  preferKcwikiData: true,
 }
 
 export type State = typeof initialState
