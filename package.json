@@ -32,6 +32,7 @@
     "typeCheck": "tsc --noEmit"
   },
   "dependencies": {
+    "react-use": "^17.3.1",
     "react-virtualized": "^9.22.3"
   },
   "devDependencies": {

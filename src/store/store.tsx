@@ -10,7 +10,7 @@ import React, {
 import { IN_POI } from '../poi'
 import { ALL_TYPE_TAG, ALL_CATEGORY_TAG } from '../tags'
 import { name as PACKAGE_NAME } from '../../package.json'
-import { useMount, useUpdateEffect } from '../utils'
+import { createGlobalState, useMount, useUpdateEffect } from 'react-use'
 
 export const initialState = {
   searchInput: '',
