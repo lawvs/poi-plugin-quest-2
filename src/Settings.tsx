@@ -1,11 +1,16 @@
-import React, { StrictMode } from 'react'
-import { Button, AnchorButton, Text } from '@blueprintjs/core'
+import React, { StrictMode, useCallback } from 'react'
+import { Button, AnchorButton, Text, Checkbox } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import styled from 'styled-components'
 import { version as PACKAGE_VERSION, homepage } from '../package.json'
 import { version as DATA_VERSION } from '../build/kcanotifyGamedata'
 import { usePluginTranslation } from './poi'
-import { useRemoveStorage, StoreProvider } from './store'
+import {
+  useRemoveStorage,
+  StoreProvider,
+  useLanguage,
+  usePreferKcwiki,
+} from './store'
 
 const Container = styled.div`
   display: flex;
@@ -18,11 +23,27 @@ const Container = styled.div`
   }
 `
 
+const useIsSimplifiedChinese = () => useLanguage() === 'zh-CN'
+
 const SettingsMain = () => {
   const { t } = usePluginTranslation()
+  const isSimplifiedChinese = useIsSimplifiedChinese()
   const removeStorage = useRemoveStorage()
+  const [preferKcwiki, setPreferKcwiki] = usePreferKcwiki()
+  const handleEnabledChange: React.FormEventHandler<HTMLInputElement> =
+    useCallback(() => {
+      setPreferKcwiki(!preferKcwiki)
+    }, [preferKcwiki, setPreferKcwiki])
+
   return (
     <>
+      <Checkbox
+        checked={preferKcwiki}
+        disabled={!isSimplifiedChinese}
+        label={t('Use Kcwiki data')}
+        onChange={handleEnabledChange}
+      />
+
       <Text>{t('Version', { version: PACKAGE_VERSION })}</Text>
       <Text>{t('Data Version', { version: DATA_VERSION })}</Text>
       <AnchorButton
@@ -32,6 +53,7 @@ const SettingsMain = () => {
         href={homepage}
         target="_blank"
       ></AnchorButton>
+
       <Button
         icon={IconNames.TRASH}
         text={t('Restore defaults')}

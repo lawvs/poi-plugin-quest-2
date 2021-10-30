@@ -1,11 +1,14 @@
 import { KcwikiQuestData } from '../../build/kcQuestsData'
 import { useStore } from '.'
 
-const usePreferKcwiki = () => {
+export const usePreferKcwiki = () => {
   const {
     store: { preferKcwikiData },
+    updateStore,
   } = useStore()
-  return preferKcwikiData
+  const setPreferKcwikiData = (val: boolean) =>
+    updateStore({ preferKcwikiData: val })
+  return [preferKcwikiData, setPreferKcwikiData] as const
 }
 
 const useIsKcwikiSupportedLanguages = (
@@ -13,7 +16,7 @@ const useIsKcwikiSupportedLanguages = (
 ): lang is keyof typeof KcwikiQuestData => lang in KcwikiQuestData
 
 export const useKcwikiData = (lang: string) => {
-  const preferKcwiki = usePreferKcwiki()
+  const [preferKcwiki] = usePreferKcwiki()
   const supported = useIsKcwikiSupportedLanguages(lang)
 
   if (!preferKcwiki) {
