@@ -158,7 +158,9 @@ const useToolbarFilter = () => {
 
   const stringFilter = useCallback(
     (quest: KcanotifyQuestExt) => {
-      const text = `${quest.code} ${quest.name} ${quest.desc}`
+      const text = `${quest.code} ${quest.name} ${quest.desc} ${
+        quest.memo ?? ''
+      }`
       if (!searchKeywords) {
         return true
       }
