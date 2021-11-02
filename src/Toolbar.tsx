@@ -3,7 +3,7 @@ import { IconNames } from '@blueprintjs/icons'
 import styled from 'styled-components'
 import React, { useCallback } from 'react'
 import type { ChangeEvent } from 'react'
-import { useThrottle } from './utils'
+import { useThrottle } from 'react-use'
 import { useQuest, useStore } from './store'
 import {
   ALL_TYPE_TAG,
@@ -158,7 +158,9 @@ const useToolbarFilter = () => {
 
   const stringFilter = useCallback(
     (quest: KcanotifyQuestExt) => {
-      const text = `${quest.code} ${quest.name} ${quest.desc}`
+      const text = `${quest.code} ${quest.name} ${quest.desc} ${
+        quest.memo ?? ''
+      }`
       if (!searchKeywords) {
         return true
       }

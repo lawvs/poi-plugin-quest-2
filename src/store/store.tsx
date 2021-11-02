@@ -4,13 +4,11 @@ import React, {
   SetStateAction,
   useCallback,
   useContext,
-  useEffect,
-  useState,
 } from 'react'
 import { IN_POI } from '../poi'
 import { ALL_TYPE_TAG, ALL_CATEGORY_TAG } from '../tags'
 import { name as PACKAGE_NAME } from '../../package.json'
-import { useMount, useUpdateEffect } from '../utils'
+import { createGlobalState, useMount, useUpdateEffect } from 'react-use'
 
 export const initialState = {
   searchInput: '',
@@ -22,22 +20,17 @@ export const initialState = {
   } as Record<string, boolean>,
   largeCard: null as null | string,
   syncWithGame: IN_POI,
+  preferKcwikiData: true,
 }
 
 export type State = typeof initialState
 
 // Persist state
 const STORAGE_KEY = PACKAGE_NAME
-let onRemoveStorage: (() => void)[] = []
-export const removeStorage = () => {
-  localStorage.removeItem(STORAGE_KEY)
-  onRemoveStorage.forEach((i) => i())
-}
 
 const useStorage = (
   store: State,
   setState: (state: State) => void,
-  onRemove = () => {},
   merge = true
 ) => {
   // Load storage at mount
@@ -46,7 +39,7 @@ const useStorage = (
     if (stringStore == null) {
       return
     }
-    const parsedStorage = JSON.parse(stringStore)
+    const parsedStorage: State = JSON.parse(stringStore)
     // TODO use deep merge
     const storageStore = merge ? { ...store, ...parsedStorage } : parsedStorage
     setState(storageStore)
@@ -57,24 +50,24 @@ const useStorage = (
     const serializedStore = JSON.stringify(store)
     localStorage.setItem(STORAGE_KEY, serializedStore)
   }, [store])
+}
 
-  useEffect(() => {
-    onRemoveStorage.push(onRemove)
-    return () => {
-      onRemoveStorage = onRemoveStorage.filter((i) => i !== onRemove)
-    }
-  })
+export const getStorage = () => {
+  const stringStore = localStorage.getItem(STORAGE_KEY)
+  if (stringStore == null) {
+    return
+  }
+  return JSON.parse(stringStore) as State
 }
 
 const StateContext = createContext<State>(initialState)
 const SetStateContext = createContext<Dispatch<SetStateAction<State>>>(() => {})
 
-export const StoreProvider = ({ children }: { children: React.ReactChild }) => {
-  const [state, setState] = useState(initialState)
-  const onStorageRemove = useCallback(() => {
-    setState(initialState)
-  }, [])
-  useStorage(state, setState, onStorageRemove)
+const useGlobalState = createGlobalState<State>(initialState)
+
+export const StoreProvider = ({ children }: { children?: React.ReactNode }) => {
+  const [state, setState] = useGlobalState()
+  useStorage(state, setState)
   return (
     <SetStateContext.Provider value={setState}>
       <StateContext.Provider value={state}>{children}</StateContext.Provider>
@@ -90,4 +83,12 @@ export const useStore = () => {
     [setStore, store]
   )
   return { store, setStore, updateStore }
+}
+
+export const useRemoveStorage = () => {
+  const { updateStore } = useStore()
+  return () => {
+    localStorage.removeItem(STORAGE_KEY)
+    updateStore(initialState)
+  }
 }

@@ -43,6 +43,10 @@ const CardBody = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+
+  * + * {
+    margin-top: 8px;
+  }
 `
 
 const CardTail = styled.div`

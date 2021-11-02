@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { checkIsKcwikiSupportedLanguages } from '.'
 import { QuestData } from '../../build/kcanotifyGamedata'
 import {
   activeQuestsSelector,
@@ -9,17 +10,29 @@ import {
   usePluginTranslation,
 } from '../poi'
 import { getCategory, KcanotifyQuestExt } from '../questHelper'
+import { useKcwikiData } from './kcwiki'
 import { useStore } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
 
+export const checkIsKcanotifySupportedLanguages = (
+  lang: string
+): lang is keyof typeof QuestData => lang in QuestData
+
+export const isSupportedLanguages = (
+  lang: string
+): lang is keyof typeof QuestData =>
+  checkIsKcanotifySupportedLanguages(lang) ||
+  checkIsKcwikiSupportedLanguages(lang)
+
 export const useLanguage = () => {
-  const { i18n } = usePluginTranslation()
-  const language =
-    i18n.language in QuestData
-      ? (i18n.language as keyof typeof QuestData)
-      : DEFAULT_LANG
-  return language
+  const {
+    i18n: { language },
+  } = usePluginTranslation()
+  const lang = checkIsKcanotifySupportedLanguages(language)
+    ? language
+    : DEFAULT_LANG
+  return lang
 }
 
 const useActiveQuest = () => {
@@ -35,8 +48,12 @@ const useActiveQuest = () => {
   return activeQuests
 }
 
-const useKcanotifyQuestMap = () => {
+const useQuestMap = () => {
   const lang = useLanguage()
+  const kcwikiData = useKcwikiData(lang)
+  if (kcwikiData) {
+    return kcwikiData
+  }
   return QuestData[lang]
 }
 
@@ -52,7 +69,7 @@ const useGameQuest = () => {
 
 export const useQuest = (): KcanotifyQuestExt[] => {
   const activeQuest = useActiveQuest()
-  const kcanotifyQuestMap = useKcanotifyQuestMap()
+  const questMap = useQuestMap()
   const gameQuest = useGameQuest()
   const {
     store: { syncWithGame },
@@ -66,13 +83,11 @@ export const useQuest = (): KcanotifyQuestExt[] => {
     return gameQuest.map((quest) => {
       const gameId = String(quest.api_no)
       const active = gameId in activeQuest
-      if (gameId in kcanotifyQuestMap) {
+      if (gameId in questMap) {
         return {
           gameId,
           active,
-          ...kcanotifyQuestMap[
-            gameId as unknown as keyof typeof kcanotifyQuestMap
-          ],
+          ...questMap[gameId as unknown as keyof typeof questMap],
         }
       }
 
@@ -88,7 +103,7 @@ export const useQuest = (): KcanotifyQuestExt[] => {
     })
   } else {
     // Return all recorded quests
-    return Object.entries(kcanotifyQuestMap).map(([gameId, val]) => ({
+    return Object.entries(questMap).map(([gameId, val]) => ({
       gameId,
       active: gameId in activeQuest,
       ...val,

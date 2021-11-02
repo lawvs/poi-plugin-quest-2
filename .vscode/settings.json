@@ -3,5 +3,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "npm.packageManager": "npm"
+  "npm.packageManager": "npm",
+  "cSpell.words": [
+    "Kcanotify",
+    "Kcwiki"
+  ]
 }

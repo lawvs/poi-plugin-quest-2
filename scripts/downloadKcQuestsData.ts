@@ -4,15 +4,13 @@ import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs'
 import pangu from 'pangu'
 import { fetch } from './proxyFetch'
 
-// See https://github.com/antest1/kcanotify-gamedata
+// See https://github.com/kcwikizh/kcQuests
 
-const OUTPUT_PATH = path.resolve('build', 'kcanotifyGamedata')
-const URL_PREFIX =
-  'https://raw.githubusercontent.com/antest1/kcanotify-gamedata/master'
-const VERSION_URL = `${URL_PREFIX}/DATA_VERSION`
-const DATA_URL = `${URL_PREFIX}/files`
-const LANGS = ['scn', 'tcn', 'jp', 'en', 'ko'] as const
-const LOCALES = ['zh-CN', 'zh-TW', 'ja-JP', 'en-US', 'ko-KR'] as const
+const OUTPUT_PATH = path.resolve('build', 'kcQuestsData')
+const FILE_NAME = 'quests-scn.json'
+const URL = `https://kcwikizh.github.io/kcQuests/${FILE_NAME}`
+const VERSION_URL =
+  'https://api.github.com/repos/kcwikizh/kcQuests/branches/main'
 
 const prepare = () => {
   if (!existsSync(OUTPUT_PATH)) {
@@ -25,7 +23,7 @@ const getRemoteVersion = async () => {
   if (!resp.ok) {
     throw new Error(`Fetch Error!\nurl: ${resp.url}\nstatus: ${resp.status}`)
   }
-  return resp.text()
+  return (await resp.json()).commit.sha
 }
 
 const getLocalVersion = () => {
@@ -47,17 +45,13 @@ const getLocalVersion = () => {
  * ```
  */
 const genTS = (version: string) => {
-  const importCode = LOCALES.map(
-    (locale, idx) =>
-      `import ${locale.replace('-', '_')} from './quests-${LANGS[idx]}.json'`
-  ).join('\n')
+  const importCode = `import zh_CN from './quests-scn.json'`
 
-  const exportCode =
-    'export const QuestData = {\n' +
-    LOCALES.map((locale) => `  '${locale}': ${locale.replace('-', '_')},`).join(
-      '\n'
-    ) +
-    '\n}'
+  const exportCode = [
+    'export const KcwikiQuestData = {',
+    `  'zh-CN': zh_CN,`,
+    '}',
+  ].join('\n')
 
   const versionCode = `export const version = '${version}'`
   return `${importCode}\n\n${exportCode}\n\n${versionCode}\n`
@@ -78,35 +72,26 @@ const main = async () => {
     console.log('New Version Detected. Version:', remoteVersion)
   }
 
-  await Promise.all(
-    LANGS.map(async (lang) => {
-      const filename = `quests-${lang}.json`
-      const fileURL = `${DATA_URL}/${filename}`
+  console.log(`Download kcQuests data...`)
+  const resp = await fetch(URL)
+  if (!resp.ok) {
+    console.error(`Fetch Error!\nurl: ${resp.url}\nstatus: ${resp.status}`)
+    return
+  }
+  let text = await resp.text()
+  text = text.trim()
 
-      console.log(`Download ${filename}...`)
-      const resp = await fetch(fileURL)
-      if (!resp.ok) {
-        console.error(`Fetch Error!\nurl: ${resp.url}\nstatus: ${resp.status}`)
-        return
-      }
-      let text = await resp.text()
-      // TODO fix source file
-      // Remove BOM(U+FEFF) from the header of the quests-ko.json
-      text = text.trim()
+  const json = JSON.parse(text) as {
+    [gameId: string]: { code: string; name: string; desc: string }
+  }
+  for (const gameId in json) {
+    const { name, desc } = json[gameId]
+    json[gameId].name = pangu.spacing(name)
+    json[gameId].desc = pangu.spacing(desc)
+  }
 
-      const json = JSON.parse(text) as {
-        [gameId: string]: { code: string; name: string; desc: string }
-      }
-      for (const gameId in json) {
-        const { name, desc } = json[gameId]
-        json[gameId].name = pangu.spacing(name)
-        json[gameId].desc = pangu.spacing(desc)
-      }
-
-      const data = JSON.stringify(json, undefined, 2)
-      writeFileSync(`${OUTPUT_PATH}/${filename}`, data)
-    })
-  )
+  const data = JSON.stringify(json, undefined, 2)
+  writeFileSync(`${OUTPUT_PATH}/${FILE_NAME}`, data)
 
   const ts = genTS(remoteVersion)
   writeFileSync(`${OUTPUT_PATH}/index.ts`, ts)
