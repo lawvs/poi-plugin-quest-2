@@ -11,13 +11,13 @@ export const usePreferKcwiki = () => {
   return [preferKcwikiData, setPreferKcwikiData] as const
 }
 
-const useIsKcwikiSupportedLanguages = (
+export const checkIsKcwikiSupportedLanguages = (
   lang: string
 ): lang is keyof typeof KcwikiQuestData => lang in KcwikiQuestData
 
 export const useKcwikiData = (lang: string) => {
   const [preferKcwiki] = usePreferKcwiki()
-  const supported = useIsKcwikiSupportedLanguages(lang)
+  const supported = checkIsKcwikiSupportedLanguages(lang)
 
   if (!preferKcwiki) {
     return null

@@ -1,6 +1,6 @@
 import { QuestData } from '../build/kcanotifyGamedata'
 
-export type KcanotifyQuest = {
+type KcanotifyQuest = {
   code: string
   name: string
   desc: string

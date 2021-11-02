@@ -39,7 +39,7 @@ const useStorage = (
     if (stringStore == null) {
       return
     }
-    const parsedStorage = JSON.parse(stringStore)
+    const parsedStorage: State = JSON.parse(stringStore)
     // TODO use deep merge
     const storageStore = merge ? { ...store, ...parsedStorage } : parsedStorage
     setState(storageStore)
@@ -50,6 +50,14 @@ const useStorage = (
     const serializedStore = JSON.stringify(store)
     localStorage.setItem(STORAGE_KEY, serializedStore)
   }, [store])
+}
+
+export const getStorage = () => {
+  const stringStore = localStorage.getItem(STORAGE_KEY)
+  if (stringStore == null) {
+    return
+  }
+  return JSON.parse(stringStore) as State
 }
 
 const StateContext = createContext<State>(initialState)

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { checkIsKcwikiSupportedLanguages } from '.'
 import { QuestData } from '../../build/kcanotifyGamedata'
 import {
   activeQuestsSelector,
@@ -14,13 +15,24 @@ import { useStore } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
 
+export const checkIsKcanotifySupportedLanguages = (
+  lang: string
+): lang is keyof typeof QuestData => lang in QuestData
+
+export const isSupportedLanguages = (
+  lang: string
+): lang is keyof typeof QuestData =>
+  checkIsKcanotifySupportedLanguages(lang) ||
+  checkIsKcwikiSupportedLanguages(lang)
+
 export const useLanguage = () => {
-  const { i18n } = usePluginTranslation()
-  const language =
-    i18n.language in QuestData
-      ? (i18n.language as keyof typeof QuestData)
-      : DEFAULT_LANG
-  return language
+  const {
+    i18n: { language },
+  } = usePluginTranslation()
+  const lang = checkIsKcanotifySupportedLanguages(language)
+    ? language
+    : DEFAULT_LANG
+  return lang
 }
 
 const useActiveQuest = () => {

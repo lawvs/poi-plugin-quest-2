@@ -1,7 +1,12 @@
 import { name as PACKAGE_NAME } from '../package.json'
 import { getPoiStore, importFromPoi } from './poi'
 import { QuestData } from '../build/kcanotifyGamedata'
-
+import { KcwikiQuestData } from '../build/kcQuestsData'
+import {
+  checkIsKcwikiSupportedLanguages,
+  getStorage,
+  isSupportedLanguages,
+} from './store'
 const LEGACY_QUEST_PLUGIN_ID = 'poi-plugin-quest-info'
 const HACK_KEY = `__patched-from-${PACKAGE_NAME}`
 
@@ -19,6 +24,28 @@ const isLegacyQuestPluginEnabled = async () => {
   return false
 }
 
+const getQuestState = (maybeLanguage: string) => {
+  const supported = isSupportedLanguages(maybeLanguage)
+  if (!supported) {
+    return {}
+  }
+  const preferKcwikiData = getStorage()?.preferKcwikiData ?? true
+  const kcwikiSupported = checkIsKcwikiSupportedLanguages(maybeLanguage)
+
+  const data =
+    preferKcwikiData && kcwikiSupported
+      ? KcwikiQuestData[maybeLanguage]
+      : QuestData[maybeLanguage]
+
+  return Object.entries(data).reduce((acc, [apiNo, { code, desc }]) => {
+    acc[apiNo] = {
+      wiki_id: code,
+      condition: desc,
+    }
+    return acc
+  }, {} as Record<string, { wiki_id: string; condition: string }>)
+}
+
 /**
  * Patch the reducer of `poi-plugin-quest-info` for poi's task panel tips
  * See https://github.com/poooi/poi/blob/da75b507e8f67615a39dc4fdb466e34ff5b5bdcf/views/components/main/parts/task-panel.es#L243
@@ -28,23 +55,6 @@ export const patchLegacyQuestPluginReducer = async () => {
   if (await isLegacyQuestPluginEnabled()) {
     // no clear if legacy quest plugin enabled
     return
-  }
-
-  const getQuestState = (maybeLanguage: string) => {
-    if (!(maybeLanguage in QuestData)) {
-      return {}
-    }
-    const lang = maybeLanguage as keyof typeof QuestData
-    return Object.entries(QuestData[lang]).reduce(
-      (acc, [apiNo, { code, desc }]) => {
-        acc[apiNo] = {
-          wiki_id: code,
-          condition: desc,
-        }
-        return acc
-      },
-      {} as Record<string, { wiki_id: string; condition: string }>
-    )
   }
 
   const language = (globalThis as any).i18next.language
