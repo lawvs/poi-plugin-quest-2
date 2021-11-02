@@ -5,7 +5,6 @@ import React, {
   useCallback,
   useContext,
 } from 'react'
-import { IN_POI } from '../poi'
 import { ALL_TYPE_TAG, ALL_CATEGORY_TAG } from '../tags'
 import { name as PACKAGE_NAME } from '../../package.json'
 import { createGlobalState, useMount, useUpdateEffect } from 'react-use'
@@ -19,7 +18,7 @@ export const initialState = {
     [ALL_CATEGORY_TAG.name]: true,
   } as Record<string, boolean>,
   largeCard: null as null | string,
-  syncWithGame: IN_POI,
+  syncWithGame: false,
   preferKcwikiData: true,
 }
 
