@@ -7,6 +7,8 @@ import {
   getStorage,
   isSupportedLanguages,
 } from './store'
+import type { i18n } from 'i18next'
+
 const LEGACY_QUEST_PLUGIN_ID = 'poi-plugin-quest-info'
 const HACK_KEY = `__patched-from-${PACKAGE_NAME}`
 
@@ -57,7 +59,8 @@ export const patchLegacyQuestPluginReducer = async () => {
     return
   }
 
-  const language = (globalThis as any).i18next.language
+  const i18next: i18n = await importFromPoi('views/env-parts/i18next')
+  const language = i18next.language
   const initState = {
     [HACK_KEY]: true,
     quests: getQuestState(language),
