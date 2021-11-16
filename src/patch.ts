@@ -59,37 +59,37 @@ export const patchLegacyQuestPluginReducer = async () => {
     return
   }
 
-  const i18next: i18n = await importFromPoi('views/env-parts/i18next')
-  const language = i18next.language
-  const initState = {
-    [HACK_KEY]: true,
-    quests: getQuestState(language),
-    questStatus: {},
-  }
-
-  const reducer = (
-    state = initState,
-    action: { type: string; [x: string]: any }
-  ) => {
-    switch (action.type) {
-      case '@@Config':
-        // change language
-        if (action.path === 'poi.misc.language') {
-          const newLanguage = action.value
-          return {
-            ...state,
-            quests: getQuestState(newLanguage),
-          }
-        }
-    }
-    return state
-  }
-
   try {
+    const i18next: i18n = await importFromPoi('views/env-parts/i18next')
+    const language = i18next.language
+    const initState = {
+      [HACK_KEY]: true,
+      quests: getQuestState(language),
+      questStatus: {},
+    }
+
+    const reducer = (
+      state = initState,
+      action: { type: string; [x: string]: any }
+    ) => {
+      switch (action.type) {
+        case '@@Config':
+          // change language
+          if (action.path === 'poi.misc.language') {
+            const newLanguage = action.value
+            return {
+              ...state,
+              quests: getQuestState(newLanguage),
+            }
+          }
+      }
+      return state
+    }
+
     const { extendReducer } = await importFromPoi('views/create-store')
     extendReducer(LEGACY_QUEST_PLUGIN_ID, reducer)
   } catch (e) {
-    console.warn('Hack quest plugin reducer error', e)
+    console.error('Hack quest plugin reducer error', e)
   }
 }
 
@@ -108,6 +108,6 @@ export const clearPatchLegacyQuestPluginReducer = async () => {
     const clearReducer = undefined
     extendReducer('poi-plugin-quest-info', clearReducer)
   } catch (e) {
-    console.warn('Clear hack quest plugin reducer error', e)
+    console.error('Clear hack quest plugin reducer error', e)
   }
 }
