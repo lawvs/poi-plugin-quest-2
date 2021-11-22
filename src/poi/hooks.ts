@@ -34,13 +34,17 @@ export const useGameQuest = () => {
   return quests
 }
 
+const UNKNOWN_TAB = 'unknown'
 const useActiveTab = () => {
-  const [activeMainTab, setActiveMainTab] = useState<string>('<unknown>')
+  const [activeMainTab, setActiveMainTab] = useState<string>(UNKNOWN_TAB)
 
   useEffect(() => {
     const listener = (activeMainTab: string) => setActiveMainTab(activeMainTab)
     // poooi/poi/views/redux/ui.es
-    return observePoiStore(listener, (state) => state.ui.activeMainTab)
+    return observePoiStore(
+      listener,
+      (state) => state?.ui?.activeMainTab ?? UNKNOWN_TAB
+    )
   }, [])
 
   return activeMainTab
