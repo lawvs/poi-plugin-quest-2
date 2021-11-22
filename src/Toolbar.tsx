@@ -13,7 +13,8 @@ import {
   ALL_TAGS,
 } from './tags'
 import type { KcanotifyQuestExt } from './questHelper'
-import { IN_POI, usePluginTranslation } from './poi'
+import { usePluginTranslation } from './poi/hooks'
+import { IN_POI } from './poi/env'
 
 const ToolbarWrapper = styled.div`
   display: flex;

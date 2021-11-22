@@ -2,7 +2,7 @@ import { Card, Elevation, H5, Text, Tooltip, Icon } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { usePluginTranslation } from '../poi'
+import { usePluginTranslation } from '../poi/hooks'
 import {
   guessQuestCategory,
   QUEST_CATEGORY,

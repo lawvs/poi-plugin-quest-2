@@ -12,7 +12,7 @@ import styled from 'styled-components'
 import { KcanotifyQuestExt, QUEST_STATUS } from '../questHelper'
 import { useLargeCard } from '../store'
 import { QuestCard } from './QuestCard'
-import { useIsQuestPluginTab } from '../poi'
+import { useIsQuestPluginTab } from '../poi/hooks'
 
 const QuestListWrapper = styled.div`
   flex: 1;

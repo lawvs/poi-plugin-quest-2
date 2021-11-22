@@ -1,5 +1,6 @@
 import { name as PACKAGE_NAME } from '../package.json'
-import { getPoiStore, importFromPoi } from './poi'
+import { getPoiStore } from './poi/store'
+import { importFromPoi } from './poi/env'
 import { QuestData } from '../build/kcanotifyGamedata'
 import { KcwikiQuestData } from '../build/kcQuestsData'
 import {

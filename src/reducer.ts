@@ -1,4 +1,4 @@
-import type { GameQuest, PoiAction } from './poi'
+import type { GameQuest, PoiAction } from './poi/types'
 
 const initState = {
   questList: null as null | GameQuest[],

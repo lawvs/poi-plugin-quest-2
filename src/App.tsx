@@ -4,7 +4,7 @@ import { Text } from '@blueprintjs/core'
 
 import { Toolbar, useFilterQuest } from './Toolbar'
 import { StoreProvider } from './store'
-import { usePluginTranslation } from './poi'
+import { usePluginTranslation } from './poi/hooks'
 import { QuestList } from './components/QuestList'
 
 const Container = styled.div`

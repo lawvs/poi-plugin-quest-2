@@ -4,7 +4,7 @@ import { IconNames } from '@blueprintjs/icons'
 import styled from 'styled-components'
 import { version as PACKAGE_VERSION, homepage } from '../package.json'
 import { version as DATA_VERSION } from '../build/kcanotifyGamedata'
-import { usePluginTranslation } from './poi'
+import { usePluginTranslation } from './poi/hooks'
 import {
   useRemoveStorage,
   StoreProvider,

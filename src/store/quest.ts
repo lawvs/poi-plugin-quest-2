@@ -1,14 +1,11 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 import { checkIsKcwikiSupportedLanguages } from '.'
 import { QuestData } from '../../build/kcanotifyGamedata'
 import {
-  activeQuestsSelector,
-  GameQuest,
-  observePluginStore,
-  observePoiStore,
-  PoiQuestState,
+  useActiveQuest,
+  useGameQuest,
   usePluginTranslation,
-} from '../poi'
+} from '../poi/hooks'
 import { getCategory, KcanotifyQuestExt } from '../questHelper'
 import { useKcwikiData } from './kcwiki'
 import { useStore } from './store'
@@ -35,19 +32,6 @@ export const useLanguage = () => {
   return lang
 }
 
-const useActiveQuest = () => {
-  const [activeQuests, setActiveQuests] = useState<PoiQuestState>({})
-
-  useEffect(() => {
-    const listener = (activeQuests: PoiQuestState) =>
-      setActiveQuests(activeQuests)
-
-    return observePoiStore(listener, activeQuestsSelector)
-  }, [])
-
-  return activeQuests
-}
-
 const useQuestMap = () => {
   const lang = useLanguage()
   const kcwikiData = useKcwikiData(lang)
@@ -55,16 +39,6 @@ const useQuestMap = () => {
     return kcwikiData
   }
   return QuestData[lang]
-}
-
-const useGameQuest = () => {
-  const [quests, setQuests] = useState<GameQuest[] | null>(null)
-  useEffect(() => {
-    const listener = (quests: GameQuest[] | null) => setQuests(quests)
-    // See reducer.ts
-    return observePluginStore(listener, (i) => i?._?.questList)
-  }, [])
-  return quests
 }
 
 export const useQuest = (): KcanotifyQuestExt[] => {

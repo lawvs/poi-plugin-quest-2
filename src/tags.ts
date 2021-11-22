@@ -1,4 +1,4 @@
-import { IN_POI } from './poi'
+import { IN_POI } from './poi/env'
 import {
   isDailyQuest,
   isMonthlyQuest,
