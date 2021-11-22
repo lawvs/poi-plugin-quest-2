@@ -12,6 +12,7 @@ import styled from 'styled-components'
 import { KcanotifyQuestExt, QUEST_STATUS } from '../questHelper'
 import { useLargeCard } from '../store'
 import { QuestCard } from './QuestCard'
+import { useIsQuestPluginTab } from '../poi'
 
 const QuestListWrapper = styled.div`
   flex: 1;
@@ -59,6 +60,7 @@ export const QuestList: React.FC<{ quests: KcanotifyQuestExt[] }> = ({
   quests,
 }) => {
   const { largeCard } = useLargeCard()
+  const activeTab = useIsQuestPluginTab()
   const listRef = useRef<List>(null)
 
   useEffect(() => {
@@ -66,6 +68,13 @@ export const QuestList: React.FC<{ quests: KcanotifyQuestExt[] }> = ({
     cache.clearAll()
     listRef.current?.recomputeRowHeights(largeCardIdx)
   }, [quests, largeCard])
+
+  useEffect(() => {
+    if (activeTab) {
+      cache.clearAll()
+      listRef.current?.recomputeRowHeights()
+    }
+  }, [activeTab])
 
   const onResize = useCallback(() => {
     cache.clearAll()

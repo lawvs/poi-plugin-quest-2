@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { name as PACKAGE_NAME } from '../package.json'
 import type { PluginState } from './reducer'
@@ -94,6 +95,11 @@ type OtherAction = {
 export type PoiAction = QuestListAction | OtherAction
 
 export type PoiState = {
+  ui: {
+    activeMainTab: string
+    activeFleetId?: number
+    activePluginName?: string
+  }
   ext: {
     // TODO fix use constant PACKAGE_NAME
     [packageName: string]: PluginState
@@ -208,4 +214,21 @@ export const activeQuestsSelector = (state: PoiState): PoiQuestState =>
 
 export const usePluginTranslation = () => {
   return useTranslation(PACKAGE_NAME)
+}
+
+const useActiveTab = () => {
+  const [activeMainTab, setActiveMainTab] = useState<string>('<unknown>')
+
+  useEffect(() => {
+    const listener = (activeMainTab: string) => setActiveMainTab(activeMainTab)
+    // poooi/poi/views/redux/ui.es
+    return observePoiStore(listener, (state) => state.ui.activeMainTab)
+  }, [])
+
+  return activeMainTab
+}
+
+export const useIsQuestPluginTab = () => {
+  const activeMainTab = useActiveTab()
+  return activeMainTab === PACKAGE_NAME
 }
