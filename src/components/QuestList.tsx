@@ -7,6 +7,7 @@ import {
   List,
   ListRowRenderer,
 } from 'react-virtualized'
+import type { ListRowProps } from 'react-virtualized'
 import styled from 'styled-components'
 import { KcanotifyQuestExt, QUEST_STATUS } from '../questHelper'
 import { useLargeCard } from '../store'
@@ -23,25 +24,9 @@ const cache = new CellMeasurerCache({
   fixedWidth: true,
 })
 
-export const QuestList: React.FC<{ quests: KcanotifyQuestExt[] }> = ({
-  quests,
-}) => {
-  const { largeCard } = useLargeCard()
-  const listRef = useRef<List>(null)
-
-  useEffect(() => {
-    const changedIdx = quests.findIndex((i) => i.gameId === largeCard)
-    cache.clearAll()
-    listRef.current?.recomputeRowHeights(changedIdx)
-  }, [quests, largeCard])
-
-  const onResize = useCallback(() => {
-    cache.clearAll()
-    listRef.current?.recomputeRowHeights()
-  }, [])
-
-  const rowRenderer: ListRowRenderer = useCallback(
-    ({ key, index, style, parent }) => {
+const useQuestsRowRenderer = (quests: KcanotifyQuestExt[]) => {
+  const rowRenderer = useCallback(
+    ({ key, index, style, parent }: ListRowProps) => {
       const { gameId, code, name, desc, memo, active } = quests[index]
       return (
         <CellMeasurer
@@ -67,6 +52,28 @@ export const QuestList: React.FC<{ quests: KcanotifyQuestExt[] }> = ({
     },
     [quests]
   )
+  return rowRenderer
+}
+
+export const QuestList: React.FC<{ quests: KcanotifyQuestExt[] }> = ({
+  quests,
+}) => {
+  const { largeCard } = useLargeCard()
+  const listRef = useRef<List>(null)
+
+  useEffect(() => {
+    const largeCardIdx = quests.findIndex((i) => i.gameId === largeCard)
+    cache.clearAll()
+    listRef.current?.recomputeRowHeights(largeCardIdx)
+  }, [quests, largeCard])
+
+  const onResize = useCallback(() => {
+    cache.clearAll()
+    listRef.current?.recomputeRowHeights()
+  }, [])
+
+  const rowRenderer: ListRowRenderer = useQuestsRowRenderer(quests)
+
   if (!quests.length) {
     // Prevent Uncaught Error: Requested index 0 is outside of range 0..0
     // See https://github.com/bvaughn/react-virtualized/issues/1016
