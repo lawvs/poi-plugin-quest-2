@@ -25,9 +25,9 @@ export const usePluginTranslation = () => {
 }
 
 export const useGameQuest = () => {
-  const [quests, setQuests] = useState<GameQuest[] | null>(null)
+  const [quests, setQuests] = useState<GameQuest[]>([])
   useEffect(() => {
-    const listener = (quests: GameQuest[] | null) => setQuests(quests)
+    const listener = (quests: GameQuest[] | null) => setQuests(quests ?? [])
     // See reducer.ts
     return observePluginStore(listener, (i) => i?._?.questList)
   }, [])

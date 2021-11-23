@@ -49,11 +49,7 @@ export const useQuest = (): KcanotifyQuestExt[] => {
     store: { syncWithGame },
   } = useStore()
 
-  if (syncWithGame) {
-    if (gameQuest == null) {
-      // TODO tip use to sync quest data
-      return []
-    }
+  if (syncWithGame && gameQuest.length) {
     return gameQuest.map((quest) => {
       const gameId = String(quest.api_no)
       const active = gameId in activeQuest
