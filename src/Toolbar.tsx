@@ -12,7 +12,7 @@ import {
   CATEGORY_TAGS,
   ALL_TAGS,
 } from './tags'
-import type { KcanotifyQuestExt } from './questHelper'
+import type { UnionQuest } from './questHelper'
 import { usePluginTranslation } from './poi/hooks'
 import { IN_POI } from './poi/env'
 
@@ -158,10 +158,10 @@ const useToolbarFilter = () => {
     .map((i) => i.toUpperCase())
 
   const stringFilter = useCallback(
-    (quest: KcanotifyQuestExt) => {
-      const text = `${quest.code} ${quest.name} ${quest.desc} ${
-        quest.memo ?? ''
-      }`
+    (quest: UnionQuest) => {
+      const text = `${quest.docQuest.code} ${quest.docQuest.name} ${
+        quest.docQuest.desc
+      } ${quest.docQuest.memo ?? ''}`
       if (!searchKeywords) {
         return true
       }
@@ -173,7 +173,7 @@ const useToolbarFilter = () => {
   )
 
   const toolbarFilter = useCallback(
-    (quest: KcanotifyQuestExt) => {
+    (quest: UnionQuest) => {
       return [...tagsFilter, stringFilter].every((filter) => filter(quest))
     },
     [stringFilter, tagsFilter]

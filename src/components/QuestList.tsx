@@ -9,10 +9,12 @@ import {
 } from 'react-virtualized'
 import type { ListRowProps } from 'react-virtualized'
 import styled from 'styled-components'
-import { KcanotifyQuestExt, QUEST_STATUS } from '../questHelper'
+import { QUEST_STATUS } from '../questHelper'
+import type { UnionQuest } from '../questHelper'
 import { useLargeCard } from '../store'
 import { QuestCard } from './QuestCard'
 import { useIsQuestPluginTab } from '../poi/hooks'
+import { QUEST_API_STATE } from '../poi/types'
 
 const QuestListWrapper = styled.div`
   flex: 1;
@@ -25,10 +27,29 @@ const cache = new CellMeasurerCache({
   fixedWidth: true,
 })
 
-const useQuestsRowRenderer = (quests: KcanotifyQuestExt[]) => {
+const questStateToQuestStatus = (
+  state: QUEST_API_STATE | undefined
+): QUEST_STATUS => {
+  switch (state) {
+    case QUEST_API_STATE.DEFAULT:
+      return QUEST_STATUS.DEFAULT
+    case QUEST_API_STATE.COMPLETED:
+      return QUEST_STATUS.COMPLETED
+    case QUEST_API_STATE.IN_PROGRESS:
+      return QUEST_STATUS.IN_PROGRESS
+    default:
+      return QUEST_STATUS.DEFAULT
+  }
+}
+
+const useQuestsRowRenderer = (quests: UnionQuest[]) => {
   const rowRenderer = useCallback(
     ({ key, index, style, parent }: ListRowProps) => {
-      const { gameId, code, name, desc, memo, active } = quests[index]
+      const quest = quests[index]
+      const { gameId } = quest
+      const { code, name, desc, memo } = quest.docQuest
+      const questStatus = questStateToQuestStatus(quest.gameQuest?.api_state)
+
       return (
         <CellMeasurer
           cache={cache}
@@ -45,7 +66,7 @@ const useQuestsRowRenderer = (quests: KcanotifyQuestExt[]) => {
               name={name}
               desc={desc}
               tips={memo}
-              status={active ? QUEST_STATUS.InProgress : QUEST_STATUS.Default}
+              status={questStatus}
             ></QuestCard>
           </div>
         </CellMeasurer>
@@ -56,12 +77,11 @@ const useQuestsRowRenderer = (quests: KcanotifyQuestExt[]) => {
   return rowRenderer
 }
 
-export const QuestList: React.FC<{ quests: KcanotifyQuestExt[] }> = ({
-  quests,
-}) => {
+export const QuestList: React.FC<{ quests: UnionQuest[] }> = ({ quests }) => {
   const { largeCard } = useLargeCard()
   const activeTab = useIsQuestPluginTab()
   const listRef = useRef<List>(null)
+  const rowRenderer: ListRowRenderer = useQuestsRowRenderer(quests)
 
   useEffect(() => {
     const largeCardIdx = quests.findIndex((i) => i.gameId === largeCard)
@@ -80,8 +100,6 @@ export const QuestList: React.FC<{ quests: KcanotifyQuestExt[] }> = ({
     cache.clearAll()
     listRef.current?.recomputeRowHeights()
   }, [])
-
-  const rowRenderer: ListRowRenderer = useQuestsRowRenderer(quests)
 
   if (!quests.length) {
     // Prevent Uncaught Error: Requested index 0 is outside of range 0..0

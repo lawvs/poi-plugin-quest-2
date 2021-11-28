@@ -1,6 +1,7 @@
 import { QuestData } from '../build/kcanotifyGamedata'
+import { GameQuest, QUEST_API_STATE } from './poi/types'
 
-type KcanotifyQuest = {
+type DocQuest = {
   code: string
   name: string
   desc: string
@@ -9,9 +10,10 @@ type KcanotifyQuest = {
   tracking?: number[][]
 }
 
-export type KcanotifyQuestExt = KcanotifyQuest & {
+export type UnionQuest = {
   gameId: string
-  active?: boolean
+  gameQuest?: GameQuest
+  docQuest: DocQuest
 }
 
 const questStartsFilter = (str: string) =>
@@ -26,16 +28,18 @@ export const quarterlyQuest = questStartsFilter('(季任)')
 // (年任) (年任 / x 月)
 export const yearlyQuest = questStartsFilter('(年任')
 
-export const isInProgressQuest = (quest: KcanotifyQuestExt) => quest.active
-export const isDailyQuest = (quest: KcanotifyQuestExt) =>
+export const isInProgressQuest = (quest: UnionQuest) =>
+  quest.gameQuest?.api_state === QUEST_API_STATE.IN_PROGRESS ||
+  quest.gameQuest?.api_state === QUEST_API_STATE.COMPLETED
+export const isDailyQuest = (quest: UnionQuest) =>
   dailyQuest.includes(quest.gameId)
-export const isWeeklyQuest = (quest: KcanotifyQuestExt) =>
+export const isWeeklyQuest = (quest: UnionQuest) =>
   weeklyQuest.includes(quest.gameId)
-export const isMonthlyQuest = (quest: KcanotifyQuestExt) =>
+export const isMonthlyQuest = (quest: UnionQuest) =>
   monthlyQuest.includes(quest.gameId)
-export const isQuarterlyQuest = (quest: KcanotifyQuestExt) =>
+export const isQuarterlyQuest = (quest: UnionQuest) =>
   quarterlyQuest.includes(quest.gameId)
-export const isYearlyQuest = (quest: KcanotifyQuestExt) =>
+export const isYearlyQuest = (quest: UnionQuest) =>
   yearlyQuest.includes(quest.gameId)
 
 export enum QUEST_CATEGORY {
@@ -154,28 +158,28 @@ export const guessQuestCategory = (
   }
 }
 
-export const isCompositionQuest = ({ code }: KcanotifyQuestExt) =>
+export const isCompositionQuest = ({ code }: DocQuest) =>
   guessQuestCategory(code).type === QUEST_CATEGORY.Composition
-export const isSortieQuest = ({ code }: KcanotifyQuestExt) =>
+export const isSortieQuest = ({ code }: DocQuest) =>
   guessQuestCategory(code).type === QUEST_CATEGORY.Sortie
-export const isExerciseQuest = ({ code }: KcanotifyQuestExt) =>
+export const isExerciseQuest = ({ code }: DocQuest) =>
   guessQuestCategory(code).type === QUEST_CATEGORY.Exercise
-export const isExpeditionQuest = ({ code }: KcanotifyQuestExt) =>
+export const isExpeditionQuest = ({ code }: DocQuest) =>
   guessQuestCategory(code).type === QUEST_CATEGORY.Expedition
-export const isSupplyOrDockingQuest = ({ code }: KcanotifyQuestExt) =>
+export const isSupplyOrDockingQuest = ({ code }: DocQuest) =>
   guessQuestCategory(code).type === QUEST_CATEGORY.SupplyOrDocking
-export const isArsenalQuest = ({ code }: KcanotifyQuestExt) =>
+export const isArsenalQuest = ({ code }: DocQuest) =>
   guessQuestCategory(code).type === QUEST_CATEGORY.Arsenal
-export const isModernizationQuest = ({ code }: KcanotifyQuestExt) =>
+export const isModernizationQuest = ({ code }: DocQuest) =>
   guessQuestCategory(code).type === QUEST_CATEGORY.Modernization
-export const isUnknownCategoryQuest = ({ code }: KcanotifyQuestExt) =>
+export const isUnknownCategoryQuest = ({ code }: DocQuest) =>
   // Starts with unknown character
   /^[^ABCDEFG]/.test(code)
 
 export enum QUEST_STATUS {
-  Locked,
-  Default,
-  InProgress,
-  Completed,
-  AlreadyCompleted,
+  LOCKED,
+  DEFAULT,
+  IN_PROGRESS,
+  COMPLETED,
+  ALREADY_COMPLETED,
 }

@@ -75,7 +75,7 @@ const questIconMap = {
 } as const
 
 const questStatusMap: Record<QUEST_STATUS, React.FC> = {
-  [QUEST_STATUS.Locked]: function Locked() {
+  [QUEST_STATUS.LOCKED]: function Locked() {
     const { t } = usePluginTranslation()
     return (
       <Tooltip content={t('Locked')}>
@@ -84,8 +84,8 @@ const questStatusMap: Record<QUEST_STATUS, React.FC> = {
     )
   },
   // Display nothing
-  [QUEST_STATUS.Default]: () => null,
-  [QUEST_STATUS.InProgress]: function InProgress() {
+  [QUEST_STATUS.DEFAULT]: () => null,
+  [QUEST_STATUS.IN_PROGRESS]: function InProgress() {
     const { t } = usePluginTranslation()
     return (
       <Tooltip content={t('In Progress')}>
@@ -93,7 +93,7 @@ const questStatusMap: Record<QUEST_STATUS, React.FC> = {
       </Tooltip>
     )
   },
-  [QUEST_STATUS.Completed]: function Completed() {
+  [QUEST_STATUS.COMPLETED]: function Completed() {
     const { t } = usePluginTranslation()
     return (
       <Tooltip content={t('Completed')}>
@@ -101,7 +101,7 @@ const questStatusMap: Record<QUEST_STATUS, React.FC> = {
       </Tooltip>
     )
   },
-  [QUEST_STATUS.AlreadyCompleted]: function AlreadyCompleted() {
+  [QUEST_STATUS.ALREADY_COMPLETED]: function AlreadyCompleted() {
     const { t } = usePluginTranslation()
     return (
       <Tooltip content={t('Already Completed')}>
@@ -126,7 +126,7 @@ export const LargeQuestCard: React.FC<QuestCardProps> = ({
   name,
   desc,
   tips,
-  status = QUEST_STATUS.Default,
+  status = QUEST_STATUS.DEFAULT,
   onClick,
   style,
 }) => {
@@ -159,7 +159,7 @@ export const MinimalQuestCard: React.FC<QuestCardProps> = ({
   name,
   desc,
   tips,
-  status = QUEST_STATUS.Default,
+  status = QUEST_STATUS.DEFAULT,
   onClick,
   style,
 }) => {

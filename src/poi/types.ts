@@ -1,11 +1,14 @@
 import type { PluginState } from '../reducer'
 
+export enum QUEST_API_STATE {
+  DEFAULT = 1,
+  IN_PROGRESS = 2,
+  COMPLETED = 3,
+}
+
 // See https://github.com/poooi/poi/blob/master/views/redux/info/quests.es
 export type GameQuest = {
-  // 1 Default
-  // 2 In progress
-  // 3 Completed
-  api_state: 1 | 2 | 3
+  api_state: QUEST_API_STATE
   api_no: number
   api_title: string
   api_detail: string

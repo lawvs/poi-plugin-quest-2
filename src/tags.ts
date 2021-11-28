@@ -15,6 +15,7 @@ import {
   isUnknownCategoryQuest,
   isInProgressQuest,
 } from './questHelper'
+import type { UnionQuest } from './questHelper'
 
 const yes = () => true as const
 
@@ -25,16 +26,21 @@ export const ALL_CATEGORY_TAG = {
 
 export const ALL_TYPE_TAG = ALL_CATEGORY_TAG
 
+const withDocQuest =
+  (filterFn: (q: UnionQuest['docQuest']) => boolean) =>
+  (unionQuest: UnionQuest) =>
+    filterFn(unionQuest.docQuest)
+
 export const CATEGORY_TAGS = [
   ALL_CATEGORY_TAG,
-  { name: 'Composition', filter: isCompositionQuest },
-  { name: 'Sortie', filter: isSortieQuest },
-  { name: 'Exercise', filter: isExerciseQuest },
-  { name: 'Expedition', filter: isExpeditionQuest },
-  { name: 'Supply / Docking', filter: isSupplyOrDockingQuest },
-  { name: 'Arsenal', filter: isArsenalQuest },
-  { name: 'Modernization', filter: isModernizationQuest },
-  { name: 'Others', filter: isUnknownCategoryQuest },
+  { name: 'Composition', filter: withDocQuest(isCompositionQuest) },
+  { name: 'Sortie', filter: withDocQuest(isSortieQuest) },
+  { name: 'Exercise', filter: withDocQuest(isExerciseQuest) },
+  { name: 'Expedition', filter: withDocQuest(isExpeditionQuest) },
+  { name: 'Supply / Docking', filter: withDocQuest(isSupplyOrDockingQuest) },
+  { name: 'Arsenal', filter: withDocQuest(isArsenalQuest) },
+  { name: 'Modernization', filter: withDocQuest(isModernizationQuest) },
+  { name: 'Others', filter: withDocQuest(isUnknownCategoryQuest) },
 ] as const
 
 export const TYPE_TAGS = [

@@ -1,13 +1,9 @@
 import { useCallback } from 'react'
-import { checkIsKcwikiSupportedLanguages } from '.'
 import { QuestData } from '../../build/kcanotifyGamedata'
-import {
-  useActiveQuest,
-  useGameQuest,
-  usePluginTranslation,
-} from '../poi/hooks'
-import { getCategory, KcanotifyQuestExt } from '../questHelper'
-import { useKcwikiData } from './kcwiki'
+import { useGameQuest, usePluginTranslation } from '../poi/hooks'
+import { getCategory } from '../questHelper'
+import type { UnionQuest } from '../questHelper'
+import { useKcwikiData, checkIsKcwikiSupportedLanguages } from './kcwiki'
 import { useStore } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
@@ -41,9 +37,8 @@ const useQuestMap = () => {
   return QuestData[lang]
 }
 
-export const useQuest = (): KcanotifyQuestExt[] => {
-  const activeQuest = useActiveQuest()
-  const questMap = useQuestMap()
+export const useQuest = (): UnionQuest[] => {
+  const docQuestMap = useQuestMap()
   const gameQuest = useGameQuest()
   const {
     store: { syncWithGame },
@@ -52,12 +47,11 @@ export const useQuest = (): KcanotifyQuestExt[] => {
   if (syncWithGame && gameQuest.length) {
     return gameQuest.map((quest) => {
       const gameId = String(quest.api_no)
-      const active = gameId in activeQuest
-      if (gameId in questMap) {
+      if (gameId in docQuestMap) {
         return {
           gameId,
-          active,
-          ...questMap[gameId as unknown as keyof typeof questMap],
+          gameQuest: quest,
+          docQuest: docQuestMap[gameId as keyof typeof docQuestMap],
         }
       }
 
@@ -65,18 +59,21 @@ export const useQuest = (): KcanotifyQuestExt[] => {
       // May be a new quest
       return {
         gameId,
-        active,
-        code: `${getCategory(quest.api_category).wikiSymbol}?`,
-        name: quest.api_title,
-        desc: quest.api_detail,
+        gameQuest: quest,
+        docQuest: {
+          code: `${getCategory(quest.api_category).wikiSymbol}?`,
+          name: quest.api_title,
+          desc: quest.api_detail,
+        },
       }
     })
   } else {
     // Return all recorded quests
-    return Object.entries(questMap).map(([gameId, val]) => ({
+    return Object.entries(docQuestMap).map(([gameId, val]) => ({
       gameId,
-      active: gameId in activeQuest,
-      ...val,
+      // Maybe empty
+      gameQuest: gameQuest.find((quest) => quest.api_no === Number(gameId))!,
+      docQuest: val,
     }))
   }
 }
