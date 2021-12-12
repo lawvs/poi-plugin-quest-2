@@ -18,18 +18,19 @@
   },
   "main": "src/index.ts",
   "scripts": {
-    "build": "npm run convertAssets && npm run downloadKcanotifyData & npm run downloadKcQuestsData",
+    "build": "npm run convertAssets && npm run update",
     "build-storybook": "build-storybook",
     "clean": "rm -rf build",
-    "downloadKcanotifyData": "ts-node scripts/downloadKcanotifyGamedata.ts",
-    "downloadKcQuestsData": "ts-node scripts/downloadKcQuestsData.ts",
-    "downloadSprites": "ts-node scripts/downloadSprites.ts",
     "convertAssets": "ts-node scripts/convertAssets.ts",
+    "downloadKcQuestsData": "ts-node scripts/downloadKcQuestsData.ts",
+    "downloadKcanotifyData": "ts-node scripts/downloadKcanotifyGamedata.ts",
+    "downloadSprites": "ts-node scripts/downloadSprites.ts",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "npm run lint -- --fix",
     "storybook": "start-storybook -p 6006",
     "test": "jest",
-    "typeCheck": "tsc --noEmit"
+    "typeCheck": "tsc --noEmit",
+    "update": "npm run downloadKcanotifyData & npm run downloadKcQuestsData"
   },
   "dependencies": {
     "react-use": "^17.3.1",
