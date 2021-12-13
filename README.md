@@ -18,6 +18,8 @@ Paste `poi-plugin-quest-info-2` in the plugins tab and click the install button.
 - Quest search and filter.
 - Sync with game quest data.
 - Auto switch to quest tab when enter quest views.
+- Star
+- pre post quest
 
 ## Thanks
 
