@@ -1,11 +1,8 @@
 import type { Story, Meta } from '@storybook/react'
 import styled from 'styled-components'
 
-import {
-  QuestCard,
-  MinimalQuestCard,
-  LargeQuestCard,
-} from '../components/QuestCard'
+import { QuestCard, LargeQuestCard } from '../components/QuestCard'
+import { MinimalQuestCard } from '../components/QuestCard/MinimalQuestCard'
 import { QUEST_STATUS } from '../questHelper'
 
 export default {
