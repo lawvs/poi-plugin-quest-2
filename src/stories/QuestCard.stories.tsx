@@ -1,6 +1,11 @@
 import type { Story, Meta } from '@storybook/react'
+import styled from 'styled-components'
 
-import { QuestCard } from '../components/QuestCard'
+import {
+  QuestCard,
+  MinimalQuestCard,
+  LargeQuestCard,
+} from '../components/QuestCard'
 import { QUEST_STATUS } from '../questHelper'
 
 export default {
@@ -9,8 +14,17 @@ export default {
   argTypes: {},
 } as Meta
 
+const Spacing = styled.div`
+  * + * {
+    margin-top: 8px;
+  }
+`
+
 const Template: Story<Parameters<typeof QuestCard>[0]> = (args) => (
-  <QuestCard {...args} />
+  <Spacing>
+    <MinimalQuestCard {...args} />
+    <LargeQuestCard {...args} />
+  </Spacing>
 )
 
 export const Composition = Template
