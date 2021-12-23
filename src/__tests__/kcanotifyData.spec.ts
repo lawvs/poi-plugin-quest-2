@@ -1,7 +1,7 @@
 import { version, QuestData } from '../../build/kcanotifyGamedata'
 
 test('should Kcanotify Game data version correct', () => {
-  expect(version).toMatchInlineSnapshot(`"5.3.4.1"`)
+  expect(version).toMatchInlineSnapshot(`"2021122301"`)
 })
 
 test('should Kcanotify Game data keys correct', () => {
