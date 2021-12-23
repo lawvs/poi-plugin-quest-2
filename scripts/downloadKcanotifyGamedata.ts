@@ -9,7 +9,7 @@ import { fetch } from './proxyFetch'
 const OUTPUT_PATH = path.resolve('build', 'kcanotifyGamedata')
 const URL_PREFIX =
   'https://raw.githubusercontent.com/antest1/kcanotify-gamedata/master'
-const VERSION_URL = `${URL_PREFIX}/DATA_VERSION`
+const VERSION_URL = `${URL_PREFIX}/KCAINFO`
 const DATA_URL = `${URL_PREFIX}/files`
 const LANGS = ['scn', 'tcn', 'jp', 'en', 'ko'] as const
 const LOCALES = ['zh-CN', 'zh-TW', 'ja-JP', 'en-US', 'ko-KR'] as const
@@ -25,7 +25,14 @@ const getRemoteVersion = async () => {
   if (!resp.ok) {
     throw new Error(`Fetch Error!\nurl: ${resp.url}\nstatus: ${resp.status}`)
   }
-  return resp.text()
+  const KCAINFO: {
+    version: string
+    data_version: string
+    kcadata_version: number
+    kc_maintenance: string[]
+  } = await resp.json()
+
+  return String(KCAINFO.kcadata_version)
 }
 
 const getLocalVersion = () => {
