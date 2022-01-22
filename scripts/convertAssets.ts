@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { prepareDir } from './utils'
 
 const ASSETS_PATH = path.resolve('assets')
 const OUTPUT_PATH = path.resolve('build')
@@ -15,19 +16,13 @@ const HEADER = `/**
  * Do not edit!
  */` as const
 
-const prepare = () => {
-  if (!fs.existsSync(OUTPUT_PATH)) {
-    fs.mkdirSync(OUTPUT_PATH, { recursive: true })
-  }
-}
-
 function base64Encode(file: string) {
   const bitmap = fs.readFileSync(file)
   return bitmap.toString('base64')
 }
 
 function main() {
-  prepare()
+  prepareDir(OUTPUT_PATH)
   const imageData = fs
     .readdirSync(ASSETS_PATH)
     // exclusive ignored ext

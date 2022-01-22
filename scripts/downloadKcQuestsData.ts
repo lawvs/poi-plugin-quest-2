@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
-import path from 'path'
-import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
 import pangu from 'pangu'
+import path from 'path'
 import { fetch } from './proxyFetch'
+import { prepareDir } from './utils'
 
 // See https://github.com/kcwikizh/kcQuests
 
@@ -11,12 +12,6 @@ const FILE_NAME = 'quests-scn.json'
 const URL = `https://kcwikizh.github.io/kcQuests/${FILE_NAME}`
 const VERSION_URL =
   'https://api.github.com/repos/kcwikizh/kcQuests/branches/main'
-
-const prepare = () => {
-  if (!existsSync(OUTPUT_PATH)) {
-    mkdirSync(OUTPUT_PATH, { recursive: true })
-  }
-}
 
 const getRemoteVersion = async () => {
   const resp = await fetch(VERSION_URL)
@@ -60,7 +55,7 @@ const genTS = (version: string) => {
 const main = async () => {
   const args = process.argv.slice(2)
 
-  prepare()
+  prepareDir(OUTPUT_PATH)
   const remoteVersion = await getRemoteVersion()
   const localVersion = getLocalVersion()
   if (remoteVersion === localVersion) {

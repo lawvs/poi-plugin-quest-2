@@ -5,6 +5,7 @@ import crypto from 'crypto'
 // See https://sharp.pixelplumbing.com/
 import sharp from 'sharp'
 import { fetch } from './proxyFetch'
+import { prepareDir } from './utils'
 
 const OUTPUT_PATH = path.resolve('build', 'dutySprites')
 
@@ -14,12 +15,6 @@ const SPRITES_PATH = '/kcs2/img/duty/duty_main.png'
 const VERSION = '5.1.2.0'
 const SPRITES_URL = `${SERVER_URL}${SPRITES_PATH}?version=${VERSION}`
 const META_URL = `${SERVER_URL}${JSON_PATH}?version=${VERSION}`
-
-const prepare = () => {
-  if (!fs.existsSync(OUTPUT_PATH)) {
-    fs.mkdirSync(OUTPUT_PATH, { recursive: true })
-  }
-}
 
 const getFilename = (url: string) => {
   const pathname = new URL(url).pathname
@@ -109,7 +104,7 @@ const parseSprites = (sprites: Buffer, meta: KCS2Meta) => {
 }
 
 const main = async () => {
-  prepare()
+  prepareDir(OUTPUT_PATH)
   const [
     { buffer: metaBuffer },
     { filePath: spritesPath, buffer: spritesBuffer },
