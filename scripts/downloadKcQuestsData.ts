@@ -14,7 +14,7 @@ const VERSION_URL =
   'https://api.github.com/repos/kcwikizh/kcQuests/branches/main'
 
 // expired quest: 2021 节分任务
-const IGNORE_DATA = [840, 841, 842, 843] as const
+const IGNORE_DATA = [329, 441, 840, 841, 842, 843] as const
 
 const getRemoteVersion = async () => {
   const resp = await fetch(VERSION_URL)
