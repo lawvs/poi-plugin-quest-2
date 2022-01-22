@@ -13,6 +13,9 @@ const URL = `https://kcwikizh.github.io/kcQuests/${FILE_NAME}`
 const VERSION_URL =
   'https://api.github.com/repos/kcwikizh/kcQuests/branches/main'
 
+// expired quest: 2021 节分任务
+const IGNORE_DATA = [840, 841, 842, 843] as const
+
 const getRemoteVersion = async () => {
   const resp = await fetch(VERSION_URL)
   if (!resp.ok) {
@@ -85,6 +88,7 @@ const main = async () => {
     json[gameId].desc = pangu.spacing(desc)
   }
 
+  IGNORE_DATA.forEach((gameId) => delete json[gameId])
   const data = JSON.stringify(json, undefined, 2)
   writeFileSync(`${OUTPUT_PATH}/${FILE_NAME}`, data)
 
