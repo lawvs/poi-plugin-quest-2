@@ -2,7 +2,7 @@ import { version, KcwikiQuestData } from '../../build/kcQuestsData'
 
 test('should KcwikiQuestData Game data version correct', () => {
   expect(version).toMatchInlineSnapshot(
-    `"4a879abd57262c9a0e9acfce90b69be049a71266"`
+    `"1ad9f7a5373ab65fc6abea972b571dc6c44d5492"`
   )
 })
 
