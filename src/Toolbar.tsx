@@ -67,13 +67,22 @@ export const SearchInput: React.FC = () => {
     [setSearchInput]
   )
 
+  const handleClear = useCallback(() => setSearchInput(''), [setSearchInput])
+
   return (
     <InputGroup
       value={searchInput}
       onChange={handleChange}
       placeholder={t('Search')}
       leftIcon={IconNames.SEARCH}
-      rightElement={<SyncButton></SyncButton>}
+      rightElement={
+        <>
+          {!!searchInput && (
+            <Button icon={IconNames.CROSS} onClick={handleClear} />
+          )}
+          <SyncButton></SyncButton>
+        </>
+      }
       type="text"
     />
   )
