@@ -94,3 +94,23 @@ export const useRemoveStorage = () => {
     updateStore(initialState)
   }
 }
+
+export const useSyncWithGame = () => {
+  const {
+    store: { syncWithGame },
+    updateStore,
+  } = useStore()
+  const setSyncWithGame = useCallback(
+    (value: boolean) => {
+      updateStore({ syncWithGame: value })
+    },
+    [updateStore]
+  )
+  const toggleSyncWithGame = useCallback(() => {
+    setSyncWithGame(!syncWithGame)
+  }, [setSyncWithGame, syncWithGame])
+  return {
+    syncWithGame,
+    toggleSyncWithGame,
+  }
+}

@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { IN_POI } from './poi/env'
 import { usePluginTranslation } from './poi/hooks'
 import type { UnionQuest } from './questHelper'
-import { useQuest, useStore } from './store'
+import { useQuest, useSyncWithGame } from './store'
 import { useFilterTags } from './store/filterTags'
 import { useSearchInput } from './store/search'
 import {
@@ -39,18 +39,21 @@ const TagsWrapper = styled.div`
 
 const SyncButton = () => {
   const { t } = usePluginTranslation()
-  const {
-    store: { syncWithGame },
-    updateStore,
-  } = useStore()
+  const { searchInput } = useSearchInput()
+  const { syncWithGame, toggleSyncWithGame } = useSyncWithGame()
   const handleClick = useCallback(() => {
-    updateStore({ syncWithGame: !syncWithGame })
-  }, [syncWithGame, updateStore])
+    toggleSyncWithGame()
+  }, [toggleSyncWithGame])
+  const intent = syncWithGame
+    ? searchInput
+      ? Intent.WARNING
+      : Intent.SUCCESS
+    : Intent.NONE
   return (
     <Tooltip content={t('Sync with game')}>
       <Button
         icon={IconNames.EXCHANGE}
-        intent={syncWithGame ? Intent.SUCCESS : Intent.NONE}
+        intent={intent}
         disabled={!IN_POI}
         onClick={handleClick}
       />
