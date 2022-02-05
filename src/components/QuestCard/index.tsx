@@ -1,5 +1,6 @@
 import { Elevation, H5, Text } from '@blueprintjs/core'
 import React from 'react'
+import styled from 'styled-components'
 import { guessQuestCategory, QUEST_STATUS } from '../../questHelper'
 import { PreTaskTag } from '../PreTaskTag'
 import { CardBody, CardMedia, CardTail, FlexCard } from './styles'
@@ -15,6 +16,11 @@ export type QuestCardProps = {
   onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   style?: React.CSSProperties
 }
+
+const PreTaskTagWrapper = styled.div`
+  display: flex;
+  align-items: baseline;
+`
 
 export const LargeQuestCard = ({
   code,
@@ -41,12 +47,12 @@ export const LargeQuestCard = ({
         <H5>{[code, name].filter((i) => i != undefined).join(' - ')}</H5>
         <Text>{desc}</Text>
         <Text tagName="i">{tips}</Text>
-        <div>
+        <PreTaskTagWrapper>
           {!!preTask?.length && <Text tagName="span">前置</Text>}
           {preTask?.map((i) => (
             <PreTaskTag key={i} code={i}></PreTaskTag>
           ))}
-        </div>
+        </PreTaskTagWrapper>
       </CardBody>
 
       <CardTail>

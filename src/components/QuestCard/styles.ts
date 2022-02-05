@@ -26,7 +26,7 @@ export const CardBody = styled.div`
   flex: 1;
   flex-direction: column;
 
-  * + * {
+  & > * + * {
     margin-top: 8px;
   }
 `
