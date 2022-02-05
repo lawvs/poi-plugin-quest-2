@@ -8,6 +8,7 @@ import { IN_POI } from './poi/env'
 import { usePluginTranslation } from './poi/hooks'
 import type { UnionQuest } from './questHelper'
 import { useQuest, useStore } from './store'
+import { useFilterTags } from './store/filterTags'
 import { useSearchInput } from './store/search'
 import {
   ALL_CATEGORY_TAG,
@@ -90,22 +91,16 @@ export const SearchInput: React.FC = () => {
 
 const Tags = () => {
   const { t } = usePluginTranslation()
-  const {
-    store: { typeTags, categoryTags },
-    updateStore,
-  } = useStore()
-  const withHandleClickTag = useCallback(
-    (tagName: string, key: 'typeTags' | 'categoryTags') => () =>
-      updateStore({ [key]: { [tagName]: true } }),
-    [updateStore]
-  )
+
+  const { typeTags, categoryTags, setCategoryTags, setTypeTags } =
+    useFilterTags()
 
   return (
     <>
       <TagsWrapper>
         {CATEGORY_TAGS.map(({ name }) => (
           <Tag
-            onClick={withHandleClickTag(name, 'categoryTags')}
+            onClick={() => setCategoryTags(name)}
             intent={
               categoryTags[name]
                 ? name === ALL_CATEGORY_TAG.name
@@ -123,7 +118,7 @@ const Tags = () => {
       <TagsWrapper>
         {TYPE_TAGS.map(({ name }) => (
           <Tag
-            onClick={withHandleClickTag(name, 'typeTags')}
+            onClick={() => setTypeTags(name)}
             intent={
               typeTags[name]
                 ? name === ALL_TYPE_TAG.name
@@ -152,9 +147,9 @@ export const Toolbar = () => {
 }
 
 const useToolbarFilter = () => {
-  const {
-    store: { searchInput, typeTags, categoryTags },
-  } = useStore()
+  const { searchInput } = useSearchInput()
+  const { typeTags, categoryTags } = useFilterTags()
+
   const activatedTags = { ...typeTags, ...categoryTags }
   const activatedTagsName = ALL_TAGS.filter((tag) => activatedTags[tag.name])
   const tagsFilter = activatedTagsName.map((tag) => tag.filter)
