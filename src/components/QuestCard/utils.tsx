@@ -1,5 +1,6 @@
 import { Icon, Tooltip } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
+import React from 'react'
 import {
   IconArsenal,
   IconCompleted,
