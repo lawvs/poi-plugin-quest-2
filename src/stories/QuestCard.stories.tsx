@@ -54,3 +54,11 @@ OverflowTest.args = {
   desc: 'TBF を秘書艦一番スロットに搭載、「13 号対空電探」x2「22 号対水上電探」x2 廃棄、開発資材 x40、改修資材 x10、弾薬 5,000、ボーキサイト 8,000、「新型航空兵装資材」x1、「熟練搭乗員」を用意せよ！',
   status: QUEST_STATUS.COMPLETED,
 }
+
+export const PreTaskCard = Template.bind({})
+PreTaskCard.args = {
+  code: 'B1',
+  name: 'はじめての「出撃」！',
+  desc: '艦隊を出撃させ、敵艦隊と交戦せよ！',
+  preTask: ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'W1'],
+}
