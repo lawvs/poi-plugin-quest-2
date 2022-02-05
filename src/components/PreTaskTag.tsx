@@ -1,5 +1,5 @@
 import { Tag } from '@blueprintjs/core'
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { guessQuestCategory } from '../questHelper'
 import { useSearchInput } from '../store/search'
@@ -7,7 +7,10 @@ import { useSearchInput } from '../store/search'
 const TagWrapper = styled(Tag)`
   margin: 0 4px;
   user-select: none;
-  cursor: pointer;
+
+  & > span {
+    cursor: pointer;
+  }
 `
 
 export const PreTaskTag = ({ code }: { code: string }) => {
