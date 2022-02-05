@@ -47,7 +47,7 @@ const useQuestsRowRenderer = (quests: UnionQuest[]) => {
     ({ key, index, style, parent }: ListRowProps) => {
       const quest = quests[index]
       const { gameId } = quest
-      const { code, name, desc, memo } = quest.docQuest
+      const { code, name, desc, memo, pre } = quest.docQuest
       const questStatus = questStateToQuestStatus(quest.gameQuest?.api_state)
 
       return (
@@ -66,6 +66,7 @@ const useQuestsRowRenderer = (quests: UnionQuest[]) => {
               name={name}
               desc={desc}
               tips={memo}
+              preTask={pre}
               status={questStatus}
             ></QuestCard>
           </div>
