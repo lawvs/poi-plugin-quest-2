@@ -1,7 +1,7 @@
-import type { Story, Meta } from '@storybook/react'
+import type { Meta, Story } from '@storybook/react'
+import React from 'react'
 import styled from 'styled-components'
-
-import { QuestCard, LargeQuestCard } from '../components/QuestCard'
+import { LargeQuestCard, QuestCard } from '../components/QuestCard'
 import { MinimalQuestCard } from '../components/QuestCard/MinimalQuestCard'
 import { QUEST_STATUS } from '../questHelper'
 
