@@ -41,7 +41,7 @@ module.exports = {
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'prettier/prettier': 'warn',
     // fix https://github.com/yannickcr/eslint-plugin-react/issues/2834
-    'react/react-in-jsx-scope': 'off',
+    // 'react/react-in-jsx-scope': 'off',
   },
   ignorePatterns: ['*.js', 'packages/*/build/**/*.ts', 'examples/spa/**'],
   settings: {

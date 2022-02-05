@@ -78,9 +78,12 @@ export const useStore = () => {
   const store = useContext(StateContext)
   const setStore = useContext(SetStateContext)
   const updateStore = useCallback(
-    (newStore: Partial<State>) => setStore({ ...store, ...newStore }),
-    [setStore, store]
+    (newStore: Partial<State>) => {
+      setStore((previousStore) => ({ ...previousStore, ...newStore }))
+    },
+    [setStore]
   )
+
   return { store, setStore, updateStore }
 }
 

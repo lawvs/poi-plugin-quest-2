@@ -80,12 +80,20 @@ const main = async () => {
   text = text.trim()
 
   const json = JSON.parse(text) as {
-    [gameId: string]: { code: string; name: string; desc: string }
+    [gameId: string]: {
+      code: string
+      name: string
+      desc: string
+      memo?: string
+    }
   }
   for (const gameId in json) {
-    const { name, desc } = json[gameId]
+    const { name, desc, memo } = json[gameId]
     json[gameId].name = pangu.spacing(name)
     json[gameId].desc = pangu.spacing(desc)
+    if (memo) {
+      json[gameId].memo = pangu.spacing(memo)
+    }
   }
 
   IGNORE_DATA.forEach((gameId) => delete json[gameId])

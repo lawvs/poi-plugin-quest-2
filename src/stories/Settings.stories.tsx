@@ -1,4 +1,5 @@
-import type { Story, Meta } from '@storybook/react'
+import type { Meta, Story } from '@storybook/react'
+import React from 'react'
 import { Settings } from '../Settings'
 
 export default {

@@ -1,20 +1,22 @@
 import { Button, InputGroup, Intent, Tag, Tooltip } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import styled from 'styled-components'
-import React, { useCallback } from 'react'
 import type { ChangeEvent } from 'react'
+import React, { useCallback } from 'react'
 import { useThrottle } from 'react-use'
-import { useQuest, useStore } from './store'
-import {
-  ALL_TYPE_TAG,
-  ALL_CATEGORY_TAG,
-  TYPE_TAGS,
-  CATEGORY_TAGS,
-  ALL_TAGS,
-} from './tags'
-import type { UnionQuest } from './questHelper'
-import { usePluginTranslation } from './poi/hooks'
+import styled from 'styled-components'
 import { IN_POI } from './poi/env'
+import { usePluginTranslation } from './poi/hooks'
+import type { UnionQuest } from './questHelper'
+import { useQuest, useStore } from './store'
+import { useFilterTags } from './store/filterTags'
+import { useSearchInput } from './store/search'
+import {
+  ALL_CATEGORY_TAG,
+  ALL_TAGS,
+  ALL_TYPE_TAG,
+  CATEGORY_TAGS,
+  TYPE_TAGS,
+} from './tags'
 
 const ToolbarWrapper = styled.div`
   display: flex;
@@ -58,16 +60,15 @@ const SyncButton = () => {
 
 export const SearchInput: React.FC = () => {
   const { t } = usePluginTranslation()
-  const {
-    store: { searchInput },
-    updateStore,
-  } = useStore()
+  const { searchInput, setSearchInput } = useSearchInput()
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
-      updateStore({ searchInput: event.target.value }),
-    [updateStore]
+      setSearchInput(event.target.value),
+    [setSearchInput]
   )
+
+  const handleClear = useCallback(() => setSearchInput(''), [setSearchInput])
 
   return (
     <InputGroup
@@ -75,7 +76,14 @@ export const SearchInput: React.FC = () => {
       onChange={handleChange}
       placeholder={t('Search')}
       leftIcon={IconNames.SEARCH}
-      rightElement={<SyncButton></SyncButton>}
+      rightElement={
+        <>
+          {!!searchInput && (
+            <Button icon={IconNames.CROSS} onClick={handleClear} />
+          )}
+          <SyncButton></SyncButton>
+        </>
+      }
       type="text"
     />
   )
@@ -83,22 +91,16 @@ export const SearchInput: React.FC = () => {
 
 const Tags = () => {
   const { t } = usePluginTranslation()
-  const {
-    store: { typeTags, categoryTags },
-    updateStore,
-  } = useStore()
-  const withHandleClickTag = useCallback(
-    (tagName: string, key: 'typeTags' | 'categoryTags') => () =>
-      updateStore({ [key]: { [tagName]: true } }),
-    [updateStore]
-  )
+
+  const { typeTags, categoryTags, setCategoryTags, setTypeTags } =
+    useFilterTags()
 
   return (
     <>
       <TagsWrapper>
         {CATEGORY_TAGS.map(({ name }) => (
           <Tag
-            onClick={withHandleClickTag(name, 'categoryTags')}
+            onClick={() => setCategoryTags(name)}
             intent={
               categoryTags[name]
                 ? name === ALL_CATEGORY_TAG.name
@@ -116,7 +118,7 @@ const Tags = () => {
       <TagsWrapper>
         {TYPE_TAGS.map(({ name }) => (
           <Tag
-            onClick={withHandleClickTag(name, 'typeTags')}
+            onClick={() => setTypeTags(name)}
             intent={
               typeTags[name]
                 ? name === ALL_TYPE_TAG.name
@@ -145,9 +147,9 @@ export const Toolbar = () => {
 }
 
 const useToolbarFilter = () => {
-  const {
-    store: { searchInput, typeTags, categoryTags },
-  } = useStore()
+  const { searchInput } = useSearchInput()
+  const { typeTags, categoryTags } = useFilterTags()
+
   const activatedTags = { ...typeTags, ...categoryTags }
   const activatedTagsName = ALL_TAGS.filter((tag) => activatedTags[tag.name])
   const tagsFilter = activatedTagsName.map((tag) => tag.filter)

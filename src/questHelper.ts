@@ -8,6 +8,7 @@ type DocQuest = {
   memo?: string
   unlock?: number[]
   tracking?: number[][]
+  pre?: string[]
 }
 
 export type UnionQuest = {
