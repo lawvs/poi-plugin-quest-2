@@ -1,20 +1,21 @@
 import { Button, InputGroup, Intent, Tag, Tooltip } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import styled from 'styled-components'
-import React, { useCallback } from 'react'
 import type { ChangeEvent } from 'react'
+import React, { useCallback } from 'react'
 import { useThrottle } from 'react-use'
-import { useQuest, useStore } from './store'
-import {
-  ALL_TYPE_TAG,
-  ALL_CATEGORY_TAG,
-  TYPE_TAGS,
-  CATEGORY_TAGS,
-  ALL_TAGS,
-} from './tags'
-import type { UnionQuest } from './questHelper'
-import { usePluginTranslation } from './poi/hooks'
+import styled from 'styled-components'
 import { IN_POI } from './poi/env'
+import { usePluginTranslation } from './poi/hooks'
+import type { UnionQuest } from './questHelper'
+import { useQuest, useStore } from './store'
+import { useSearchInput } from './store/search'
+import {
+  ALL_CATEGORY_TAG,
+  ALL_TAGS,
+  ALL_TYPE_TAG,
+  CATEGORY_TAGS,
+  TYPE_TAGS,
+} from './tags'
 
 const ToolbarWrapper = styled.div`
   display: flex;
@@ -58,15 +59,12 @@ const SyncButton = () => {
 
 export const SearchInput: React.FC = () => {
   const { t } = usePluginTranslation()
-  const {
-    store: { searchInput },
-    updateStore,
-  } = useStore()
+  const { searchInput, setSearchInput } = useSearchInput()
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
-      updateStore({ searchInput: event.target.value }),
-    [updateStore]
+      setSearchInput(event.target.value),
+    [setSearchInput]
   )
 
   return (
