@@ -1,8 +1,6 @@
 import { Elevation, H5, Text } from '@blueprintjs/core'
-import React, { useCallback } from 'react'
+import React from 'react'
 import { guessQuestCategory, QUEST_STATUS } from '../../questHelper'
-import { useLargeCard } from '../../store/quest'
-import { MinimalQuestCard } from './MinimalQuestCard'
 import { CardBody, CardMedia, CardTail, FlexCard } from './styles'
 import { questIconMap, questStatusMap } from './utils'
 
@@ -50,17 +48,7 @@ export const LargeQuestCard = ({
 }
 
 export const QuestCard: React.FC<QuestCardProps & { gameId: string }> = ({
-  gameId,
   ...props
 }) => {
-  const { largeCard, setLarge, setMinimal } = useLargeCard()
-  const setQuestCardLarge = useCallback(
-    () => setLarge(gameId),
-    [gameId, setLarge]
-  )
-  return gameId === largeCard ? (
-    <LargeQuestCard onClick={setMinimal} {...props}></LargeQuestCard>
-  ) : (
-    <MinimalQuestCard onClick={setQuestCardLarge} {...props}></MinimalQuestCard>
-  )
+  return <LargeQuestCard {...props}></LargeQuestCard>
 }
