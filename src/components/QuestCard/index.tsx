@@ -1,6 +1,7 @@
 import { Elevation, H5, Text } from '@blueprintjs/core'
 import React from 'react'
 import styled from 'styled-components'
+import { usePluginTranslation } from '../../poi/hooks'
 import { guessQuestCategory, QUEST_STATUS } from '../../questHelper'
 import { PreTaskTag } from '../PreTaskTag'
 import { CardBody, CardMedia, CardTail, FlexCard } from './styles'
@@ -34,6 +35,7 @@ export const LargeQuestCard = ({
 }: QuestCardProps) => {
   const headIcon = questIconMap[guessQuestCategory(code).type]
   const TailIcon = questStatusMap[status]
+  const { t } = usePluginTranslation()
 
   return (
     <FlexCard
@@ -46,9 +48,9 @@ export const LargeQuestCard = ({
       <CardBody>
         <H5>{[code, name].filter((i) => i != undefined).join(' - ')}</H5>
         <Text>{desc}</Text>
-        <Text tagName="i">{tips}</Text>
+        {tips && <Text tagName="i">{tips}</Text>}
         <PreTaskTagWrapper>
-          {!!preTask?.length && <Text tagName="span">前置</Text>}
+          {!!preTask?.length && <Text tagName="span">{t('Requires')}</Text>}
           {preTask?.map((i) => (
             <PreTaskTag key={i} code={i}></PreTaskTag>
           ))}
