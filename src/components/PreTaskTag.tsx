@@ -2,6 +2,7 @@ import { Tag } from '@blueprintjs/core'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { guessQuestCategory } from '../questHelper'
+import { useFilterTags } from '../store/filterTags'
 import { useSearchInput } from '../store/search'
 
 const TagWrapper = styled(Tag)`
@@ -15,9 +16,13 @@ const TagWrapper = styled(Tag)`
 
 export const PreTaskTag = ({ code }: { code: string }) => {
   const { setSearchInput } = useSearchInput()
+  const { setCategoryTagsAll, setTypeTagsAll } = useFilterTags()
+
   const handleClick = useCallback(() => {
     setSearchInput(code)
-  }, [code, setSearchInput])
+    setCategoryTagsAll()
+    setTypeTagsAll()
+  }, [code, setCategoryTagsAll, setSearchInput, setTypeTagsAll])
   const indicatorColor = guessQuestCategory(code).color
   const fontColor =
     indicatorColor === '#fff' || indicatorColor === '#87da61'
