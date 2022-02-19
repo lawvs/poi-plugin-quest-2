@@ -14,6 +14,7 @@ import {
   isModernizationQuest,
   isUnknownCategoryQuest,
   isInProgressQuest,
+  isSingleQuest,
 } from './questHelper'
 import type { UnionQuest } from './questHelper'
 
@@ -51,7 +52,7 @@ export const TYPE_TAGS = [
   { name: 'Monthly', filter: isMonthlyQuest },
   { name: 'Quarterly', filter: isQuarterlyQuest },
   { name: 'Yearly', filter: isYearlyQuest },
-  // TODO add one-time
+  { name: 'One-time', filter: isSingleQuest },
 ] as const
 
 // TODO tag In Progress / Lock / Completed
