@@ -19,11 +19,13 @@ const main = () => {
   const weeklyQuest = questStartsFilter('(周任)')
   const monthlyQuest = questStartsFilter('(月任)')
   const quarterlyQuest = [
-    ...questStartsFilter('(季任)'),
-    ...kcwikiDataSelector()
-      .filter(([, quest]) => quest.desc.includes('季常任务'))
-      .map(([gameId]) => gameId),
-  ]
+    ...new Set([
+      ...questStartsFilter('(季任)'),
+      ...kcwikiDataSelector()
+        .filter(([, quest]) => quest.desc.includes('季常任务'))
+        .map(([gameId]) => gameId),
+    ]),
+  ].sort((a, b) => +a - +b)
   // (年任) (年任 / x 月)
   const yearlyQuest = kcwikiDataSelector()
     .filter(([, quest]) => quest.desc.includes('❀备注：年常任务'))
