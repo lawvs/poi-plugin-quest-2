@@ -1,4 +1,4 @@
-import questCategoryMap from '../build/questCategoryMap.json'
+import questCategory from '../build/questCategory.json'
 import { GameQuest, QUEST_API_STATE } from './poi/types'
 
 type DocQuest = {
@@ -26,12 +26,12 @@ export type UnionQuest = {
   docQuest: DocQuest
 }
 
-const dailyQuest = new Set(questCategoryMap.dailyQuest)
-const weeklyQuest = new Set(questCategoryMap.weeklyQuest)
-const monthlyQuest = new Set(questCategoryMap.monthlyQuest)
-const quarterlyQuest = new Set(questCategoryMap.quarterlyQuest)
-const yearlyQuest = new Set(questCategoryMap.yearlyQuest)
-const singleQuest = new Set(questCategoryMap.singleQuest)
+const dailyQuest = new Set(questCategory.dailyQuest)
+const weeklyQuest = new Set(questCategory.weeklyQuest)
+const monthlyQuest = new Set(questCategory.monthlyQuest)
+const quarterlyQuest = new Set(questCategory.quarterlyQuest)
+const yearlyQuest = new Set(questCategory.yearlyQuest)
+const singleQuest = new Set(questCategory.singleQuest)
 
 export const isInProgressQuest = (quest: UnionQuest) =>
   quest.gameQuest?.api_state === QUEST_API_STATE.IN_PROGRESS ||

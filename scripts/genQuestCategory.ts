@@ -3,7 +3,7 @@ import path from 'path'
 import { QuestData } from '../build/kcanotifyGamedata'
 import { KcwikiQuestData } from '../build/kcQuestsData'
 
-const OUTPUT_PATH = path.resolve('build', 'questCategoryMap.json')
+const OUTPUT_PATH = path.resolve('build', 'questCategory.json')
 
 const questStartsFilter = (str: string) =>
   Object.entries(QuestData['zh-CN'])
@@ -18,7 +18,12 @@ const main = () => {
   const dailyQuest = questStartsFilter('(日任)')
   const weeklyQuest = questStartsFilter('(周任)')
   const monthlyQuest = questStartsFilter('(月任)')
-  const quarterlyQuest = questStartsFilter('(季任)')
+  const quarterlyQuest = [
+    ...questStartsFilter('(季任)'),
+    ...kcwikiDataSelector()
+      .filter(([, quest]) => quest.desc.includes('季常任务'))
+      .map(([gameId]) => gameId),
+  ]
   // (年任) (年任 / x 月)
   const yearlyQuest = kcwikiDataSelector()
     .filter(([, quest]) => quest.desc.includes('❀备注：年常任务'))
