@@ -78,6 +78,9 @@ export const useQuest = (): UnionQuest[] => {
   }
 }
 
+/**
+ * @deprecated Not large card now
+ */
 export const useLargeCard = () => {
   const {
     store: { largeCard },
