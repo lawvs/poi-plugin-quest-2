@@ -31,7 +31,7 @@
     "storybook": "start-storybook -p 6006",
     "test": "jest",
     "typeCheck": "tsc --noEmit",
-    "update": "npm run downloadKcanotifyData & npm run downloadKcQuestsData && npm run genQuestCategory"
+    "update": "npm run downloadKcanotifyData && npm run downloadKcQuestsData && npm run genQuestCategory"
   },
   "dependencies": {
     "react-use": "^17.3.1",
