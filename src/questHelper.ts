@@ -1,4 +1,4 @@
-import { QuestData } from '../build/kcanotifyGamedata'
+import questCategoryMap from '../build/questCategoryMap.json'
 import { GameQuest, QUEST_API_STATE } from './poi/types'
 
 type DocQuest = {
@@ -6,8 +6,17 @@ type DocQuest = {
   name: string
   desc: string
   memo?: string
+  /**
+   * Only in kcanotify
+   */
   unlock?: number[]
+  /**
+   * Only in kcanotify
+   */
   tracking?: number[][]
+  /**
+   * Only in KcWiki
+   */
   pre?: string[]
 }
 
@@ -17,31 +26,27 @@ export type UnionQuest = {
   docQuest: DocQuest
 }
 
-const questStartsFilter = (str: string) =>
-  Object.entries(QuestData['zh-CN'])
-    .filter(([, quest]) => quest.name.startsWith(str))
-    .map(([gameId]) => gameId)
-
-export const dailyQuest = questStartsFilter('(日任)')
-export const weeklyQuest = questStartsFilter('(周任)')
-export const monthlyQuest = questStartsFilter('(月任)')
-export const quarterlyQuest = questStartsFilter('(季任)')
-// (年任) (年任 / x 月)
-export const yearlyQuest = questStartsFilter('(年任')
+const dailyQuest = new Set(questCategoryMap.dailyQuest)
+const weeklyQuest = new Set(questCategoryMap.weeklyQuest)
+const monthlyQuest = new Set(questCategoryMap.monthlyQuest)
+const quarterlyQuest = new Set(questCategoryMap.quarterlyQuest)
+const yearlyQuest = new Set(questCategoryMap.yearlyQuest)
+const singleQuest = new Set(questCategoryMap.singleQuest)
 
 export const isInProgressQuest = (quest: UnionQuest) =>
   quest.gameQuest?.api_state === QUEST_API_STATE.IN_PROGRESS ||
   quest.gameQuest?.api_state === QUEST_API_STATE.COMPLETED
-export const isDailyQuest = (quest: UnionQuest) =>
-  dailyQuest.includes(quest.gameId)
+export const isDailyQuest = (quest: UnionQuest) => dailyQuest.has(quest.gameId)
 export const isWeeklyQuest = (quest: UnionQuest) =>
-  weeklyQuest.includes(quest.gameId)
+  weeklyQuest.has(quest.gameId)
 export const isMonthlyQuest = (quest: UnionQuest) =>
-  monthlyQuest.includes(quest.gameId)
+  monthlyQuest.has(quest.gameId)
 export const isQuarterlyQuest = (quest: UnionQuest) =>
-  quarterlyQuest.includes(quest.gameId)
+  quarterlyQuest.has(quest.gameId)
 export const isYearlyQuest = (quest: UnionQuest) =>
-  yearlyQuest.includes(quest.gameId)
+  yearlyQuest.has(quest.gameId)
+export const isSingleQuest = (quest: UnionQuest) =>
+  singleQuest.has(quest.gameId)
 
 export enum QUEST_CATEGORY {
   Composition = '1',
