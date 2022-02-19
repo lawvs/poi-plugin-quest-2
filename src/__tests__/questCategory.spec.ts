@@ -24,8 +24,8 @@ describe('should questCategory correct', () => {
           .sort((a, b) => +a - +b)
           .map((gameId) => ({
             gameId,
-            code: mergeData[gameId as keyof typeof mergeData]?.code,
-            name: mergeData[gameId as keyof typeof mergeData]?.name,
+            code: mergeData[gameId as keyof typeof mergeData].code,
+            name: mergeData[gameId as keyof typeof mergeData].name,
           })),
       ])
     )
