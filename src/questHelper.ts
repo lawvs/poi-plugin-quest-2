@@ -1,4 +1,5 @@
 import questCategory from '../build/questCategory.json'
+import newQuestData from '../build/kcQuestsData/quests-scn-new.json'
 import { GameQuest, QUEST_API_STATE } from './poi/types'
 
 type DocQuest = {
@@ -32,6 +33,7 @@ const monthlyQuest = new Set(questCategory.monthlyQuest)
 const quarterlyQuest = new Set(questCategory.quarterlyQuest)
 const yearlyQuest = new Set(questCategory.yearlyQuest)
 const singleQuest = new Set(questCategory.singleQuest)
+const newQuest = new Set(newQuestData)
 
 export const isInProgressQuest = (quest: UnionQuest) =>
   quest.gameQuest?.api_state === QUEST_API_STATE.IN_PROGRESS ||
@@ -47,6 +49,9 @@ export const isYearlyQuest = (quest: UnionQuest) =>
   yearlyQuest.has(quest.gameId)
 export const isSingleQuest = (quest: UnionQuest) =>
   singleQuest.has(quest.gameId)
+
+export const hasNewQuest = newQuestData.length > 0
+export const isNewQuest = (quest: UnionQuest) => newQuest.has(quest.gameId)
 
 export enum QUEST_CATEGORY {
   Composition = '1',
