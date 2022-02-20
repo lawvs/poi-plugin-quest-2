@@ -8,13 +8,15 @@ import { prepareDir } from './utils'
 // See https://github.com/kcwikizh/kcQuests
 
 const OUTPUT_PATH = path.resolve('build', 'kcQuestsData')
-const FILE_NAME = 'quests-scn.json'
-const URL = `https://kcwikizh.github.io/kcQuests/${FILE_NAME}`
+const DATA_FILE_NAME = 'quests-scn.json'
+const DATA_URL = `https://kcwikizh.github.io/kcQuests/${DATA_FILE_NAME}`
+const NEW_QUEST_FILE_NAME = 'quests-scn-new.json'
+const NEW_QUEST_URL = `https://kcwikizh.github.io/kcQuests/${NEW_QUEST_FILE_NAME}`
 const VERSION_URL =
   'https://api.github.com/repos/kcwikizh/kcQuests/branches/main'
 
-// expired quest: 2021 节分任务
-const IGNORE_DATA = [329, 441, 840, 841, 842, 843] as const
+// maybe need ignore some expired quest
+const IGNORE_DATA = [] as const
 
 const getRemoteVersion = async () => {
   const resp = await fetch(VERSION_URL)
@@ -55,6 +57,49 @@ const genTS = (version: string) => {
   return `${importCode}\n\n${exportCode}\n\n${versionCode}\n`
 }
 
+const downloadQuestData = async () => {
+  const resp = await fetch(DATA_URL)
+  if (!resp.ok) {
+    console.error(`Fetch Error!\nurl: ${resp.url}\nstatus: ${resp.status}`)
+    return
+  }
+  const text = await resp.text()
+
+  const json = JSON.parse(text) as {
+    [gameId: string]: {
+      code: string
+      name: string
+      desc: string
+      memo?: string
+    }
+  }
+  for (const gameId in json) {
+    const { code, name, desc, memo } = json[gameId]
+    json[gameId].code = code.trim()
+    json[gameId].name = pangu.spacing(name)
+    json[gameId].desc = pangu.spacing(desc)
+    if (memo) {
+      json[gameId].memo = pangu.spacing(memo)
+    }
+  }
+
+  IGNORE_DATA.forEach((gameId) => delete json[gameId])
+  const data = JSON.stringify(json, undefined, 2)
+  writeFileSync(path.resolve(OUTPUT_PATH, DATA_FILE_NAME), data)
+}
+
+const downloadNewQuest = async () => {
+  const resp = await fetch(NEW_QUEST_URL)
+  if (!resp.ok) {
+    console.error(`Fetch Error!\nurl: ${resp.url}\nstatus: ${resp.status}`)
+    return
+  }
+  const text = await resp.text()
+  const json = Object.keys(JSON.parse(text))
+  const data = JSON.stringify(json, undefined, 2)
+  writeFileSync(path.resolve(OUTPUT_PATH, NEW_QUEST_FILE_NAME), data)
+}
+
 const main = async () => {
   const args = process.argv.slice(2)
 
@@ -71,34 +116,7 @@ const main = async () => {
   }
 
   console.log(`Download kcQuests data...`)
-  const resp = await fetch(URL)
-  if (!resp.ok) {
-    console.error(`Fetch Error!\nurl: ${resp.url}\nstatus: ${resp.status}`)
-    return
-  }
-  let text = await resp.text()
-  text = text.trim()
-
-  const json = JSON.parse(text) as {
-    [gameId: string]: {
-      code: string
-      name: string
-      desc: string
-      memo?: string
-    }
-  }
-  for (const gameId in json) {
-    const { name, desc, memo } = json[gameId]
-    json[gameId].name = pangu.spacing(name)
-    json[gameId].desc = pangu.spacing(desc)
-    if (memo) {
-      json[gameId].memo = pangu.spacing(memo)
-    }
-  }
-
-  IGNORE_DATA.forEach((gameId) => delete json[gameId])
-  const data = JSON.stringify(json, undefined, 2)
-  writeFileSync(`${OUTPUT_PATH}/${FILE_NAME}`, data)
+  await Promise.all([downloadQuestData(), downloadNewQuest()])
 
   const ts = genTS(remoteVersion)
   writeFileSync(`${OUTPUT_PATH}/index.ts`, ts)
