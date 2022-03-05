@@ -17,6 +17,7 @@ import {
   isSingleQuest,
   hasNewQuest,
   isNewQuest,
+  newQuestNumber,
 } from './questHelper'
 import type { UnionQuest } from './questHelper'
 
@@ -49,7 +50,9 @@ export const CATEGORY_TAGS = [
 export const TYPE_TAGS = [
   ALL_TYPE_TAG,
   ...(IN_POI ? [{ name: 'In Progress', filter: isInProgressQuest }] : []),
-  ...(hasNewQuest ? [{ name: 'New', filter: isNewQuest }] : []),
+  ...(hasNewQuest
+    ? [{ name: 'New', filter: isNewQuest, suffix: newQuestNumber }]
+    : []),
   { name: 'Daily', filter: isDailyQuest },
   { name: 'Weekly', filter: isWeeklyQuest },
   { name: 'Monthly', filter: isMonthlyQuest },

@@ -119,20 +119,21 @@ const Tags = () => {
         ))}
       </TagsWrapper>
       <TagsWrapper>
-        {TYPE_TAGS.map(({ name }) => (
+        {TYPE_TAGS.map((tag) => (
           <Tag
-            onClick={() => setTypeTags(name)}
+            onClick={() => setTypeTags(tag.name)}
             intent={
-              typeTags[name]
-                ? name === ALL_TYPE_TAG.name
+              typeTags[tag.name]
+                ? tag.name === ALL_TYPE_TAG.name
                   ? 'success'
                   : 'primary'
                 : 'none'
             }
             interactive={true}
-            key={name}
+            key={tag.name}
           >
-            {t(name)}
+            {t(tag.name)}
+            {'suffix' in tag && ' ' + tag.suffix}
           </Tag>
         ))}
       </TagsWrapper>

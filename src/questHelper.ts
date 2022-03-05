@@ -38,6 +38,7 @@ const newQuest = new Set(newQuestData)
 export const isInProgressQuest = (quest: UnionQuest) =>
   quest.gameQuest?.api_state === QUEST_API_STATE.IN_PROGRESS ||
   quest.gameQuest?.api_state === QUEST_API_STATE.COMPLETED
+
 export const isDailyQuest = (quest: UnionQuest) => dailyQuest.has(quest.gameId)
 export const isWeeklyQuest = (quest: UnionQuest) =>
   weeklyQuest.has(quest.gameId)
@@ -52,6 +53,7 @@ export const isSingleQuest = (quest: UnionQuest) =>
 
 export const hasNewQuest = newQuestData.length > 0
 export const isNewQuest = (quest: UnionQuest) => newQuest.has(quest.gameId)
+export const newQuestNumber = newQuestData.length
 
 export enum QUEST_CATEGORY {
   Composition = '1',
