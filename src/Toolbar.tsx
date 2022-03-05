@@ -159,17 +159,19 @@ const useToolbarFilter = () => {
 
   const throttledSearchInput = useThrottle(searchInput)
   const searchKeywords = throttledSearchInput
-    ?.split(' ')
+    .split(' ')
+    // Remove empty string
+    .filter((i) => !!i)
     .map((i) => i.toUpperCase())
 
   const stringFilter = useCallback(
     (quest: UnionQuest) => {
+      if (!searchKeywords || !searchKeywords.length) {
+        return true
+      }
       const text = `${quest.docQuest.code} ${quest.docQuest.name} ${
         quest.docQuest.desc
       } ${quest.docQuest.memo ?? ''}`
-      if (!searchKeywords) {
-        return true
-      }
       return searchKeywords.some((keyword) =>
         text.toUpperCase().includes(keyword)
       )
