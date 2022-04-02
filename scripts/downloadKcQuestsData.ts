@@ -71,15 +71,19 @@ const downloadQuestData = async () => {
       name: string
       desc: string
       memo?: string
+      memo2?: string
     }
   }
   for (const gameId in json) {
-    const { code, name, desc, memo } = json[gameId]
+    const { code, name, desc, memo, memo2 } = json[gameId]
     json[gameId].code = code.trim()
     json[gameId].name = pangu.spacing(name)
     json[gameId].desc = pangu.spacing(desc)
     if (memo) {
       json[gameId].memo = pangu.spacing(memo)
+    }
+    if (memo2) {
+      json[gameId].memo2 = pangu.spacing(memo2)
     }
   }
 
