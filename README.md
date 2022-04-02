@@ -19,6 +19,20 @@ Paste `poi-plugin-quest-info-2` in the plugins tab and click the install button.
 - Sync with game quest data.
 - Auto switch to quest tab when enter quest views.
 
+## Development
+
+```sh
+# Install dependencies
+npm install
+
+# Download game data from github and convert assets to base64
+# try set `http_proxy` or `https_proxy` as environment when download fail
+npm run build
+
+# Run the plugin in web environment
+npm run storybook
+```
+
 ## Thanks
 
 - [poi](https://github.com/poooi/poi)
