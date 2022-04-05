@@ -6,7 +6,14 @@ type DocQuest = {
   code: string
   name: string
   desc: string
+  /**
+   * Quest rewards
+   */
   memo?: string
+  /**
+   * Quest details, only in KcWiki
+   */
+  memo2?: string
   /**
    * Only in kcanotify
    */

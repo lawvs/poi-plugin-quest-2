@@ -11,7 +11,8 @@ export type QuestCardProps = {
   code: string
   name: string
   desc: string | JSX.Element
-  tips?: string
+  tip?: string
+  tip2?: string
   status?: QUEST_STATUS
   preTask?: string[]
   onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
@@ -27,7 +28,8 @@ export const LargeQuestCard = ({
   code,
   name,
   desc,
-  tips,
+  tip,
+  tip2,
   preTask,
   status = QUEST_STATUS.DEFAULT,
   onClick,
@@ -48,7 +50,8 @@ export const LargeQuestCard = ({
       <CardBody>
         <H5>{[code, name].filter((i) => i != undefined).join(' - ')}</H5>
         <Text>{desc}</Text>
-        {tips && <Text tagName="i">{tips}</Text>}
+        {tip2 && <Text tagName="b">{tip2}</Text>}
+        {tip && <Text tagName="i">{tip}</Text>}
         <PreTaskTagWrapper>
           {!!preTask?.length && <Text tagName="span">{t('Requires')}</Text>}
           {preTask?.map((i) => (
