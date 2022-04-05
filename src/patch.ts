@@ -40,13 +40,20 @@ const getQuestState = (maybeLanguage: string) => {
       ? KcwikiQuestData[maybeLanguage]
       : QuestData[maybeLanguage]
 
-  return Object.entries(data).reduce((acc, [apiNo, { code, desc }]) => {
-    acc[apiNo] = {
-      wiki_id: code,
-      condition: desc,
-    }
-    return acc
-  }, {} as Record<string, { wiki_id: string; condition: string }>)
+  return Object.fromEntries(
+    Object.entries(data).map(
+      ([apiNo, { code, desc, memo2 }]: [
+        key: string,
+        value: { code: string; desc: string; memo2?: string }
+      ]) => [
+        apiNo,
+        {
+          wiki_id: code,
+          condition: [memo2, desc].filter(Boolean).join(' '),
+        },
+      ]
+    )
+  )
 }
 
 /**
