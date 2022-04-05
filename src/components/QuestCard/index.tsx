@@ -50,10 +50,10 @@ export const LargeQuestCard = ({
       <CardBody>
         <H5>{[code, name].filter((i) => i != undefined).join(' - ')}</H5>
         <Text>{desc}</Text>
-        {tip2 && <Text tagName="b">{tip2}</Text>}
-        {tip && <Text tagName="i">{tip}</Text>}
+        {tip2 && <b>{tip2}</b>}
+        {tip && <i>{tip}</i>}
         <PreTaskTagWrapper>
-          {!!preTask?.length && <Text tagName="span">{t('Requires')}</Text>}
+          {!!preTask?.length && <span>{t('Requires')}</span>}
           {preTask?.map((i) => (
             <PreTaskTag key={i} code={i}></PreTaskTag>
           ))}
