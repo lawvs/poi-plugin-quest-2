@@ -9,7 +9,7 @@ export const MinimalQuestCard: React.FC<QuestCardProps> = ({
   code,
   name,
   desc,
-  tips,
+  tip,
   status = QUEST_STATUS.DEFAULT,
   onClick,
   style,
@@ -24,7 +24,7 @@ export const MinimalQuestCard: React.FC<QuestCardProps> = ({
         <>
           {desc}
           <br />
-          {tips}
+          {tip}
         </>
       }
     >
