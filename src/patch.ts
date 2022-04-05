@@ -49,7 +49,7 @@ const getQuestState = (maybeLanguage: string) => {
         apiNo,
         {
           wiki_id: code,
-          condition: [memo2, desc].filter(Boolean).join(' '),
+          condition: [memo2, desc].filter(Boolean).join(' | '),
         },
       ]
     )
