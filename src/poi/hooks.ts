@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { observePluginStore, observePoiStore } from './store'
 import { name as PACKAGE_NAME } from '../../package.json'
-import type { GameQuest, PoiQuestState, PoiState } from './types'
+import { GameQuest, PoiQuestState, PoiState, QuestTab } from './types'
 
 export const useActiveQuest = () => {
   const [activeQuests, setActiveQuests] = useState<PoiQuestState>({})
@@ -32,6 +32,15 @@ export const useGameQuest = () => {
     return observePluginStore(listener, (i) => i?._?.questList)
   }, [])
   return quests
+}
+
+export const useGameTab = () => {
+  const [tab, setTab] = useState<QuestTab>(QuestTab.ALL)
+  useEffect(() => {
+    const listener = (tabId: QuestTab | null) => setTab(tabId ?? QuestTab.ALL)
+    return observePluginStore(listener, (i) => i?._?.tabId)
+  }, [])
+  return tab
 }
 
 const UNKNOWN_TAB = 'unknown'

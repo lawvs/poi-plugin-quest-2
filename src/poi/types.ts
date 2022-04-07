@@ -60,19 +60,22 @@ export type GameQuest = {
   api_bonus_flag: 1
 }
 
+export enum QuestTab {
+  ALL = '0',
+  IN_PROGRESS = '9',
+  DAILY = '1',
+  WEEKLY = '2',
+  MONTHLY = '3',
+  ONCE = '4',
+  OTHERS = '5',
+}
+
 type QuestListAction = {
   type: '@@Response/kcsapi/api_get_member/questlist'
   path: '/kcsapi/api_get_member/questlist'
   postBody: {
     api_verno: '1'
-    api_tab_id:
-      | '0' // All
-      | '9' // In progress
-      | '1' // Daily
-      | '2' // Weekly
-      | '3' // Monthly
-      | '4' // Once
-      | '5' // Others
+    api_tab_id: QuestTab
   }
   body: {
     api_completed_kind: number
