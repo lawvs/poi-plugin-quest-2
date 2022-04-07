@@ -8,7 +8,7 @@ import { IN_POI } from './poi/env'
 import { usePluginTranslation } from './poi/hooks'
 import type { UnionQuest } from './questHelper'
 import { useQuest, useSyncWithGame } from './store'
-import { useFilterTags } from './store/filterTags'
+import { useFilterTags, useSyncGameTagEffect } from './store/filterTags'
 import { useSearchInput } from './store/search'
 import {
   ALL_CATEGORY_TAG,
@@ -93,6 +93,8 @@ export const SearchInput: React.FC = () => {
 
 const Tags = () => {
   const { t } = usePluginTranslation()
+
+  useSyncGameTagEffect()
 
   const { typeTags, categoryTags, setCategoryTags, setTypeTags } =
     useFilterTags()
