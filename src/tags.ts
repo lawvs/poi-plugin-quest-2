@@ -49,18 +49,18 @@ export const CATEGORY_TAGS = [
 
 export const TYPE_TAGS = [
   ALL_TYPE_TAG,
-  ...(IN_POI ? [{ name: 'In Progress', filter: isInProgressQuest }] : []),
+  ...(IN_POI
+    ? ([{ name: 'In Progress', filter: isInProgressQuest }] as const)
+    : []),
   ...(hasNewQuest
-    ? [{ name: 'New', filter: isNewQuest, suffix: newQuestNumber }]
+    ? ([{ name: 'New', filter: isNewQuest, suffix: newQuestNumber }] as const)
     : []),
   { name: 'Daily', filter: isDailyQuest },
   { name: 'Weekly', filter: isWeeklyQuest },
   { name: 'Monthly', filter: isMonthlyQuest },
+  { name: 'One-time', filter: isSingleQuest },
   { name: 'Quarterly', filter: isQuarterlyQuest },
   { name: 'Yearly', filter: isYearlyQuest },
-  { name: 'One-time', filter: isSingleQuest },
 ] as const
 
 // TODO tag In Progress / Lock / Completed
-
-export const ALL_TAGS = [...CATEGORY_TAGS, ...TYPE_TAGS]
