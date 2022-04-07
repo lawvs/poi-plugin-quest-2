@@ -41,18 +41,13 @@ const getQuestState = (maybeLanguage: string) => {
       : QuestData[maybeLanguage]
 
   return Object.fromEntries(
-    Object.entries(data).map(
-      ([apiNo, { code, desc, memo2 }]: [
-        key: string,
-        value: { code: string; desc: string; memo2?: string }
-      ]) => [
-        apiNo,
-        {
-          wiki_id: code,
-          condition: [memo2, desc].filter(Boolean).join(' | '),
-        },
-      ]
-    )
+    Object.entries(data).map(([apiNo, data]) => [
+      apiNo,
+      {
+        wiki_id: data.code,
+        condition: [(data as any).memo2, data.desc].filter(Boolean).join(' | '),
+      },
+    ])
   )
 }
 
