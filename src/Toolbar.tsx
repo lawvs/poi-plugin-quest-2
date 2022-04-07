@@ -12,7 +12,6 @@ import { useFilterTags } from './store/filterTags'
 import { useSearchInput } from './store/search'
 import {
   ALL_CATEGORY_TAG,
-  ALL_TAGS,
   ALL_TYPE_TAG,
   CATEGORY_TAGS,
   TYPE_TAGS,
@@ -150,14 +149,8 @@ export const Toolbar = () => {
   )
 }
 
-const useToolbarFilter = () => {
+const useInputStringFilter = () => {
   const { searchInput } = useSearchInput()
-  const { typeTags, categoryTags } = useFilterTags()
-
-  const activatedTags = { ...typeTags, ...categoryTags }
-  const activatedTagsName = ALL_TAGS.filter((tag) => activatedTags[tag.name])
-  const tagsFilter = activatedTagsName.map((tag) => tag.filter)
-
   const throttledSearchInput = useThrottle(searchInput)
   const searchKeywords = throttledSearchInput
     .split(' ')
@@ -179,14 +172,32 @@ const useToolbarFilter = () => {
     },
     [searchKeywords]
   )
+  return stringFilter
+}
 
-  const toolbarFilter = useCallback(
-    (quest: UnionQuest) => {
-      return [...tagsFilter, stringFilter].every((filter) => filter(quest))
-    },
-    [stringFilter, tagsFilter]
+const And =
+  <T extends (...args: any[]) => boolean>(...fnArray: T[]) =>
+  (...args: Parameters<T>) =>
+    fnArray.every((fn) => fn(...args))
+
+const Or =
+  <T extends (...args: any[]) => boolean>(...fnArray: T[]) =>
+  (...args: Parameters<T>) =>
+    fnArray.some((fn) => fn(...args))
+
+const useToolbarFilter = () => {
+  const stringFilter = useInputStringFilter()
+  const { typeTags, categoryTags } = useFilterTags()
+
+  const typeTagsFilter = Or(
+    ...TYPE_TAGS.filter((tag) => typeTags[tag.name]).map((tag) => tag.filter)
   )
-
+  const categoryTagsFilter = Or(
+    ...CATEGORY_TAGS.filter((tag) => categoryTags[tag.name]).map(
+      (tag) => tag.filter
+    )
+  )
+  const toolbarFilter = And(stringFilter, typeTagsFilter, categoryTagsFilter)
   return toolbarFilter
 }
 
