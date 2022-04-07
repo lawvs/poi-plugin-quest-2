@@ -4,7 +4,7 @@ import { useGameQuest, usePluginTranslation } from '../poi/hooks'
 import { getCategory } from '../questHelper'
 import type { UnionQuest } from '../questHelper'
 import { useKcwikiData, checkIsKcwikiSupportedLanguages } from './kcwiki'
-import { useStore } from './store'
+import { useStore, useSyncWithGame } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
 
@@ -40,9 +40,7 @@ const useQuestMap = () => {
 export const useQuest = (): UnionQuest[] => {
   const docQuestMap = useQuestMap()
   const gameQuest = useGameQuest()
-  const {
-    store: { syncWithGame },
-  } = useStore()
+  const { syncWithGame } = useSyncWithGame()
 
   if (syncWithGame && gameQuest.length) {
     return gameQuest.map((quest) => {
