@@ -9,6 +9,8 @@ A [poi](https://github.com/poooi/poi) plugin that helps you view quest info. Dat
 
 ## Installation
 
+Paste `poi-plugin-quest-info-2` in the plugins tab and click the install button.
+
 ![image](https://user-images.githubusercontent.com/18554747/161830757-0a4e500c-f246-4dbd-820d-0b9a9c5a34a4.png)
 
 ## Features
