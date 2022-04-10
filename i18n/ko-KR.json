@@ -4,7 +4,7 @@
   "Search": "검색",
   "All": "전체",
   "Locked": "잠김",
-  "In Progress": "진행 중",
+  "In Progress": "진행 중 {{number}}",
   "Completed": "완료",
   "Version": "버전: {{version}}",
   "Data Version": "데이터 버전: {{version}}",

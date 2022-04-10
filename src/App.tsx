@@ -31,7 +31,7 @@ const Main: React.FC = () => {
   return (
     <>
       <Toolbar></Toolbar>
-      <CountText>{t('TotalQuests', { count: quests.length })}</CountText>
+      <CountText>{t('TotalQuests', { number: quests.length })}</CountText>
       <QuestList quests={quests}></QuestList>
     </>
   )
