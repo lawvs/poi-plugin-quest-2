@@ -1,4 +1,4 @@
-import { Button, InputGroup, Intent, Tag, Tooltip } from '@blueprintjs/core'
+import { Button, InputGroup, Intent, Tooltip } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import type { ChangeEvent } from 'react'
 import React, { useCallback } from 'react'
@@ -10,12 +10,7 @@ import type { UnionQuest } from './questHelper'
 import { useQuest, useSyncWithGame } from './store'
 import { useFilterTags, useSyncGameTagEffect } from './store/filterTags'
 import { useSearchInput } from './store/search'
-import {
-  ALL_CATEGORY_TAG,
-  ALL_TYPE_TAG,
-  CATEGORY_TAGS,
-  TYPE_TAGS,
-} from './tags'
+import { CategoryTags, CATEGORY_TAGS, TypeTags, TYPE_TAGS } from './tags'
 
 const ToolbarWrapper = styled.div`
   display: flex;
@@ -24,15 +19,6 @@ const ToolbarWrapper = styled.div`
 
   & > * + * {
     margin-top: 8px;
-  }
-`
-
-const TagsWrapper = styled.div`
-  margin-left: -4px;
-  margin-right: -4px;
-
-  & > * {
-    margin: 4px;
   }
 `
 
@@ -91,62 +77,14 @@ export const SearchInput: React.FC = () => {
   )
 }
 
-const Tags = () => {
-  const { t } = usePluginTranslation()
-
+export const Toolbar = () => {
   useSyncGameTagEffect()
 
-  const { typeTags, categoryTags, setCategoryTags, setTypeTags } =
-    useFilterTags()
-
-  return (
-    <>
-      <TagsWrapper>
-        {CATEGORY_TAGS.map(({ name }) => (
-          <Tag
-            onClick={() => setCategoryTags(name)}
-            intent={
-              categoryTags[name]
-                ? name === ALL_CATEGORY_TAG.name
-                  ? 'success'
-                  : 'primary'
-                : 'none'
-            }
-            interactive={true}
-            key={name}
-          >
-            {t(name)}
-          </Tag>
-        ))}
-      </TagsWrapper>
-      <TagsWrapper>
-        {TYPE_TAGS.map((tag) => (
-          <Tag
-            onClick={() => setTypeTags(tag.name)}
-            intent={
-              typeTags[tag.name]
-                ? tag.name === ALL_TYPE_TAG.name
-                  ? 'success'
-                  : 'primary'
-                : 'none'
-            }
-            interactive={true}
-            key={tag.name}
-          >
-            {t(tag.name)}
-            {'suffix' in tag && ' ' + tag.suffix}
-          </Tag>
-        ))}
-      </TagsWrapper>
-    </>
-  )
-}
-
-export const Toolbar = () => {
   return (
     <ToolbarWrapper>
       <SearchInput></SearchInput>
-      <Tags></Tags>
+      <CategoryTags />
+      <TypeTags />
     </ToolbarWrapper>
   )
 }

@@ -42,9 +42,9 @@ const yearlyQuest = new Set(questCategory.yearlyQuest)
 const singleQuest = new Set(questCategory.singleQuest)
 const newQuest = new Set(newQuestData)
 
-export const isInProgressQuest = (quest: UnionQuest) =>
-  quest.gameQuest?.api_state === QUEST_API_STATE.IN_PROGRESS ||
-  quest.gameQuest?.api_state === QUEST_API_STATE.COMPLETED
+export const isInProgressQuest = (quest: GameQuest) =>
+  quest.api_state === QUEST_API_STATE.IN_PROGRESS ||
+  quest.api_state === QUEST_API_STATE.COMPLETED
 
 export const isDailyQuest = (quest: UnionQuest) => dailyQuest.has(quest.gameId)
 export const isWeeklyQuest = (quest: UnionQuest) =>
