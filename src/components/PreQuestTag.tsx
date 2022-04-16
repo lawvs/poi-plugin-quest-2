@@ -14,7 +14,7 @@ const TagWrapper = styled(Tag)`
   }
 `
 
-export const PreTaskTag = ({ code }: { code: string }) => {
+export const PreQuestTag = ({ code }: { code: string }) => {
   const { setSearchInput } = useSearchInput()
   const { setCategoryTagsAll, setTypeTagsAll } = useFilterTags()
 
