@@ -6,6 +6,7 @@ import { KcwikiQuestData } from '../build/kcQuestsData'
 
 const CATEGORY_OUTPUT_PATH = path.resolve('build', 'questCategory.json')
 const QUEST_MAP_OUTPUT_PATH = path.resolve('build', 'questMap.json')
+const PRE_POST_QUEST_OUTPUT_PATH = path.resolve('build', 'prePostQuest.json')
 
 const kcaQuestStartsFilter = (str: string) =>
   Object.entries(QuestData['zh-CN'])
@@ -56,6 +57,7 @@ const genQuestCategory = async () => {
 
   await writeFile(CATEGORY_OUTPUT_PATH, JSON.stringify(data, null, 2))
   console.log('Updated quest category', CATEGORY_OUTPUT_PATH)
+  return data
 }
 
 const genQuestMap = async () => {
@@ -63,22 +65,55 @@ const genQuestMap = async () => {
     (acc, [gameId, { code }]) => {
       if (code in acc) {
         console.warn(`Duplicate quest code: ${code}`)
+        process.exitCode = 1
       }
       if (Number.isNaN(+gameId)) {
         console.warn(`Invalid gameId: ${gameId}`)
+        process.exitCode = 1
       }
-      acc[code] = gameId
+      acc[code] = +gameId
       return acc
     },
-    {} as Record<string, string>
+    {} as Record<string, number>
   )
   await writeFile(QUEST_MAP_OUTPUT_PATH, JSON.stringify(data, null, 2))
   console.log('Updated quest map', QUEST_MAP_OUTPUT_PATH)
+  return data
+}
+
+const genPostQuestMap = async (code2IdQuestMap: Record<string, number>) => {
+  const data = Object.entries(KcwikiQuestData['zh-CN']).reduce(
+    (acc, [gameId, { code, pre }]) => {
+      if (!pre || pre.length === 0) {
+        return acc
+      }
+      if (!acc[gameId]) {
+        acc[gameId] = { pre: [], post: [] }
+      }
+      pre.forEach((preCode) => {
+        acc[gameId].pre.push(preCode)
+        const preQuestId = code2IdQuestMap[preCode]
+        if (preQuestId) {
+          if (!acc[preQuestId]) {
+            acc[preQuestId] = { pre: [], post: [] }
+          }
+          acc[preQuestId].post.push(code)
+        }
+      })
+      return acc
+    },
+    {} as Record<string, { pre: string[]; post: string[] }>
+  )
+
+  await writeFile(PRE_POST_QUEST_OUTPUT_PATH, JSON.stringify(data, null, 2))
+  console.log('Updated quest map', PRE_POST_QUEST_OUTPUT_PATH)
+  return data
 }
 
 const main = async () => {
   await genQuestCategory()
-  await genQuestMap()
+  const code2IdQuestMap = await genQuestMap()
+  await genPostQuestMap(code2IdQuestMap)
 }
 
 main()
