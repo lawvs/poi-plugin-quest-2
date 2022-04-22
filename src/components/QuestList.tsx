@@ -84,6 +84,11 @@ export const QuestList: React.FC<{ quests: UnionQuest[] }> = ({ quests }) => {
   const rowRenderer: ListRowRenderer = useQuestsRowRenderer(quests)
 
   useEffect(() => {
+    cache.clearAll()
+    listRef.current?.recomputeRowHeights()
+  }, [quests])
+
+  useEffect(() => {
     if (activeTab) {
       cache.clearAll()
       listRef.current?.recomputeRowHeights()
