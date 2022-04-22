@@ -1,10 +1,16 @@
-assets/
-storybook-static/
-__tests__/
-src/stories/
-coverage/
-.storybook/
-build/dutySprites/
-*.tgz
+# Config
 .github
 .vscode
+.storybook/
+scripts/
+
+# Build output
+assets/
+storybook-static/
+coverage/
+build/dutySprites/
+*.tgz
+
+# Other
+__tests__/
+src/stories/

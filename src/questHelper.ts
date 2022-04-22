@@ -1,5 +1,6 @@
 import questCategory from '../build/questCategory.json'
 import newQuestData from '../build/kcQuestsData/quests-scn-new.json'
+import prePostQuest from '../build/prePostQuest.json'
 import { GameQuest, QUEST_API_STATE } from './poi/types'
 
 type DocQuest = {
@@ -29,7 +30,7 @@ type DocQuest = {
 }
 
 export type UnionQuest = {
-  gameId: string
+  gameId: number
   gameQuest?: GameQuest
   docQuest: DocQuest
 }
@@ -40,7 +41,7 @@ const monthlyQuest = new Set(questCategory.monthlyQuest)
 const quarterlyQuest = new Set(questCategory.quarterlyQuest)
 const yearlyQuest = new Set(questCategory.yearlyQuest)
 const singleQuest = new Set(questCategory.singleQuest)
-const newQuest = new Set(newQuestData)
+const newQuest = new Set(newQuestData.map((gameId) => +gameId))
 
 export const isInProgressQuest = (quest: GameQuest) =>
   quest.api_state === QUEST_API_STATE.IN_PROGRESS ||
@@ -195,6 +196,13 @@ export const isModernizationQuest = ({ code }: DocQuest) =>
 export const isUnknownCategoryQuest = ({ code }: DocQuest) =>
   // Starts with unknown character
   /^[^ABCDEFG]/.test(code)
+
+export const getPrePost = (gameId: number) => {
+  if (!(gameId in prePostQuest)) {
+    return { pre: [], post: [] }
+  }
+  return prePostQuest[String(gameId) as keyof typeof prePostQuest]
+}
 
 export enum QUEST_STATUS {
   LOCKED,

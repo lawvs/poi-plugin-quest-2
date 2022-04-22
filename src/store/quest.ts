@@ -44,12 +44,12 @@ export const useQuest = (): UnionQuest[] => {
 
   if (syncWithGame && gameQuest.length) {
     return gameQuest.map((quest) => {
-      const gameId = String(quest.api_no)
+      const gameId = quest.api_no
       if (gameId in docQuestMap) {
         return {
           gameId,
           gameQuest: quest,
-          docQuest: docQuestMap[gameId as keyof typeof docQuestMap],
+          docQuest: docQuestMap[String(gameId) as keyof typeof docQuestMap],
         }
       }
 
@@ -68,7 +68,7 @@ export const useQuest = (): UnionQuest[] => {
   } else {
     // Return all recorded quests
     return Object.entries(docQuestMap).map(([gameId, val]) => ({
-      gameId,
+      gameId: +gameId,
       // Maybe empty
       gameQuest: gameQuest.find((quest) => quest.api_no === Number(gameId))!,
       docQuest: val,

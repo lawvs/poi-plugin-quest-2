@@ -25,13 +25,13 @@
     "downloadKcQuestsData": "ts-node scripts/downloadKcQuestsData.ts",
     "downloadKcanotifyData": "ts-node scripts/downloadKcanotifyGamedata.ts",
     "downloadSprites": "ts-node scripts/downloadSprites.ts",
-    "genQuestCategory": "ts-node scripts/genQuestCategory.ts",
+    "genQuestData": "ts-node scripts/genQuestData.ts",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "npm run lint -- --fix",
     "storybook": "start-storybook -p 6006",
     "test": "jest",
     "typeCheck": "tsc --noEmit",
-    "update": "npm run downloadKcanotifyData && npm run downloadKcQuestsData && npm run genQuestCategory"
+    "update": "npm run downloadKcanotifyData && npm run downloadKcQuestsData && npm run genQuestData"
   },
   "dependencies": {
     "react-use": "^17.3.1",

@@ -6,15 +6,16 @@ import { useFilterTags } from '../store/filterTags'
 import { useSearchInput } from '../store/search'
 
 const TagWrapper = styled(Tag)`
-  margin: 0 4px;
+  margin: 2px 4px;
   user-select: none;
+  overflow: visible;
 
   & > span {
     cursor: pointer;
   }
 `
 
-export const PreTaskTag = ({ code }: { code: string }) => {
+export const QuestTag = ({ code }: { code: string }) => {
   const { setSearchInput } = useSearchInput()
   const { setCategoryTagsAll, setTypeTagsAll } = useFilterTags()
 

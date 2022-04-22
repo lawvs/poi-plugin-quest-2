@@ -11,7 +11,6 @@ import type { ListRowProps } from 'react-virtualized'
 import styled from 'styled-components'
 import { QUEST_STATUS } from '../questHelper'
 import type { UnionQuest } from '../questHelper'
-import { useLargeCard } from '../store'
 import { QuestCard } from './QuestCard'
 import { useIsQuestPluginTab } from '../poi/hooks'
 import { QUEST_API_STATE } from '../poi/types'
@@ -67,7 +66,7 @@ const useQuestsRowRenderer = (quests: UnionQuest[]) => {
               desc={desc}
               tip={memo}
               tip2={memo2}
-              preTask={pre}
+              preQuest={pre}
               status={questStatus}
             ></QuestCard>
           </div>
@@ -80,16 +79,14 @@ const useQuestsRowRenderer = (quests: UnionQuest[]) => {
 }
 
 export const QuestList: React.FC<{ quests: UnionQuest[] }> = ({ quests }) => {
-  const { largeCard } = useLargeCard()
   const activeTab = useIsQuestPluginTab()
   const listRef = useRef<List>(null)
   const rowRenderer: ListRowRenderer = useQuestsRowRenderer(quests)
 
   useEffect(() => {
-    const largeCardIdx = quests.findIndex((i) => i.gameId === largeCard)
     cache.clearAll()
-    listRef.current?.recomputeRowHeights(largeCardIdx)
-  }, [quests, largeCard])
+    listRef.current?.recomputeRowHeights()
+  }, [quests])
 
   useEffect(() => {
     if (activeTab) {

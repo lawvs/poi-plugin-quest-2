@@ -40,3 +40,20 @@ export const CardTail = styled.div`
     height: 20px;
   }
 `
+
+export const CardActionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+`
+
+export const TagsWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+`
+
+export const SpanText = styled.span`
+  white-space: nowrap;
+`

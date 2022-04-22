@@ -35,6 +35,7 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     'react/prop-types': 'off',
+    'react/display-name': 'off',
     'linebreak-style': ['error', 'unix'],
     'no-var': 'error',
     'prefer-const': 'error',
