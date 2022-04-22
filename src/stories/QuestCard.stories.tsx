@@ -64,7 +64,6 @@ ComplexCard.args = {
   tip: '奖励:“比叡” 挂轴以下奖励三选一：战斗详报 ×196 式 150cm 探照灯 ×1 勋章 ×1',
   tip2: '非限时任务使用以比叡作为旗舰的舰队取得以下海域 S 胜：5-3、5-4 背景相关：比叡于 1942 年 11 月 13 日沉没于所罗门海域，2019 年 2 月 6 日舰体被发现。',
   name: '「比叡」的出击',
-  preQuest: ['B50', 'F65', 'F66', 'B11'],
 }
 
 export const PreQuestCard = Template.bind({})
@@ -73,5 +72,4 @@ PreQuestCard.args = {
   code: 'B1',
   name: 'はじめての「出撃」！',
   desc: '艦隊を出撃させ、敵艦隊と交戦せよ！',
-  preQuest: ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'W1'],
 }
