@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react'
 import type { StyledComponentProps } from 'styled-components'
 import { usePluginTranslation } from '../../poi/hooks'
 import { getPrePost, guessQuestCategory, QUEST_STATUS } from '../../questHelper'
-import { QuestTag } from '../PreQuestTag'
+import { QuestTag } from '../QuestTag'
 import {
   CardActionWrapper,
   CardBody,

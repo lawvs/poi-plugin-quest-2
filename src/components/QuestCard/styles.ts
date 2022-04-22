@@ -43,15 +43,15 @@ export const CardTail = styled.div`
 
 export const CardActionWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: baseline;
-  flex-wrap: wrap;
-  martin-bottom: 8px;
 `
 
 export const TagsWrapper = styled.div`
   display: flex;
   flex: 1;
-  margin-bottom: 8px;
+  flex-wrap: wrap;
+  align-items: center;
 `
 
 export const SpanText = styled.span`

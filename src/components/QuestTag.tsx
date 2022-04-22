@@ -6,7 +6,7 @@ import { useFilterTags } from '../store/filterTags'
 import { useSearchInput } from '../store/search'
 
 const TagWrapper = styled(Tag)`
-  margin: 0 4px;
+  margin: 2px 4px;
   user-select: none;
   overflow: visible;
 
