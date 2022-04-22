@@ -77,7 +77,15 @@ const genQuestMap = async () => {
   return data
 }
 
-const genPostQuestMap = async (code2IdQuestMap: Record<string, number>) => {
+const genPrePostQuestMap = async (code2IdQuestMap: Record<string, number>) => {
+  const compareQuest = (code1: string, code2: string) => {
+    if (!code2IdQuestMap[code1] || !code2IdQuestMap[code2]) {
+      return 0
+    }
+
+    return code2IdQuestMap[code1] - code2IdQuestMap[code2]
+  }
+
   const data = Object.entries(KcwikiQuestData['zh-CN']).reduce(
     (acc, [gameId, { code, pre }]) => {
       if (!pre || pre.length === 0) {
@@ -88,6 +96,7 @@ const genPostQuestMap = async (code2IdQuestMap: Record<string, number>) => {
       }
       pre.forEach((preCode) => {
         acc[gameId].pre.push(preCode)
+
         const preQuestId = code2IdQuestMap[preCode]
         if (preQuestId) {
           if (!acc[preQuestId]) {
@@ -101,6 +110,12 @@ const genPostQuestMap = async (code2IdQuestMap: Record<string, number>) => {
     {} as Record<string, { pre: string[]; post: string[] }>
   )
 
+  // Sort pre/post quests
+  for (const key in data) {
+    data[key].pre.sort(compareQuest)
+    data[key].post.sort(compareQuest)
+  }
+
   await writeFile(PRE_POST_QUEST_OUTPUT_PATH, JSON.stringify(data, null, 2))
   console.log('Updated quest map', PRE_POST_QUEST_OUTPUT_PATH)
   return data
@@ -109,7 +124,7 @@ const genPostQuestMap = async (code2IdQuestMap: Record<string, number>) => {
 const main = async () => {
   await genQuestCategory()
   const code2IdQuestMap = await genQuestMap()
-  await genPostQuestMap(code2IdQuestMap)
+  await genPrePostQuestMap(code2IdQuestMap)
 }
 
 main()
