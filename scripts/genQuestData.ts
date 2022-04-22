@@ -11,7 +11,7 @@ const PRE_POST_QUEST_OUTPUT_PATH = path.resolve('build', 'prePostQuest.json')
 const kcaQuestStartsFilter = (str: string) =>
   Object.entries(QuestData['zh-CN'])
     .filter(([, quest]) => quest.name.startsWith(str))
-    .map(([gameId]) => gameId)
+    .map(([gameId]) => +gameId)
 
 const kcwikiDataSelector = () => Object.entries(KcwikiQuestData['zh-CN'])
 const mergeDataSelector = () =>
@@ -26,13 +26,13 @@ const genQuestCategory = async () => {
       ...kcaQuestStartsFilter('(季任)'),
       ...kcwikiDataSelector()
         .filter(([, quest]) => quest.memo2.includes('季常任务'))
-        .map(([gameId]) => gameId),
+        .map(([gameId]) => +gameId),
     ]),
   ].sort((a, b) => +a - +b)
   // (年任) (年任 / x 月)
   const yearlyQuest = kcwikiDataSelector()
     .filter(([, quest]) => quest.memo2.includes('年常任务'))
-    .map(([gameId]) => gameId)
+    .map(([gameId]) => +gameId)
   const singleQuest = mergeDataSelector()
     .filter(
       ([gameId]) =>
@@ -42,9 +42,9 @@ const genQuestCategory = async () => {
           ...monthlyQuest,
           ...quarterlyQuest,
           ...yearlyQuest,
-        ].includes(gameId)
+        ].includes(+gameId)
     )
-    .map(([gameId]) => gameId)
+    .map(([gameId]) => +gameId)
 
   const data = {
     dailyQuest,
@@ -65,10 +65,6 @@ const genQuestMap = async () => {
     (acc, [gameId, { code }]) => {
       if (code in acc) {
         console.warn(`Duplicate quest code: ${code}`)
-        process.exitCode = 1
-      }
-      if (Number.isNaN(+gameId)) {
-        console.warn(`Invalid gameId: ${gameId}`)
         process.exitCode = 1
       }
       acc[code] = +gameId
