@@ -94,6 +94,7 @@ const main = async () => {
       let text = await resp.text()
       // TODO fix source file
       // Remove BOM(U+FEFF) from the header of the quests-ko.json
+      // See https://github.com/antest1/kcanotify-gamedata/pull/2
       text = text.trim()
 
       const json = JSON.parse(text) as {
@@ -104,6 +105,13 @@ const main = async () => {
           memo?: string
         }
       }
+
+      if ('421?' in json) {
+        // TODO fix source file
+        // See https://github.com/antest1/kcanotify-gamedata/pull/2
+        delete json['421?']
+      }
+
       for (const gameId in json) {
         const { name, desc, memo } = json[gameId]
         json[gameId].name = pangu.spacing(name)
