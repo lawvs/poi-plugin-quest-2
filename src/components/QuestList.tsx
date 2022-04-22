@@ -66,7 +66,7 @@ const useQuestsRowRenderer = (quests: UnionQuest[]) => {
               desc={desc}
               tip={memo}
               tip2={memo2}
-              preTask={pre}
+              preQuest={pre}
               status={questStatus}
             ></QuestCard>
           </div>
