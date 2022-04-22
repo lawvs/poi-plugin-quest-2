@@ -1,5 +1,6 @@
 import questCategory from '../build/questCategory.json'
 import newQuestData from '../build/kcQuestsData/quests-scn-new.json'
+import prePostQuest from '../build/prePostQuest.json'
 import { GameQuest, QUEST_API_STATE } from './poi/types'
 
 type DocQuest = {
@@ -195,6 +196,13 @@ export const isModernizationQuest = ({ code }: DocQuest) =>
 export const isUnknownCategoryQuest = ({ code }: DocQuest) =>
   // Starts with unknown character
   /^[^ABCDEFG]/.test(code)
+
+export const getPrePost = (gameId: number) => {
+  if (!(gameId in prePostQuest)) {
+    return { pre: [], post: [] }
+  }
+  return prePostQuest[String(gameId) as keyof typeof prePostQuest]
+}
 
 export enum QUEST_STATUS {
   LOCKED,

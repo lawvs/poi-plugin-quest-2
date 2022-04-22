@@ -1,19 +1,16 @@
-import { Elevation, Text, Tooltip } from '@blueprintjs/core'
-import React from 'react'
+import { Card, Elevation, Text, Tooltip } from '@blueprintjs/core'
+import React, { forwardRef } from 'react'
+import type { StyledComponentProps } from 'styled-components'
 import { guessQuestCategory, QUEST_STATUS } from '../../questHelper'
 import type { QuestCardProps } from './index'
 import { CardBody, CardTail, CatIndicator, FlexCard } from './styles'
 import { questStatusMap } from './utils'
 
-export const MinimalQuestCard: React.FC<QuestCardProps> = ({
-  code,
-  name,
-  desc,
-  tip,
-  status = QUEST_STATUS.DEFAULT,
-  onClick,
-  style,
-}) => {
+export const MinimalQuestCard = forwardRef<
+  Card,
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  QuestCardProps & StyledComponentProps<typeof Card, any, {}, never>
+>(({ code, name, desc, tip, status = QUEST_STATUS.DEFAULT, ...props }, ref) => {
   const indicatorColor = guessQuestCategory(code).color
   const TailIcon = questStatusMap[status]
 
@@ -29,10 +26,10 @@ export const MinimalQuestCard: React.FC<QuestCardProps> = ({
       }
     >
       <FlexCard
+        ref={ref}
         elevation={Elevation.ZERO}
         interactive={true}
-        onClick={onClick}
-        style={style}
+        {...props}
       >
         <CatIndicator color={indicatorColor}></CatIndicator>
         <CardBody>
@@ -45,4 +42,4 @@ export const MinimalQuestCard: React.FC<QuestCardProps> = ({
       </FlexCard>
     </Tooltip>
   )
-}
+})

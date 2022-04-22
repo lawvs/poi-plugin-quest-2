@@ -30,7 +30,6 @@ export const CardBody = styled.div`
     margin-top: 8px;
   }
 `
-
 export const CardTail = styled.div`
   display: flex;
   justify-content: center;
@@ -39,4 +38,21 @@ export const CardTail = styled.div`
   img {
     height: 20px;
   }
+`
+
+export const CardActionWrapper = styled.div`
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  martin-bottom: 8px;
+`
+
+export const TagsWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  margin-bottom: 8px;
+`
+
+export const SpanText = styled.span`
+  white-space: nowrap;
 `

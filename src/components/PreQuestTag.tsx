@@ -8,13 +8,14 @@ import { useSearchInput } from '../store/search'
 const TagWrapper = styled(Tag)`
   margin: 0 4px;
   user-select: none;
+  overflow: visible;
 
   & > span {
     cursor: pointer;
   }
 `
 
-export const PreQuestTag = ({ code }: { code: string }) => {
+export const QuestTag = ({ code }: { code: string }) => {
   const { setSearchInput } = useSearchInput()
   const { setCategoryTagsAll, setTypeTagsAll } = useFilterTags()
 

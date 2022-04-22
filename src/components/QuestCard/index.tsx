@@ -1,67 +1,105 @@
-import { Elevation, H5, Text } from '@blueprintjs/core'
-import React from 'react'
-import styled from 'styled-components'
+import { Card, Elevation, H5, Text } from '@blueprintjs/core'
+import React, { forwardRef } from 'react'
+import type { StyledComponentProps } from 'styled-components'
 import { usePluginTranslation } from '../../poi/hooks'
-import { guessQuestCategory, QUEST_STATUS } from '../../questHelper'
-import { PreQuestTag } from '../PreQuestTag'
-import { CardBody, CardMedia, CardTail, FlexCard } from './styles'
+import { getPrePost, guessQuestCategory, QUEST_STATUS } from '../../questHelper'
+import { QuestTag } from '../PreQuestTag'
+import {
+  CardActionWrapper,
+  CardBody,
+  CardMedia,
+  CardTail,
+  FlexCard,
+  SpanText,
+  TagsWrapper,
+} from './styles'
 import { questIconMap, questStatusMap } from './utils'
 
 export type QuestCardProps = {
+  gameId: number
   code: string
   name: string
   desc: string | JSX.Element
   tip?: string
   tip2?: string
   status?: QUEST_STATUS
-  preTask?: string[]
-  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  preQuest?: string[]
 }
 
-const PreTaskTagWrapper = styled.div`
-  display: flex;
-  align-items: baseline;
-`
-
-export const LargeQuestCard = ({
-  code,
-  name,
-  desc,
-  tip,
-  tip2,
-  preTask,
-  status = QUEST_STATUS.DEFAULT,
-  onClick,
-}: QuestCardProps) => {
+const CardAction = ({ gameId }: { gameId: number }) => {
   const { t } = usePluginTranslation()
-  const headIcon = questIconMap[guessQuestCategory(code).type]
-  const TailIcon = questStatusMap[status]
+
+  const preQuests = getPrePost(gameId)
 
   return (
-    <FlexCard elevation={Elevation.ZERO} interactive={false} onClick={onClick}>
-      <CardMedia src={headIcon}></CardMedia>
-      <CardBody>
-        <H5>{[code, name].filter((i) => i != undefined).join(' - ')}</H5>
-        <Text>{desc}</Text>
-        {tip2 && <b>{tip2}</b>}
-        {tip && <i>{tip}</i>}
-        <PreTaskTagWrapper>
-          {!!preTask?.length && <span>{t('Requires')}</span>}
-          {preTask?.map((i) => (
-            <PreQuestTag key={i} code={i}></PreQuestTag>
-          ))}
-        </PreTaskTagWrapper>
-      </CardBody>
+    <CardActionWrapper>
+      <TagsWrapper>
+        {!!preQuests.pre.length && (
+          <>
+            <SpanText>{t('Requires')}</SpanText>
+            {preQuests.pre.map((i) => (
+              <QuestTag key={i} code={i}></QuestTag>
+            ))}
+          </>
+        )}
+      </TagsWrapper>
 
-      <CardTail>
-        <TailIcon />
-      </CardTail>
-    </FlexCard>
+      <TagsWrapper>
+        {!!preQuests.post.length && (
+          <>
+            <SpanText>{t('Unlocks')}</SpanText>
+            {preQuests.post.map((i) => (
+              <QuestTag key={i} code={i}></QuestTag>
+            ))}
+          </>
+        )}
+      </TagsWrapper>
+    </CardActionWrapper>
   )
 }
 
-export const QuestCard: React.FC<QuestCardProps & { gameId: string }> = ({
-  ...props
-}) => {
-  return <LargeQuestCard {...props}></LargeQuestCard>
-}
+export const QuestCard = forwardRef<
+  Card,
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  QuestCardProps & StyledComponentProps<typeof Card, any, {}, never>
+>(
+  (
+    {
+      gameId,
+      code,
+      name,
+      desc,
+      tip,
+      tip2,
+      status = QUEST_STATUS.DEFAULT,
+      ...props
+    },
+    ref
+  ) => {
+    const headIcon = questIconMap[guessQuestCategory(code).type]
+    const TailIcon = questStatusMap[status]
+
+    return (
+      <FlexCard
+        ref={ref}
+        elevation={Elevation.ZERO}
+        interactive={false}
+        {...props}
+      >
+        <CardMedia src={headIcon}></CardMedia>
+        <CardBody>
+          <H5>{[code, name].filter((i) => i != undefined).join(' - ')}</H5>
+          <Text>{desc}</Text>
+          {tip2 && <b>{tip2}</b>}
+          {tip && <i>{tip}</i>}
+
+          <CardAction gameId={gameId}></CardAction>
+        </CardBody>
+
+        <CardTail>
+          <TailIcon />
+        </CardTail>
+      </FlexCard>
+    )
+  }
+)
