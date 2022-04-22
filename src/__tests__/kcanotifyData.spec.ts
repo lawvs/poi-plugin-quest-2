@@ -15,3 +15,16 @@ Array [
 ]
 `)
 })
+
+describe('should format correct', () => {
+  Object.keys(QuestData).forEach((lang) => {
+    test(`${lang} key format`, () => {
+      Object.keys(QuestData[lang as keyof typeof QuestData]).forEach((key) => {
+        // gameId should not extra space
+        expect(key.trim()).toEqual(key)
+        // gameId should be number
+        expect(String(+key)).toEqual(key)
+      })
+    })
+  })
+})

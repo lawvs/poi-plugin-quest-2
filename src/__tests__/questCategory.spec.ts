@@ -21,11 +21,11 @@ describe('should questCategory correct', () => {
       Object.entries(questCategory).map(([key, val]) => [
         key,
         val
-          .sort((a, b) => +a - +b)
+          .sort((a, b) => a - b)
           .map((gameId) => ({
             gameId,
-            code: mergeData[gameId as keyof typeof mergeData].code,
-            name: mergeData[gameId as keyof typeof mergeData].name,
+            code: mergeData[String(gameId) as keyof typeof mergeData].code,
+            name: mergeData[String(gameId) as keyof typeof mergeData].name,
           })),
       ])
     )
