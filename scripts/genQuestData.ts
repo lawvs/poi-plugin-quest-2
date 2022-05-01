@@ -5,7 +5,7 @@ import { QuestData } from '../build/kcanotifyGamedata'
 import { KcwikiQuestData } from '../build/kcQuestsData'
 
 const CATEGORY_OUTPUT_PATH = path.resolve('build', 'questCategory.json')
-const QUEST_MAP_OUTPUT_PATH = path.resolve('build', 'questMap.json')
+const QUEST_CODE_MAP_OUTPUT_PATH = path.resolve('build', 'questCodeMap.json')
 const PRE_POST_QUEST_OUTPUT_PATH = path.resolve('build', 'prePostQuest.json')
 
 const kcaQuestStartsFilter = (str: string) =>
@@ -72,8 +72,8 @@ const genQuestMap = async () => {
     },
     {} as Record<string, number>
   )
-  await writeFile(QUEST_MAP_OUTPUT_PATH, JSON.stringify(data, null, 2))
-  console.log('Updated quest map', QUEST_MAP_OUTPUT_PATH)
+  await writeFile(QUEST_CODE_MAP_OUTPUT_PATH, JSON.stringify(data, null, 2))
+  console.log('Updated quest map', QUEST_CODE_MAP_OUTPUT_PATH)
   return data
 }
 

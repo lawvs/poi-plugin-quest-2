@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useGameQuest, usePluginTranslation } from '../poi/hooks'
 import {
+  DocQuest,
   getCategory,
   getKcanotifyQuestData,
   getQuestIdByCode,
@@ -34,7 +35,7 @@ export const useLanguage = () => {
   return lang
 }
 
-const useQuestMap = () => {
+const useQuestMap = (): Record<string, DocQuest> => {
   const lang = useLanguage()
   const kcwikiData = useKcwikiData(lang)
   if (kcwikiData) {
@@ -81,6 +82,15 @@ export const useQuest = (): UnionQuest[] => {
       docQuest: val,
     }))
   }
+}
+
+export const useQuestByCode = (code: string) => {
+  const questMap = useQuestMap()
+  const questId = getQuestIdByCode(code)
+  if (questId && questId in questMap) {
+    return questMap[String(questId) as keyof typeof questMap]
+  }
+  return null
 }
 
 /**

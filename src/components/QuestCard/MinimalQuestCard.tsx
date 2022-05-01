@@ -6,6 +6,9 @@ import type { QuestCardProps } from './index'
 import { CardBody, CardTail, CatIndicator, FlexCard } from './styles'
 import { questStatusMap } from './utils'
 
+/**
+ * @deprecated
+ */
 export const MinimalQuestCard = forwardRef<
   Card,
   // eslint-disable-next-line @typescript-eslint/ban-types

@@ -6,7 +6,7 @@ import questCategory from '../build/questCategory.json'
 import questCodeMap from '../build/questCodeMap.json'
 import { GameQuest, QUEST_API_STATE } from './poi/types'
 
-type DocQuest = {
+export type DocQuest = {
   code: string
   name: string
   desc: string

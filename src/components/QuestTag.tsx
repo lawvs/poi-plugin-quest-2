@@ -1,8 +1,11 @@
-import { Tag } from '@blueprintjs/core'
-import React, { useCallback } from 'react'
+import type { TooltipProps } from '@blueprintjs/core'
+import { Tag, Text, Tooltip } from '@blueprintjs/core'
+import { IconNames } from '@blueprintjs/icons'
+import React, { forwardRef, useCallback } from 'react'
 import styled from 'styled-components'
-import { guessQuestCategory } from '../questHelper'
+import { DocQuest, guessQuestCategory } from '../questHelper'
 import { useFilterTags } from '../store/filterTags'
+import { useQuestByCode } from '../store/quest'
 import { useSearchInput } from '../store/search'
 
 const TagWrapper = styled(Tag)`
@@ -15,9 +18,39 @@ const TagWrapper = styled(Tag)`
   }
 `
 
+const QuestTooltip = forwardRef<
+  Tooltip,
+  Omit<TooltipProps, 'content'> & {
+    quest: DocQuest
+    children: React.ReactNode
+  }
+>(({ quest, children, ...props }, ref) => {
+  if (!quest) {
+    return <>{children}</>
+  }
+  return (
+    <Tooltip
+      ref={ref}
+      content={
+        <>
+          <div>{`${quest.code} - ${quest.name}`}</div>
+          <Text>{quest.desc}</Text>
+          {quest.memo2 && <b>{quest.memo2}</b>}
+          {quest.memo && <i>{quest.memo}</i>}
+        </>
+      }
+      placement={'top'}
+      {...props}
+    >
+      {children}
+    </Tooltip>
+  )
+})
+
 export const QuestTag = ({ code }: { code: string }) => {
   const { setSearchInput } = useSearchInput()
   const { setCategoryTagsAll, setTypeTagsAll } = useFilterTags()
+  const maybeQuest = useQuestByCode(code)
 
   const handleClick = useCallback(() => {
     setSearchInput(code)
@@ -29,13 +62,28 @@ export const QuestTag = ({ code }: { code: string }) => {
     indicatorColor === '#fff' || indicatorColor === '#87da61'
       ? 'black'
       : 'white'
+
+  if (!maybeQuest) {
+    return (
+      <TagWrapper
+        icon={IconNames.HELP}
+        style={{ color: fontColor, background: indicatorColor }}
+      >
+        {code}
+      </TagWrapper>
+    )
+  }
+
+  const quest = maybeQuest
   return (
-    <TagWrapper
-      onClick={handleClick}
-      interactive
-      style={{ color: fontColor, background: indicatorColor }}
-    >
-      {code}
-    </TagWrapper>
+    <QuestTooltip quest={quest}>
+      <TagWrapper
+        onClick={handleClick}
+        interactive
+        style={{ color: fontColor, background: indicatorColor }}
+      >
+        {code}
+      </TagWrapper>
+    </QuestTooltip>
   )
 }
