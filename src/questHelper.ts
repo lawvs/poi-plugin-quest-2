@@ -1,6 +1,9 @@
-import questCategory from '../build/questCategory.json'
+import { QuestData } from '../build/kcanotifyGamedata'
+import { KcwikiQuestData } from '../build/kcQuestsData'
 import newQuestData from '../build/kcQuestsData/quests-scn-new.json'
 import prePostQuest from '../build/prePostQuest.json'
+import questCategory from '../build/questCategory.json'
+import questCodeMap from '../build/questCodeMap.json'
 import { GameQuest, QUEST_API_STATE } from './poi/types'
 
 type DocQuest = {
@@ -34,6 +37,9 @@ export type UnionQuest = {
   gameQuest?: GameQuest
   docQuest: DocQuest
 }
+
+export const getKcwikiQuestData = () => KcwikiQuestData
+export const getKcanotifyQuestData = () => QuestData
 
 const dailyQuest = new Set(questCategory.dailyQuest)
 const weeklyQuest = new Set(questCategory.weeklyQuest)
@@ -202,6 +208,13 @@ export const getPrePost = (gameId: number) => {
     return { pre: [], post: [] }
   }
   return prePostQuest[String(gameId) as keyof typeof prePostQuest]
+}
+
+export const getQuestIdByCode = (code: string) => {
+  if (code in questCodeMap) {
+    return questCodeMap[code as keyof typeof questCodeMap]
+  }
+  return null
 }
 
 export enum QUEST_STATUS {

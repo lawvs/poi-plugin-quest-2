@@ -1,20 +1,26 @@
 import { useCallback } from 'react'
-import { QuestData } from '../../build/kcanotifyGamedata'
 import { useGameQuest, usePluginTranslation } from '../poi/hooks'
-import { getCategory } from '../questHelper'
+import {
+  getCategory,
+  getKcanotifyQuestData,
+  getQuestIdByCode,
+} from '../questHelper'
 import type { UnionQuest } from '../questHelper'
 import { useKcwikiData, checkIsKcwikiSupportedLanguages } from './kcwiki'
 import { useStore, useSyncWithGame } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
 
-export const checkIsKcanotifySupportedLanguages = (
+const checkIsKcanotifySupportedLanguages = (
   lang: string
-): lang is keyof typeof QuestData => lang in QuestData
+): lang is keyof typeof kcaQuestData => {
+  const kcaQuestData = getKcanotifyQuestData()
+  return lang in kcaQuestData
+}
 
 export const isSupportedLanguages = (
   lang: string
-): lang is keyof typeof QuestData =>
+): lang is keyof ReturnType<typeof getKcanotifyQuestData> =>
   checkIsKcanotifySupportedLanguages(lang) ||
   checkIsKcwikiSupportedLanguages(lang)
 
@@ -34,7 +40,8 @@ const useQuestMap = () => {
   if (kcwikiData) {
     return kcwikiData
   }
-  return QuestData[lang]
+  const kcaQuestData = getKcanotifyQuestData()
+  return kcaQuestData[lang]
 }
 
 export const useQuest = (): UnionQuest[] => {
