@@ -26,7 +26,7 @@ const cache = new CellMeasurerCache({
   fixedWidth: true,
 })
 
-const questStateToQuestStatus = (
+const questApiStateToQuestStatus = (
   state: QUEST_API_STATE | undefined
 ): QUEST_STATUS => {
   switch (state) {
@@ -47,7 +47,7 @@ const useQuestsRowRenderer = (quests: UnionQuest[]) => {
       const quest = quests[index]
       const { gameId } = quest
       const { code, name, desc, memo, memo2, pre } = quest.docQuest
-      const questStatus = questStateToQuestStatus(quest.gameQuest?.api_state)
+      const questStatus = questApiStateToQuestStatus(quest.gameQuest?.api_state)
 
       return (
         <CellMeasurer

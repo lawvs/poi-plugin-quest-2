@@ -203,7 +203,7 @@ export const isUnknownCategoryQuest = ({ code }: DocQuest) =>
   // Starts with unknown character
   /^[^ABCDEFG]/.test(code)
 
-export const getPrePost = (gameId: number) => {
+export const getQuestPrePost = (gameId: number) => {
   if (!(gameId in prePostQuest)) {
     return { pre: [], post: [] }
   }

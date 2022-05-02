@@ -5,6 +5,8 @@ import {
   getCategory,
   getKcanotifyQuestData,
   getQuestIdByCode,
+  getQuestPrePost,
+  QUEST_STATUS,
 } from '../questHelper'
 import type { UnionQuest } from '../questHelper'
 import { useKcwikiData, checkIsKcwikiSupportedLanguages } from './kcwiki'
@@ -84,13 +86,75 @@ export const useQuest = (): UnionQuest[] => {
   }
 }
 
-export const useQuestByCode = (code: string) => {
+export const useQuestByCode = (code: string): UnionQuest | null => {
   const questMap = useQuestMap()
-  const questId = getQuestIdByCode(code)
-  if (questId && questId in questMap) {
-    return questMap[String(questId) as keyof typeof questMap]
+  const gameId = getQuestIdByCode(code)
+  if (gameId && gameId in questMap) {
+    return {
+      gameId,
+      docQuest: questMap[String(gameId) as keyof typeof questMap],
+    }
   }
   return null
+}
+
+const useCompletedQuest = () => {
+  const completedQuest: Record<number, true> = {}
+  const gameQuest = useGameQuest()
+  const queue: number[] = gameQuest.map((quest) => quest.api_no)
+  while (queue.length) {
+    const gameId = queue.shift()!
+    if (gameId in completedQuest) {
+      continue
+    }
+    completedQuest[gameId] = true
+
+    const prePostQuests = getQuestPrePost(gameId)
+    prePostQuests.pre.forEach((nextCode) => {
+      const nextGameId = getQuestIdByCode(nextCode)
+      if (nextGameId) {
+        queue.push(nextGameId)
+      }
+    })
+  }
+  return completedQuest
+}
+
+const useLockedQuest = () => {
+  const lockedQuest: Record<number, true> = {}
+  const gameQuest = useGameQuest()
+  const queue: number[] = gameQuest.map((quest) => quest.api_no)
+  while (queue.length) {
+    const gameId = queue.shift()!
+    if (gameId in lockedQuest) {
+      continue
+    }
+    lockedQuest[gameId] = true
+    const prePostQuests = getQuestPrePost(gameId)
+    prePostQuests.post.forEach((nextCode) => {
+      const nextGameId = getQuestIdByCode(nextCode)
+      if (nextGameId) {
+        queue.push(nextGameId)
+      }
+    })
+  }
+  return lockedQuest
+}
+
+export const useQuestStatus = (gameId: number | null) => {
+  const completedQuest = useCompletedQuest()
+  const lockedQuest = useLockedQuest()
+
+  if (!gameId) {
+    return QUEST_STATUS.DEFAULT
+  }
+  if (gameId in completedQuest) {
+    return QUEST_STATUS.ALREADY_COMPLETED
+  }
+  if (gameId in lockedQuest) {
+    return QUEST_STATUS.LOCKED
+  }
+  return QUEST_STATUS.DEFAULT
 }
 
 /**

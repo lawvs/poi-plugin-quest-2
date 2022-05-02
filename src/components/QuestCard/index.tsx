@@ -2,7 +2,11 @@ import { Card, Elevation, H5, Text } from '@blueprintjs/core'
 import React, { forwardRef } from 'react'
 import type { StyledComponentProps } from 'styled-components'
 import { usePluginTranslation } from '../../poi/hooks'
-import { getPrePost, guessQuestCategory, QUEST_STATUS } from '../../questHelper'
+import {
+  getQuestPrePost,
+  guessQuestCategory,
+  QUEST_STATUS,
+} from '../../questHelper'
 import { QuestTag } from '../QuestTag'
 import {
   CardActionWrapper,
@@ -29,15 +33,15 @@ export type QuestCardProps = {
 const CardAction = ({ gameId }: { gameId: number }) => {
   const { t } = usePluginTranslation()
 
-  const preQuests = getPrePost(gameId)
+  const prePostQuests = getQuestPrePost(gameId)
 
   return (
     <CardActionWrapper>
       <TagsWrapper>
-        {!!preQuests.pre.length && (
+        {!!prePostQuests.pre.length && (
           <>
             <SpanText>{t('Requires')}</SpanText>
-            {preQuests.pre.map((i) => (
+            {prePostQuests.pre.map((i) => (
               <QuestTag key={i} code={i}></QuestTag>
             ))}
           </>
@@ -45,10 +49,10 @@ const CardAction = ({ gameId }: { gameId: number }) => {
       </TagsWrapper>
 
       <TagsWrapper>
-        {!!preQuests.post.length && (
+        {!!prePostQuests.post.length && (
           <>
             <SpanText>{t('Unlocks')}</SpanText>
-            {preQuests.post.map((i) => (
+            {prePostQuests.post.map((i) => (
               <QuestTag key={i} code={i}></QuestTag>
             ))}
           </>

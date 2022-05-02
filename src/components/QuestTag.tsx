@@ -1,20 +1,20 @@
 import type { TooltipProps } from '@blueprintjs/core'
-import { Tag, Text, Tooltip } from '@blueprintjs/core'
+import { Tag, Tooltip } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import React, { forwardRef, useCallback } from 'react'
 import styled from 'styled-components'
-import { DocQuest, guessQuestCategory } from '../questHelper'
+import { DocQuest, guessQuestCategory, QUEST_STATUS } from '../questHelper'
 import { useFilterTags } from '../store/filterTags'
-import { useQuestByCode } from '../store/quest'
+import { useQuestByCode, useQuestStatus } from '../store/quest'
 import { useSearchInput } from '../store/search'
 
 const TagWrapper = styled(Tag)`
   margin: 2px 4px;
-  user-select: none;
+  user-select: ${({ interactive }) => (interactive ? 'none' : 'auto')};
   overflow: visible;
 
   & > span {
-    cursor: pointer;
+    cursor: ${({ interactive }) => (interactive ? 'pointer' : 'auto')};
   }
 `
 
@@ -34,7 +34,7 @@ const QuestTooltip = forwardRef<
       content={
         <>
           <div>{`${quest.code} - ${quest.name}`}</div>
-          <Text>{quest.desc}</Text>
+          <div>{quest.desc}</div>
           {quest.memo2 && <b>{quest.memo2}</b>}
           {quest.memo && <i>{quest.memo}</i>}
         </>
@@ -47,10 +47,24 @@ const QuestTooltip = forwardRef<
   )
 })
 
+const getTagIcon = (questStatus: QUEST_STATUS) => {
+  switch (questStatus) {
+    case QUEST_STATUS.ALREADY_COMPLETED:
+      return IconNames.TICK
+    case QUEST_STATUS.LOCKED:
+      return IconNames.LOCK
+    default:
+      return null
+  }
+}
+
 export const QuestTag = ({ code }: { code: string }) => {
   const { setSearchInput } = useSearchInput()
   const { setCategoryTagsAll, setTypeTagsAll } = useFilterTags()
   const maybeQuest = useQuestByCode(code)
+  const maybeGameId = maybeQuest?.gameId ?? null
+  const questStatus = useQuestStatus(maybeGameId)
+  const tagIcon = getTagIcon(questStatus)
 
   const handleClick = useCallback(() => {
     setSearchInput(code)
@@ -74,12 +88,13 @@ export const QuestTag = ({ code }: { code: string }) => {
     )
   }
 
-  const quest = maybeQuest
+  const quest = maybeQuest.docQuest
   return (
     <QuestTooltip quest={quest}>
       <TagWrapper
-        onClick={handleClick}
         interactive
+        icon={tagIcon}
+        onClick={handleClick}
         style={{ color: fontColor, background: indicatorColor }}
       >
         {code}
