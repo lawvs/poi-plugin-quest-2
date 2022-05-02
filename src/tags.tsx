@@ -38,12 +38,12 @@ export const ALL_CATEGORY_TAG = {
 export const ALL_TYPE_TAG = ALL_CATEGORY_TAG
 
 const withDocQuest =
-  <T extends any>(filterFn: (q: UnionQuest['docQuest']) => T) =>
+  <T,>(filterFn: (q: UnionQuest['docQuest']) => T) =>
   (unionQuest: UnionQuest) =>
     filterFn(unionQuest.docQuest)
 
 const withGameQuestOr =
-  <T extends any>(filterFn: (q: GameQuest) => T, fallback: T) =>
+  <T,>(filterFn: (q: GameQuest) => T, fallback: T) =>
   ({ gameQuest }: UnionQuest) => {
     if (!gameQuest) {
       return fallback
