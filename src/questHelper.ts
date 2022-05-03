@@ -210,6 +210,16 @@ export const getQuestPrePost = (gameId: number) => {
   return prePostQuest[String(gameId) as keyof typeof prePostQuest]
 }
 
+export const getPreQuestIds = (gameId: number): number[] =>
+  getQuestPrePost(gameId)
+    .pre.map((code) => getQuestIdByCode(code))
+    .filter(Boolean) as number[]
+
+export const getPostQuestIds = (gameId: number): number[] =>
+  getQuestPrePost(gameId)
+    .post.map((code) => getQuestIdByCode(code))
+    .filter(Boolean) as number[]
+
 export const getQuestIdByCode = (code: string) => {
   if (code in questCodeMap) {
     return questCodeMap[code as keyof typeof questCodeMap]
