@@ -1,18 +1,15 @@
-import { useCallback, useEffect } from 'react'
-import { createGlobalState } from 'react-use'
+import { useCallback } from 'react'
 import { useGameQuest, usePluginTranslation } from '../poi/hooks'
-import type { GameQuest } from '../poi/types'
-import type { UnionQuest } from '../questHelper'
 import {
   DocQuest,
   getCategory,
   getKcanotifyQuestData,
-  getPostQuestIds,
-  getPreQuestIds,
   getQuestIdByCode,
+  getQuestPrePost,
   QUEST_STATUS,
 } from '../questHelper'
-import { checkIsKcwikiSupportedLanguages, useKcwikiData } from './kcwiki'
+import type { UnionQuest } from '../questHelper'
+import { useKcwikiData, checkIsKcwikiSupportedLanguages } from './kcwiki'
 import { useStore, useSyncWithGame } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
@@ -101,52 +98,47 @@ export const useQuestByCode = (code: string): UnionQuest | null => {
   return null
 }
 
-const calcQuestMap = (
-  gameQuest: GameQuest[],
-  next: (gameId: number) => number[]
-) => {
-  const map: Record<number, true> = {}
+const useCompletedQuest = () => {
+  const completedQuest: Record<number, true> = {}
+  const gameQuest = useGameQuest()
   const queue: number[] = gameQuest.map((quest) => quest.api_no)
   while (queue.length) {
     const gameId = queue.shift()!
-    if (gameId in map) {
+    if (gameId in completedQuest) {
       continue
     }
-    map[gameId] = true
+    completedQuest[gameId] = true
 
-    next(gameId).forEach((nextGameId) => {
-      queue.push(nextGameId)
+    const prePostQuests = getQuestPrePost(gameId)
+    prePostQuests.pre.forEach((nextCode) => {
+      const nextGameId = getQuestIdByCode(nextCode)
+      if (nextGameId) {
+        queue.push(nextGameId)
+      }
     })
   }
-  return map
+  return completedQuest
 }
 
-// const useCompletedQuest = () => {
-//   const gameQuest = useGameQuest()
-//   const completedQuest = calcQuestMap(gameQuest, getPreQuestIds)
-//   return completedQuest
-// }
-
-const useCompletedStatus = createGlobalState<Record<number, true>>({})
-const useCompletedQuest = () => {
-  const gameQuest = useGameQuest()
-  const [state, setState] = useCompletedStatus()
-  useEffect(() => {
-    const lockedQuest = calcQuestMap(gameQuest, getPreQuestIds)
-    setState(lockedQuest)
-  }, [gameQuest, setState])
-  return state
-}
-
-const useLockedStatus = createGlobalState<Record<number, true>>({})
 const useLockedQuest = () => {
+  const lockedQuest: Record<number, true> = {}
   const gameQuest = useGameQuest()
-  const [state, setState] = useLockedStatus()
-  useEffect(() => {
-    const lockedQuest = calcQuestMap(gameQuest, getPostQuestIds)
-    setState(lockedQuest)
-  }, [gameQuest, setState])
-  return state
+  const queue: number[] = gameQuest.map((quest) => quest.api_no)
+  while (queue.length) {
+    const gameId = queue.shift()!
+    if (gameId in lockedQuest) {
+      continue
+    }
+    lockedQuest[gameId] = true
+    const prePostQuests = getQuestPrePost(gameId)
+    prePostQuests.post.forEach((nextCode) => {
+      const nextGameId = getQuestIdByCode(nextCode)
+      if (nextGameId) {
+        queue.push(nextGameId)
+      }
+    })
+  }
+  return lockedQuest
 }
 
 export const useQuestStatus = (gameId: number | null) => {
