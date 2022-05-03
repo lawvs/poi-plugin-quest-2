@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useCallback } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
+import type { ListRowProps } from 'react-virtualized'
 // See https://github.com/bvaughn/react-virtualized
 import {
   AutoSizer,
@@ -7,13 +8,10 @@ import {
   List,
   ListRowRenderer,
 } from 'react-virtualized'
-import type { ListRowProps } from 'react-virtualized'
 import styled from 'styled-components'
-import { QUEST_STATUS } from '../questHelper'
+import { useIsQuestPluginTab } from '../poi/hooks'
 import type { UnionQuest } from '../questHelper'
 import { QuestCard } from './QuestCard'
-import { useIsQuestPluginTab } from '../poi/hooks'
-import { QUEST_API_STATE } from '../poi/types'
 
 const QuestListWrapper = styled.div`
   flex: 1;
@@ -26,28 +24,12 @@ const cache = new CellMeasurerCache({
   fixedWidth: true,
 })
 
-const questApiStateToQuestStatus = (
-  state: QUEST_API_STATE | undefined
-): QUEST_STATUS => {
-  switch (state) {
-    case QUEST_API_STATE.DEFAULT:
-      return QUEST_STATUS.DEFAULT
-    case QUEST_API_STATE.COMPLETED:
-      return QUEST_STATUS.COMPLETED
-    case QUEST_API_STATE.IN_PROGRESS:
-      return QUEST_STATUS.IN_PROGRESS
-    default:
-      return QUEST_STATUS.DEFAULT
-  }
-}
-
 const useQuestsRowRenderer = (quests: UnionQuest[]) => {
   const rowRenderer = useCallback(
     ({ key, index, style, parent }: ListRowProps) => {
       const quest = quests[index]
       const { gameId } = quest
       const { code, name, desc, memo, memo2, pre } = quest.docQuest
-      const questStatus = questApiStateToQuestStatus(quest.gameQuest?.api_state)
 
       return (
         <CellMeasurer
@@ -67,7 +49,6 @@ const useQuestsRowRenderer = (quests: UnionQuest[]) => {
               tip={memo}
               tip2={memo2}
               preQuest={pre}
-              status={questStatus}
             ></QuestCard>
           </div>
         </CellMeasurer>
@@ -78,7 +59,7 @@ const useQuestsRowRenderer = (quests: UnionQuest[]) => {
   return rowRenderer
 }
 
-export const QuestList: React.FC<{ quests: UnionQuest[] }> = ({ quests }) => {
+export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
   const activeTab = useIsQuestPluginTab()
   const listRef = useRef<List>(null)
   const rowRenderer: ListRowRenderer = useQuestsRowRenderer(quests)

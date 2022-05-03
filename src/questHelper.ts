@@ -258,6 +258,21 @@ export const getLockedQuest = moize((inProgressQuest: number[]) => {
   return lockedQuest
 })
 
+export const questApiStateToQuestStatus = (
+  state: QUEST_API_STATE | undefined
+): QUEST_STATUS => {
+  switch (state) {
+    case QUEST_API_STATE.DEFAULT:
+      return QUEST_STATUS.DEFAULT
+    case QUEST_API_STATE.COMPLETED:
+      return QUEST_STATUS.COMPLETED
+    case QUEST_API_STATE.IN_PROGRESS:
+      return QUEST_STATUS.IN_PROGRESS
+    default:
+      return QUEST_STATUS.DEFAULT
+  }
+}
+
 export enum QUEST_STATUS {
   LOCKED,
   DEFAULT,
