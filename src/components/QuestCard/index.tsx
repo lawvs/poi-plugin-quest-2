@@ -1,4 +1,4 @@
-import { Card, Elevation, H5, Text } from '@blueprintjs/core'
+import { Card, Elevation, H5 } from '@blueprintjs/core'
 import React, { forwardRef } from 'react'
 import type { StyledComponentProps } from 'styled-components'
 import { usePluginTranslation } from '../../poi/hooks'
@@ -93,7 +93,7 @@ export const QuestCard = forwardRef<
         <CardMedia src={headIcon}></CardMedia>
         <CardBody>
           <H5>{[code, name].filter((i) => i != undefined).join(' - ')}</H5>
-          <Text>{desc}</Text>
+          <div>{desc}</div>
           {tip2 && <b>{tip2}</b>}
           {tip && <i>{tip}</i>}
 
