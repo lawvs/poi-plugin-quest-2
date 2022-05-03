@@ -1,16 +1,14 @@
-import moize from 'moize'
 import { useCallback } from 'react'
 import { useGameQuest, usePluginTranslation } from '../poi/hooks'
-import type { GameQuest } from '../poi/types'
-import type { UnionQuest } from '../questHelper'
 import {
   DocQuest,
   getCategory,
+  getCompletedQuest,
   getKcanotifyQuestData,
-  getPostQuestIds,
-  getPreQuestIds,
+  getLockedQuest,
   getQuestIdByCode,
   QUEST_STATUS,
+  UnionQuest,
 } from '../questHelper'
 import { checkIsKcwikiSupportedLanguages, useKcwikiData } from './kcwiki'
 import { useStore, useSyncWithGame } from './store'
@@ -101,46 +99,14 @@ export const useQuestByCode = (code: string): UnionQuest | null => {
   return null
 }
 
-const calcQuestMap = moize(
-  (gameQuest: GameQuest[], next: (gameId: number) => number[]) => {
-    const map: Record<number, true> = {}
-    const queue: number[] = gameQuest.map((quest) => quest.api_no)
-    while (queue.length) {
-      const gameId = queue.shift()!
-      if (gameId in map) {
-        continue
-      }
-      map[gameId] = true
-
-      next(gameId).forEach((nextGameId) => {
-        queue.push(nextGameId)
-      })
-    }
-    return map
-  },
-  {
-    maxSize: 2,
-  }
-)
-
-const useCompletedQuest = () => {
-  const gameQuest = useGameQuest()
-  const completedQuest = calcQuestMap(gameQuest, getPreQuestIds)
-  return completedQuest
-}
-
-const useLockedQuest = () => {
-  const gameQuest = useGameQuest()
-  const lockedQuest = calcQuestMap(gameQuest, getPostQuestIds)
-  return lockedQuest
-}
-
 export const useQuestStatus = (gameId: number | null) => {
-  const completedQuest = useCompletedQuest()
-  const lockedQuest = useLockedQuest()
+  const gameQuest = useGameQuest()
+  const gameQuestId = gameQuest.map((quest) => quest.api_no)
+  const completedQuest = getCompletedQuest(gameQuestId)
+  const lockedQuest = getLockedQuest(gameQuestId)
 
   if (!gameId) {
-    return QUEST_STATUS.DEFAULT
+    return QUEST_STATUS.UNKNOWN
   }
   if (gameId in completedQuest) {
     return QUEST_STATUS.ALREADY_COMPLETED
@@ -148,7 +114,10 @@ export const useQuestStatus = (gameId: number | null) => {
   if (gameId in lockedQuest) {
     return QUEST_STATUS.LOCKED
   }
-  return QUEST_STATUS.DEFAULT
+  if (gameQuestId.find((questId) => questId === gameId)) {
+    return QUEST_STATUS.DEFAULT
+  }
+  return QUEST_STATUS.UNKNOWN
 }
 
 /**
