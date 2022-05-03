@@ -7,6 +7,7 @@ import {
   getKcanotifyQuestData,
   getLockedQuest,
   getQuestIdByCode,
+  questApiStateToQuestStatus,
   QUEST_STATUS,
   UnionQuest,
 } from '../questHelper'
@@ -108,14 +109,15 @@ export const useQuestStatus = (gameId: number | null) => {
   if (!gameId) {
     return QUEST_STATUS.UNKNOWN
   }
-  if (gameId in completedQuest) {
-    return QUEST_STATUS.ALREADY_COMPLETED
+  const theGameQuest = gameQuest.find((quest) => quest.api_no === gameId)
+  if (theGameQuest) {
+    return questApiStateToQuestStatus(theGameQuest.api_state)
   }
   if (gameId in lockedQuest) {
     return QUEST_STATUS.LOCKED
   }
-  if (gameQuestId.find((questId) => questId === gameId)) {
-    return QUEST_STATUS.DEFAULT
+  if (gameId in completedQuest) {
+    return QUEST_STATUS.ALREADY_COMPLETED
   }
   return QUEST_STATUS.UNKNOWN
 }
