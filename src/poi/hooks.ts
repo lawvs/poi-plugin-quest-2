@@ -25,10 +25,8 @@ export const usePluginTranslation = () => {
   return useTranslation(PACKAGE_NAME)
 }
 
-const useGlobalGameQuest = createGlobalState<GameQuest[]>([])
-
 export const useGameQuest = () => {
-  const [quests, setQuests] = useGlobalGameQuest()
+  const [quests, setQuests] = useState<GameQuest[]>([])
   useEffect(() => {
     const listener = (quests: GameQuest[] | null) => setQuests(quests ?? [])
     // See reducer.ts
