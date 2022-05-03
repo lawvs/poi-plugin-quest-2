@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { observePluginStore, observePoiStore } from './store'
 import { name as PACKAGE_NAME } from '../../package.json'
+import { observePluginStore, observePoiStore } from './store'
 import { GameQuest, PoiQuestState, PoiState, QuestTab } from './types'
-import { createGlobalState } from 'react-use'
 
 export const activeQuestsSelector = (state: PoiState): PoiQuestState =>
   state?.info?.quests?.activeQuests ?? {}
