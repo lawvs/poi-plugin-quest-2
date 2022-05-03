@@ -7,6 +7,7 @@ import {
   guessQuestCategory,
   QUEST_STATUS,
 } from '../../questHelper'
+import { useQuestStatus } from '../../store/quest'
 import { QuestTag } from '../QuestTag'
 import {
   CardActionWrapper,
@@ -18,6 +19,7 @@ import {
   TagsWrapper,
 } from './styles'
 import { questIconMap, questStatusMap } from './utils'
+import { IN_POI } from '../../poi/env'
 
 export type QuestCardProps = {
   gameId: number
@@ -66,44 +68,30 @@ export const QuestCard = forwardRef<
   Card,
   // eslint-disable-next-line @typescript-eslint/ban-types
   QuestCardProps & StyledComponentProps<typeof Card, any, {}, never>
->(
-  (
-    {
-      gameId,
-      code,
-      name,
-      desc,
-      tip,
-      tip2,
-      status = QUEST_STATUS.DEFAULT,
-      ...props
-    },
-    ref
-  ) => {
-    const headIcon = questIconMap[guessQuestCategory(code).type]
-    const TailIcon = questStatusMap[status]
+>(({ gameId, code, name, desc, tip, tip2, ...props }, ref) => {
+  const status = useQuestStatus(gameId)
+  const headIcon = questIconMap[guessQuestCategory(code).type]
+  const TailIcon = questStatusMap[status]
+  const inPoi = IN_POI
 
-    return (
-      <FlexCard
-        ref={ref}
-        elevation={Elevation.ZERO}
-        interactive={false}
-        {...props}
-      >
-        <CardMedia src={headIcon}></CardMedia>
-        <CardBody>
-          <H5>{[code, name].filter((i) => i != undefined).join(' - ')}</H5>
-          <div>{desc}</div>
-          {tip2 && <b>{tip2}</b>}
-          {tip && <i>{tip}</i>}
+  return (
+    <FlexCard
+      ref={ref}
+      elevation={Elevation.ZERO}
+      interactive={false}
+      {...props}
+    >
+      <CardMedia src={headIcon}></CardMedia>
+      <CardBody>
+        <H5>{[code, name].filter((i) => i != undefined).join(' - ')}</H5>
+        <div>{desc}</div>
+        {tip2 && <b>{tip2}</b>}
+        {tip && <i>{tip}</i>}
 
-          <CardAction gameId={gameId}></CardAction>
-        </CardBody>
+        <CardAction gameId={gameId}></CardAction>
+      </CardBody>
 
-        <CardTail>
-          <TailIcon />
-        </CardTail>
-      </FlexCard>
-    )
-  }
-)
+      <CardTail>{inPoi && <TailIcon />}</CardTail>
+    </FlexCard>
+  )
+})

@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { observePluginStore, observePoiStore } from './store'
 import { name as PACKAGE_NAME } from '../../package.json'
+import { observePluginStore, observePoiStore } from './store'
 import { GameQuest, PoiQuestState, PoiState, QuestTab } from './types'
-import { createGlobalState } from 'react-use'
 
 export const activeQuestsSelector = (state: PoiState): PoiQuestState =>
   state?.info?.quests?.activeQuests ?? {}
@@ -25,10 +24,8 @@ export const usePluginTranslation = () => {
   return useTranslation(PACKAGE_NAME)
 }
 
-const useGlobalGameQuest = createGlobalState<GameQuest[]>([])
-
 export const useGameQuest = () => {
-  const [quests, setQuests] = useGlobalGameQuest()
+  const [quests, setQuests] = useState<GameQuest[]>([])
   useEffect(() => {
     const listener = (quests: GameQuest[] | null) => setQuests(quests ?? [])
     // See reducer.ts

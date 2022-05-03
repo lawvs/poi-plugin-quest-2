@@ -3,13 +3,15 @@ import { useGameQuest, usePluginTranslation } from '../poi/hooks'
 import {
   DocQuest,
   getCategory,
+  getCompletedQuest,
   getKcanotifyQuestData,
+  getLockedQuest,
   getQuestIdByCode,
-  getQuestPrePost,
+  questApiStateToQuestStatus,
   QUEST_STATUS,
+  UnionQuest,
 } from '../questHelper'
-import type { UnionQuest } from '../questHelper'
-import { useKcwikiData, checkIsKcwikiSupportedLanguages } from './kcwiki'
+import { checkIsKcwikiSupportedLanguages, useKcwikiData } from './kcwiki'
 import { useStore, useSyncWithGame } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
@@ -98,63 +100,26 @@ export const useQuestByCode = (code: string): UnionQuest | null => {
   return null
 }
 
-const useCompletedQuest = () => {
-  const completedQuest: Record<number, true> = {}
-  const gameQuest = useGameQuest()
-  const queue: number[] = gameQuest.map((quest) => quest.api_no)
-  while (queue.length) {
-    const gameId = queue.shift()!
-    if (gameId in completedQuest) {
-      continue
-    }
-    completedQuest[gameId] = true
-
-    const prePostQuests = getQuestPrePost(gameId)
-    prePostQuests.pre.forEach((nextCode) => {
-      const nextGameId = getQuestIdByCode(nextCode)
-      if (nextGameId) {
-        queue.push(nextGameId)
-      }
-    })
-  }
-  return completedQuest
-}
-
-const useLockedQuest = () => {
-  const lockedQuest: Record<number, true> = {}
-  const gameQuest = useGameQuest()
-  const queue: number[] = gameQuest.map((quest) => quest.api_no)
-  while (queue.length) {
-    const gameId = queue.shift()!
-    if (gameId in lockedQuest) {
-      continue
-    }
-    lockedQuest[gameId] = true
-    const prePostQuests = getQuestPrePost(gameId)
-    prePostQuests.post.forEach((nextCode) => {
-      const nextGameId = getQuestIdByCode(nextCode)
-      if (nextGameId) {
-        queue.push(nextGameId)
-      }
-    })
-  }
-  return lockedQuest
-}
-
 export const useQuestStatus = (gameId: number | null) => {
-  const completedQuest = useCompletedQuest()
-  const lockedQuest = useLockedQuest()
+  const gameQuest = useGameQuest()
+  const gameQuestId = gameQuest.map((quest) => quest.api_no)
+  const completedQuest = getCompletedQuest(gameQuestId)
+  const lockedQuest = getLockedQuest(gameQuestId)
 
   if (!gameId) {
-    return QUEST_STATUS.DEFAULT
+    return QUEST_STATUS.UNKNOWN
   }
-  if (gameId in completedQuest) {
-    return QUEST_STATUS.ALREADY_COMPLETED
+  const theGameQuest = gameQuest.find((quest) => quest.api_no === gameId)
+  if (theGameQuest) {
+    return questApiStateToQuestStatus(theGameQuest.api_state)
   }
   if (gameId in lockedQuest) {
     return QUEST_STATUS.LOCKED
   }
-  return QUEST_STATUS.DEFAULT
+  if (gameId in completedQuest) {
+    return QUEST_STATUS.ALREADY_COMPLETED
+  }
+  return QUEST_STATUS.UNKNOWN
 }
 
 /**

@@ -21,6 +21,8 @@
   "Locked": "Locked",
   "In Progress": "In Progress {{number}}",
   "Completed": "Completed",
+  "Already Completed": "Already Completed",
+  "Unknown": "Unknown",
   "TotalQuests": "Total {{number}} quests",
   "Sync with game": "Sync with game (Show in-game quests only)",
   "Version": "Version: {{version}}",

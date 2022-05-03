@@ -50,6 +50,14 @@ export const questStatusMap: Record<QUEST_STATUS, React.FC> = {
       </Tooltip>
     )
   },
+  [QUEST_STATUS.UNKNOWN]: function AlreadyCompleted() {
+    const { t } = usePluginTranslation()
+    return (
+      <Tooltip content={t('Unknown')}>
+        <Icon icon={IconNames.HELP} iconSize={Icon.SIZE_LARGE}></Icon>
+      </Tooltip>
+    )
+  },
 }
 
 // transparent GIF pixel

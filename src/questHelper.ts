@@ -1,3 +1,4 @@
+import moize from 'moize'
 import { QuestData } from '../build/kcanotifyGamedata'
 import { KcwikiQuestData } from '../build/kcQuestsData'
 import newQuestData from '../build/kcQuestsData/quests-scn-new.json'
@@ -217,10 +218,66 @@ export const getQuestIdByCode = (code: string) => {
   return null
 }
 
+export const getPreQuestIds = (gameId: number): number[] =>
+  getQuestPrePost(gameId)
+    .pre.map((code) => getQuestIdByCode(code))
+    .filter(Boolean) as number[]
+
+export const getPostQuestIds = (gameId: number): number[] =>
+  getQuestPrePost(gameId)
+    .post.map((code) => getQuestIdByCode(code))
+    .filter(Boolean) as number[]
+
+const calcQuestMap = (
+  inProgressQuests: number[],
+  next: (gameId: number) => number[]
+) => {
+  const map: Record<number, true> = {}
+  const queue: number[] = inProgressQuests.flatMap(next)
+  while (queue.length) {
+    const gameId = queue.shift()!
+    if (gameId in map) {
+      continue
+    }
+    map[gameId] = true
+
+    next(gameId).forEach((nextGameId) => {
+      queue.push(nextGameId)
+    })
+  }
+  return map
+}
+
+export const getCompletedQuest = moize((inProgressQuest: number[]) => {
+  const completedQuest = calcQuestMap(inProgressQuest, getPreQuestIds)
+  return completedQuest
+})
+
+export const getLockedQuest = moize((inProgressQuest: number[]) => {
+  const lockedQuest = calcQuestMap(inProgressQuest, getPostQuestIds)
+  return lockedQuest
+})
+
+export const questApiStateToQuestStatus = (
+  state: QUEST_API_STATE | undefined
+): QUEST_STATUS => {
+  switch (state) {
+    case QUEST_API_STATE.DEFAULT:
+      return QUEST_STATUS.DEFAULT
+    case QUEST_API_STATE.COMPLETED:
+      return QUEST_STATUS.COMPLETED
+    case QUEST_API_STATE.IN_PROGRESS:
+      return QUEST_STATUS.IN_PROGRESS
+    default:
+      return QUEST_STATUS.DEFAULT
+  }
+}
+
 export enum QUEST_STATUS {
   LOCKED,
   DEFAULT,
   IN_PROGRESS,
   COMPLETED,
   ALREADY_COMPLETED,
+  UNKNOWN,
 }
