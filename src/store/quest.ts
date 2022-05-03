@@ -1,15 +1,18 @@
+import moize from 'moize'
 import { useCallback } from 'react'
 import { useGameQuest, usePluginTranslation } from '../poi/hooks'
+import type { GameQuest } from '../poi/types'
+import type { UnionQuest } from '../questHelper'
 import {
   DocQuest,
   getCategory,
   getKcanotifyQuestData,
+  getPostQuestIds,
+  getPreQuestIds,
   getQuestIdByCode,
-  getQuestPrePost,
   QUEST_STATUS,
 } from '../questHelper'
-import type { UnionQuest } from '../questHelper'
-import { useKcwikiData, checkIsKcwikiSupportedLanguages } from './kcwiki'
+import { checkIsKcwikiSupportedLanguages, useKcwikiData } from './kcwiki'
 import { useStore, useSyncWithGame } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
@@ -98,46 +101,37 @@ export const useQuestByCode = (code: string): UnionQuest | null => {
   return null
 }
 
-const useCompletedQuest = () => {
-  const completedQuest: Record<number, true> = {}
-  const gameQuest = useGameQuest()
-  const queue: number[] = gameQuest.map((quest) => quest.api_no)
-  while (queue.length) {
-    const gameId = queue.shift()!
-    if (gameId in completedQuest) {
-      continue
-    }
-    completedQuest[gameId] = true
-
-    const prePostQuests = getQuestPrePost(gameId)
-    prePostQuests.pre.forEach((nextCode) => {
-      const nextGameId = getQuestIdByCode(nextCode)
-      if (nextGameId) {
-        queue.push(nextGameId)
+const calcQuestMap = moize(
+  (gameQuest: GameQuest[], next: (gameId: number) => number[]) => {
+    const map: Record<number, true> = {}
+    const queue: number[] = gameQuest.map((quest) => quest.api_no)
+    while (queue.length) {
+      const gameId = queue.shift()!
+      if (gameId in map) {
+        continue
       }
-    })
+      map[gameId] = true
+
+      next(gameId).forEach((nextGameId) => {
+        queue.push(nextGameId)
+      })
+    }
+    return map
+  },
+  {
+    maxSize: 2,
   }
+)
+
+const useCompletedQuest = () => {
+  const gameQuest = useGameQuest()
+  const completedQuest = calcQuestMap(gameQuest, getPreQuestIds)
   return completedQuest
 }
 
 const useLockedQuest = () => {
-  const lockedQuest: Record<number, true> = {}
   const gameQuest = useGameQuest()
-  const queue: number[] = gameQuest.map((quest) => quest.api_no)
-  while (queue.length) {
-    const gameId = queue.shift()!
-    if (gameId in lockedQuest) {
-      continue
-    }
-    lockedQuest[gameId] = true
-    const prePostQuests = getQuestPrePost(gameId)
-    prePostQuests.post.forEach((nextCode) => {
-      const nextGameId = getQuestIdByCode(nextCode)
-      if (nextGameId) {
-        queue.push(nextGameId)
-      }
-    })
-  }
+  const lockedQuest = calcQuestMap(gameQuest, getPostQuestIds)
   return lockedQuest
 }
 

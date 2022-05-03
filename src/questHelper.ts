@@ -217,6 +217,16 @@ export const getQuestIdByCode = (code: string) => {
   return null
 }
 
+export const getPreQuestIds = (gameId: number): number[] =>
+  getQuestPrePost(gameId)
+    .pre.map((code) => getQuestIdByCode(code))
+    .filter(Boolean) as number[]
+
+export const getPostQuestIds = (gameId: number): number[] =>
+  getQuestPrePost(gameId)
+    .post.map((code) => getQuestIdByCode(code))
+    .filter(Boolean) as number[]
+
 export enum QUEST_STATUS {
   LOCKED,
   DEFAULT,
