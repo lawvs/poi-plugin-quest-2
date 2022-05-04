@@ -22,6 +22,10 @@ describe('questHelper', () => {
     expect(getCompletedQuest([101])).toEqual({})
   })
 
+  test('should getCompletedQuest quest match snapshot', () => {
+    expect(getCompletedQuest([817])).toMatchSnapshot()
+  })
+
   test('should 236 getCompletedQuest correct', () => {
     expect(getCompletedQuest([236])).toMatchSnapshot()
   })

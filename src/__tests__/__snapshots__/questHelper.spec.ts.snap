@@ -77,6 +77,7 @@ Object {
   "173": true,
   "174": true,
   "175": true,
+  "176": true,
   "177": true,
   "178": true,
   "179": true,
@@ -288,7 +289,15 @@ Object {
   "815": true,
   "816": true,
   "817": true,
+  "818": true,
+  "819": true,
+  "820": true,
+  "821": true,
   "822": true,
+  "823": true,
+  "826": true,
+  "827": true,
+  "828": true,
   "829": true,
   "833": true,
   "835": true,
@@ -395,5 +404,15 @@ Object {
   "235": true,
   "273": true,
   "307": true,
+}
+`;
+
+exports[`questHelper should getCompletedQuest quest match snapshot 1`] = `
+Object {
+  "101": true,
+  "102": true,
+  "103": true,
+  "104": true,
+  "174": true,
 }
 `;
