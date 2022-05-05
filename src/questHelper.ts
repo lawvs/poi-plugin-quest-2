@@ -248,15 +248,35 @@ const calcQuestMap = (
   return map
 }
 
-export const getCompletedQuest = moize((inProgressQuest: number[]) => {
-  const completedQuest = calcQuestMap(inProgressQuest, getPreQuestIds)
-  return completedQuest
-})
+export const getCompletedQuest = moize(
+  (inProgressQuest: number[]) => {
+    const completedQuest = calcQuestMap(inProgressQuest, getPreQuestIds)
+    return completedQuest
+  },
+  {
+    matchesArg: (cacheKeyArg, keyArg) => {
+      if (Array.isArray(cacheKeyArg) && Array.isArray(keyArg)) {
+        return cacheKeyArg.join(',') === keyArg.join(',')
+      }
+      return cacheKeyArg === keyArg
+    },
+  }
+)
 
-export const getLockedQuest = moize((inProgressQuest: number[]) => {
-  const lockedQuest = calcQuestMap(inProgressQuest, getPostQuestIds)
-  return lockedQuest
-})
+export const getLockedQuest = moize(
+  (inProgressQuest: number[]) => {
+    const lockedQuest = calcQuestMap(inProgressQuest, getPostQuestIds)
+    return lockedQuest
+  },
+  {
+    matchesArg: (cacheKeyArg, keyArg) => {
+      if (Array.isArray(cacheKeyArg) && Array.isArray(keyArg)) {
+        return cacheKeyArg.join(',') === keyArg.join(',')
+      }
+      return cacheKeyArg === keyArg
+    },
+  }
+)
 
 export const questApiStateToQuestStatus = (
   state: QUEST_API_STATE | undefined
