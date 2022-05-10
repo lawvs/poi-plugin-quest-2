@@ -111,6 +111,7 @@ export const useSyncWithGame = () => {
   }, [setSyncWithGame, syncWithGame])
   return {
     syncWithGame,
+    setSyncWithGame,
     toggleSyncWithGame,
   }
 }

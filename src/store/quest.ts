@@ -88,7 +88,7 @@ export const useQuest = (): UnionQuest[] => {
   }
 }
 
-export const useQuestByCode = (code: string): UnionQuest | null => {
+export const useQuestByCode = (code: string) => {
   const questMap = useQuestMap()
   const gameId = getQuestIdByCode(code)
   if (gameId && gameId in questMap) {
@@ -102,17 +102,20 @@ export const useQuestByCode = (code: string): UnionQuest | null => {
 
 export const useQuestStatus = (gameId: number | null) => {
   const gameQuest = useGameQuest()
-  const gameQuestId = gameQuest.map((quest) => quest.api_no)
-  const completedQuest = getCompletedQuest(gameQuestId)
-  const lockedQuest = getLockedQuest(gameQuestId)
 
   if (!gameId) {
     return QUEST_STATUS.UNKNOWN
   }
   const theGameQuest = gameQuest.find((quest) => quest.api_no === gameId)
   if (theGameQuest) {
+    // the quest is in game
     return questApiStateToQuestStatus(theGameQuest.api_state)
   }
+
+  const gameQuestId = gameQuest.map((quest) => quest.api_no)
+  const completedQuest = getCompletedQuest(gameQuestId)
+  const lockedQuest = getLockedQuest(gameQuestId)
+
   if (gameId in lockedQuest) {
     return QUEST_STATUS.LOCKED
   }
