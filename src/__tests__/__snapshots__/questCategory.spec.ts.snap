@@ -558,6 +558,16 @@ Object {
       "name": "机动部队决战",
     },
     Object {
+      "code": "By11",
+      "gameId": 973,
+      "name": "日英美联合水上舰队，起航！",
+    },
+    Object {
+      "code": "By12",
+      "gameId": 975,
+      "name": "精锐「第十九驱逐队」，全力出击！",
+    },
+    Object {
       "code": "F98",
       "gameId": 1103,
       "name": "量产潜水舰强化兵装",
