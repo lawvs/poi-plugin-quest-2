@@ -4,10 +4,11 @@ import React, {
   SetStateAction,
   useCallback,
   useContext,
+  useState,
 } from 'react'
-import { ALL_TYPE_TAG, ALL_CATEGORY_TAG } from '../tags'
+import { useMount, useUpdateEffect } from 'react-use'
 import { name as PACKAGE_NAME } from '../../package.json'
-import { createGlobalState, useMount, useUpdateEffect } from 'react-use'
+import { ALL_CATEGORY_TAG, ALL_TYPE_TAG } from '../tags'
 
 export const initialState = {
   searchInput: '',
@@ -27,28 +28,29 @@ export type State = typeof initialState
 // Persist state
 const STORAGE_KEY = PACKAGE_NAME
 
-const useStorage = (
-  store: State,
-  setState: (state: State) => void,
-  merge = true
-) => {
+const useStorage = <T,>(initialValue: T) => {
+  const [state, setState] = useState<T>(initialValue)
   // Load storage at mount
   useMount(() => {
-    const stringStore = localStorage.getItem(STORAGE_KEY)
-    if (stringStore == null) {
-      return
+    try {
+      const stringStore = localStorage.getItem(STORAGE_KEY)
+      if (stringStore == null) {
+        return
+      }
+      const parsedStorage: T = JSON.parse(stringStore)
+      setState(parsedStorage)
+    } catch (error) {
+      console.error('Failed to load storage', error)
     }
-    const parsedStorage: State = JSON.parse(stringStore)
-    // TODO use deep merge
-    const storageStore = merge ? { ...store, ...parsedStorage } : parsedStorage
-    setState(storageStore)
   })
 
   // Save storage when store change
   useUpdateEffect(() => {
-    const serializedStore = JSON.stringify(store)
+    const serializedStore = JSON.stringify(state)
     localStorage.setItem(STORAGE_KEY, serializedStore)
-  }, [store])
+  }, [state])
+
+  return [state, setState] as const
 }
 
 export const getStorage = () => {
@@ -62,11 +64,8 @@ export const getStorage = () => {
 const StateContext = createContext<State>(initialState)
 const SetStateContext = createContext<Dispatch<SetStateAction<State>>>(() => {})
 
-const useGlobalState = createGlobalState<State>(initialState)
-
 export const StoreProvider = ({ children }: { children?: React.ReactNode }) => {
-  const [state, setState] = useGlobalState()
-  useStorage(state, setState)
+  const [state, setState] = useStorage<State>(initialState)
   return (
     <SetStateContext.Provider value={setState}>
       <StateContext.Provider value={state}>{children}</StateContext.Provider>
