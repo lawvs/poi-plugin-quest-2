@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useGameQuest, usePluginTranslation } from '../poi/hooks'
+import { usePluginTranslation } from '../poi/hooks'
 import {
   DocQuest,
   getCategory,
@@ -11,6 +11,7 @@ import {
   QUEST_STATUS,
   UnionQuest,
 } from '../questHelper'
+import { useGlobalGameQuest } from './gameQuest'
 import { checkIsKcwikiSupportedLanguages, useKcwikiData } from './kcwiki'
 import { useStore, useSyncWithGame } from './store'
 
@@ -51,7 +52,7 @@ const useQuestMap = (): Record<string, DocQuest> => {
 
 export const useQuest = (): UnionQuest[] => {
   const docQuestMap = useQuestMap()
-  const gameQuest = useGameQuest()
+  const gameQuest = useGlobalGameQuest()
   const { syncWithGame } = useSyncWithGame()
 
   if (syncWithGame && gameQuest.length) {
@@ -101,7 +102,7 @@ export const useQuestByCode = (code: string) => {
 }
 
 export const useQuestStatus = (gameId: number | null) => {
-  const gameQuest = useGameQuest()
+  const gameQuest = useGlobalGameQuest()
 
   if (!gameId) {
     return QUEST_STATUS.UNKNOWN

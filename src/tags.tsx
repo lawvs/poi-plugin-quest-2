@@ -2,7 +2,7 @@ import { Tag } from '@blueprintjs/core'
 import React from 'react'
 import styled from 'styled-components'
 import { IN_POI } from './poi/env'
-import { useGameQuest, useGameTab, usePluginTranslation } from './poi/hooks'
+import { useGameTab, usePluginTranslation } from './poi/hooks'
 import { GameQuest, QuestTab } from './poi/types'
 import type { UnionQuest } from './questHelper'
 import {
@@ -27,6 +27,7 @@ import {
 } from './questHelper'
 import { useSyncWithGame } from './store'
 import { useFilterTags } from './store/filterTags'
+import { useGlobalGameQuest } from './store/gameQuest'
 
 const yes = () => true as const
 
@@ -119,7 +120,7 @@ export const TypeTags = () => {
   const { t } = usePluginTranslation()
   const gameTab = useGameTab()
   const { syncWithGame } = useSyncWithGame()
-  const gameQuests = useGameQuest()
+  const gameQuests = useGlobalGameQuest()
   const inProgressQuest = gameQuests.filter((gameQuest) =>
     isInProgressQuest(gameQuest)
   )

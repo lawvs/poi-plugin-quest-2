@@ -9,6 +9,7 @@ import React, {
 import { useMount, useUpdateEffect } from 'react-use'
 import { name as PACKAGE_NAME } from '../../package.json'
 import { ALL_CATEGORY_TAG, ALL_TYPE_TAG } from '../tags'
+import { GameQuestProvider } from './gameQuest'
 
 export const initialState = {
   searchInput: '',
@@ -67,9 +68,11 @@ const SetStateContext = createContext<Dispatch<SetStateAction<State>>>(() => {})
 export const StoreProvider = ({ children }: { children?: React.ReactNode }) => {
   const [state, setState] = useStorage<State>(initialState)
   return (
-    <SetStateContext.Provider value={setState}>
-      <StateContext.Provider value={state}>{children}</StateContext.Provider>
-    </SetStateContext.Provider>
+    <GameQuestProvider>
+      <SetStateContext.Provider value={setState}>
+        <StateContext.Provider value={state}>{children}</StateContext.Provider>
+      </SetStateContext.Provider>
+    </GameQuestProvider>
   )
 }
 
