@@ -35,8 +35,16 @@ const QuestTooltip = forwardRef<
         <>
           <div>{`${quest.code} - ${quest.name}`}</div>
           <div>{quest.desc}</div>
-          {quest.memo2 && <b>{quest.memo2}</b>}
-          {quest.memo && <i>{quest.memo}</i>}
+          {quest.memo2 && (
+            <div>
+              <b>{quest.memo2}</b>
+            </div>
+          )}
+          {quest.memo && (
+            <div>
+              <i>{quest.memo}</i>
+            </div>
+          )}
         </>
       }
       placement={'top'}
