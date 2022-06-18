@@ -29,7 +29,6 @@ export type QuestCardProps = {
   tip?: string
   tip2?: string
   status?: QUEST_STATUS
-  preQuest?: string[]
 }
 
 const CardAction = ({ gameId }: { gameId: number }) => {

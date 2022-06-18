@@ -1,13 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react'
-import type { ListRowProps } from 'react-virtualized'
-// See https://github.com/bvaughn/react-virtualized
-import {
-  AutoSizer,
-  CellMeasurer,
-  CellMeasurerCache,
-  List,
-  ListRowRenderer,
-} from 'react-virtualized'
+import AutoSizer from 'react-virtualized-auto-sizer'
+// https://github.com/bvaughn/react-window
+import { ListChildComponentProps, VariableSizeList as List } from 'react-window'
 import styled from 'styled-components'
 import { useIsQuestPluginTab } from '../poi/hooks'
 import type { UnionQuest } from '../questHelper'
@@ -17,89 +11,77 @@ const QuestListWrapper = styled.div`
   flex: 1;
 `
 
-const MINIMAL_CARD_HEIGHT = 70
-// const LARGE_CARD_HEIGHT = 120
-const cache = new CellMeasurerCache({
-  defaultHeight: MINIMAL_CARD_HEIGHT,
-  fixedWidth: true,
-})
-
-const useQuestsRowRenderer = (quests: UnionQuest[]) => {
-  const rowRenderer = useCallback(
-    ({ key, index, style, parent }: ListRowProps) => {
-      const quest = quests[index]
-      const { gameId } = quest
-      const { code, name, desc, memo, memo2, pre } = quest.docQuest
-
-      return (
-        <CellMeasurer
-          cache={cache}
-          columnIndex={0}
-          key={key}
-          parent={parent}
-          rowIndex={index}
-        >
-          <div style={style}>
-            <QuestCard
-              style={{ margin: '4px' }}
-              gameId={gameId}
-              code={code}
-              name={name}
-              desc={desc}
-              tip={memo}
-              tip2={memo2}
-              preQuest={pre}
-            ></QuestCard>
-          </div>
-        </CellMeasurer>
-      )
-    },
-    [quests]
-  )
-  return rowRenderer
-}
-
 export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
   const activeTab = useIsQuestPluginTab()
   const listRef = useRef<List>(null)
-  const rowRenderer: ListRowRenderer = useQuestsRowRenderer(quests)
+  const rowHeights = useRef<Record<number, number>>({})
 
   useEffect(() => {
-    cache.clearAll()
-    listRef.current?.recomputeRowHeights()
+    listRef.current?.resetAfterIndex(0)
   }, [quests])
 
   useEffect(() => {
     if (activeTab) {
-      cache.clearAll()
-      listRef.current?.recomputeRowHeights()
+      listRef.current?.resetAfterIndex(0)
     }
   }, [activeTab])
 
-  const onResize = useCallback(() => {
-    cache.clearAll()
-    listRef.current?.recomputeRowHeights()
+  const setRowHeight = useCallback((index, size) => {
+    if (rowHeights.current[index] === size) {
+      return
+    }
+    rowHeights.current = { ...rowHeights.current, [index]: size }
+    listRef.current?.resetAfterIndex(index)
   }, [])
 
-  if (!quests.length) {
-    // Prevent Uncaught Error: Requested index 0 is outside of range 0..0
-    // See https://github.com/bvaughn/react-virtualized/issues/1016
-    return null
+  const getRowHeight = useCallback((index) => {
+    return rowHeights.current[index] + 8 || 200
+  }, [])
+
+  const Row = ({ index, style }: ListChildComponentProps) => {
+    const rowRef = useRef<HTMLDivElement>(null)
+
+    const quest = quests[index]
+    const { gameId } = quest
+    const { code, name, desc, memo, memo2 } = quest.docQuest
+
+    useEffect(() => {
+      if (rowRef.current) {
+        setRowHeight(index, rowRef.current.clientHeight)
+      }
+    }, [index])
+
+    return (
+      <div style={style}>
+        <div ref={rowRef}>
+          <QuestCard
+            style={{ margin: '4px' }}
+            gameId={gameId}
+            code={code}
+            name={name}
+            desc={desc}
+            tip={memo}
+            tip2={memo2}
+          />
+        </div>
+      </div>
+    )
   }
 
   return (
     <QuestListWrapper>
-      <AutoSizer onResize={onResize}>
+      <AutoSizer>
         {({ height, width }) => (
           <List
             ref={listRef}
             height={height}
             width={width}
-            rowCount={quests.length}
-            rowHeight={cache.rowHeight}
-            deferredMeasurementCache={cache}
-            rowRenderer={rowRenderer}
-          ></List>
+            itemCount={quests.length}
+            estimatedItemSize={200}
+            itemSize={getRowHeight}
+          >
+            {Row}
+          </List>
         )}
       </AutoSizer>
     </QuestListWrapper>
