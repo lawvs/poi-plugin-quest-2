@@ -1,10 +1,8 @@
 import { name as PACKAGE_NAME } from '../../package.json'
 import type { PluginState } from '../reducer'
-import { IN_POI, importFromPoi } from './env'
+import { id, noop } from '../utils'
+import { importFromPoi, IN_POI } from './env'
 import type { PoiState, Store } from './types'
-
-const noop = () => {}
-const id = <T>(x: T) => x
 
 /**
  * See https://redux.js.org/api/store#subscribelistener

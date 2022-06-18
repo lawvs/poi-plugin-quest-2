@@ -11,6 +11,7 @@ import { useQuest, useSyncWithGame } from './store'
 import { useFilterTags, useSyncGameTagEffect } from './store/filterTags'
 import { useSearchInput } from './store/search'
 import { CategoryTags, CATEGORY_TAGS, TypeTags, TYPE_TAGS } from './tags'
+import { And, Or } from './utils'
 
 const ToolbarWrapper = styled.div`
   display: flex;
@@ -114,16 +115,6 @@ const useInputStringFilter = () => {
   )
   return stringFilter
 }
-
-const And =
-  <T extends (...args: any[]) => boolean>(...fnArray: T[]) =>
-  (...args: Parameters<T>) =>
-    fnArray.every((fn) => fn(...args))
-
-const Or =
-  <T extends (...args: any[]) => boolean>(...fnArray: T[]) =>
-  (...args: Parameters<T>) =>
-    fnArray.some((fn) => fn(...args))
 
 const useToolbarFilter = () => {
   const stringFilter = useInputStringFilter()

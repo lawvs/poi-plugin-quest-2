@@ -28,8 +28,7 @@ import {
 import { useSyncWithGame } from './store'
 import { useFilterTags } from './store/filterTags'
 import { useGlobalGameQuest } from './store/gameQuest'
-
-const yes = () => true as const
+import { yes } from './utils'
 
 export const ALL_CATEGORY_TAG = {
   name: 'All',
