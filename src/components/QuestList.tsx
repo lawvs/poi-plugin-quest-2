@@ -9,6 +9,29 @@ import { QuestCard } from './QuestCard'
 
 const QuestListWrapper = styled.div`
   flex: 1;
+  overflow: hidden;
+`
+
+// CSS - Overflow: Scroll; - Always show vertical scroll bar?
+// See https://stackoverflow.com/questions/7492062/css-overflow-scroll-always-show-vertical-scroll-bar
+const ListWrapper = styled(List)`
+overflow
+  -webkit-overflow-scrolling: auto;
+
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(1, 1, 1, 0.3);
+  }
+
+  ::-webkit-scrollbar {
+    border-radius: 4px;
+    background-color: rgba(1, 1, 1, 0.1);
+  }
 `
 
 export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
@@ -72,7 +95,7 @@ export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
     <QuestListWrapper>
       <AutoSizer>
         {({ height, width }) => (
-          <List
+          <ListWrapper
             ref={listRef}
             height={height}
             width={width}
@@ -81,7 +104,7 @@ export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
             itemSize={getRowHeight}
           >
             {Row}
-          </List>
+          </ListWrapper>
         )}
       </AutoSizer>
     </QuestListWrapper>
