@@ -3,7 +3,7 @@
  * @see https://github.com/poooi/poi/blob/baa35b29d16c4e1eb5f2dee21929a68dc1641ef0/assets/css/global.css
  */
 
- ::-webkit-scrollbar {
+::-webkit-scrollbar {
   height: 0;
   width: 0;
 }
