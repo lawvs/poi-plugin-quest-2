@@ -106,7 +106,7 @@ const useInputStringFilter = () => {
       }
       const text = `${quest.docQuest.code} ${quest.docQuest.name} ${
         quest.docQuest.desc
-      } ${quest.docQuest.memo ?? ''}`
+      } ${quest.docQuest.memo ?? ''} ${quest.docQuest.memo2 ?? ''}`
       return searchKeywords.some((keyword) =>
         text.toUpperCase().includes(keyword)
       )
