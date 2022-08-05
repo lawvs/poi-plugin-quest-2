@@ -15,7 +15,6 @@ const QuestListWrapper = styled.div`
 // CSS - Overflow: Scroll; - Always show vertical scroll bar?
 // See https://stackoverflow.com/questions/7492062/css-overflow-scroll-always-show-vertical-scroll-bar
 const ListWrapper = styled(List)`
-overflow
   -webkit-overflow-scrolling: auto;
 
   ::-webkit-scrollbar {
