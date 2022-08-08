@@ -51,10 +51,11 @@ export const observePluginStore = <SelectedState = PluginState>(
   selector: (state: PluginState) => SelectedState = id as any
 ) => observePoiStore(onChange, (s) => selector(s?.ext[PACKAGE_NAME]))
 
-const fallbackStore: Store<PoiState> = {
-  getState: noop as () => PoiState,
-  subscribe: () => (() => {}) as () => () => void,
-}
+const genFallbackStore = (state?: PoiState) =>
+  ({
+    getState: () => state,
+    subscribe: () => (() => {}) as () => () => void,
+  } as Store<PoiState>)
 
 let globalStore: Store<PoiState> | null = null
 /**
@@ -73,6 +74,23 @@ export const getPoiStore: () => Promise<Store<PoiState>> = async () => {
       console.warn('Load global store error', error)
     }
   }
-  globalStore = fallbackStore
-  return fallbackStore
+  globalStore = genFallbackStore()
+  return globalStore
+}
+
+export const exportPoiState = async () => {
+  if (!IN_POI) {
+    throw new Error(
+      'Failed export state from poi! You are not currently in the poi environment!'
+    )
+  }
+  const { getState } = await getPoiStore()
+  return getState()
+}
+
+/**
+ * TODO fix state update
+ */
+export const importPoiState = (state: PoiState) => {
+  globalStore = genFallbackStore(state)
 }
