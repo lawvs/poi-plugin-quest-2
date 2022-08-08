@@ -4,7 +4,6 @@ import type { ChangeEvent } from 'react'
 import React, { useCallback } from 'react'
 import { useThrottle } from 'react-use'
 import styled from 'styled-components'
-import { IN_POI } from './poi/env'
 import { usePluginTranslation } from './poi/hooks'
 import type { UnionQuest } from './questHelper'
 import { useQuest, useSyncWithGame } from './store'
@@ -37,12 +36,7 @@ const SyncButton = () => {
     : Intent.NONE
   return (
     <Tooltip content={t('Sync with game')}>
-      <Button
-        icon={IconNames.EXCHANGE}
-        intent={intent}
-        disabled={!IN_POI}
-        onClick={handleClick}
-      />
+      <Button icon={IconNames.EXCHANGE} intent={intent} onClick={handleClick} />
     </Tooltip>
   )
 }

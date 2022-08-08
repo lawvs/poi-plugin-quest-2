@@ -1,7 +1,6 @@
 import { Tag } from '@blueprintjs/core'
 import React from 'react'
 import styled from 'styled-components'
-import { IN_POI } from './poi/env'
 import { useGameTab, usePluginTranslation } from './poi/hooks'
 import { GameQuest, QuestTab } from './poi/types'
 import type { UnionQuest } from './questHelper'
@@ -136,15 +135,15 @@ export const TypeTags = () => {
       >
         {t('All')}
       </Tag>
-      {IN_POI && (
-        <Tag
-          intent={typeTags['In Progress'] ? 'primary' : 'none'}
-          interactive={true}
-          onClick={() => setTypeTags('In Progress')}
-        >
-          {t('In Progress', { number: inProgressQuest.length })}
-        </Tag>
-      )}
+
+      <Tag
+        intent={typeTags['In Progress'] ? 'primary' : 'none'}
+        interactive={true}
+        onClick={() => setTypeTags('In Progress')}
+      >
+        {t('In Progress', { number: inProgressQuest.length })}
+      </Tag>
+
       {hasNewQuest && (
         <Tag
           intent={typeTags['New'] ? 'primary' : 'none'}
