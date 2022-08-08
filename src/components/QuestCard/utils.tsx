@@ -29,7 +29,7 @@ export const questStatusMap: Record<QUEST_STATUS, React.FC> = {
   [QUEST_STATUS.IN_PROGRESS]: function InProgress() {
     const { t } = usePluginTranslation()
     return (
-      <Tooltip content={t('In Progress')}>
+      <Tooltip content={t('In Progress', { number: '' })}>
         <img src={IconInProgress}></img>
       </Tooltip>
     )
