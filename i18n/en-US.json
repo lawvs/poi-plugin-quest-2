@@ -32,5 +32,10 @@
   "Use Kcwiki data": "Use Kcwiki's data (Simplified Chinese only)",
   "Requires": "Requires",
   "Unlocks": "Unlocks",
+  "Import quest data": "Import quest data",
+  "Export quest data": "Export quest data",
+  "Import data success": "Import data success",
+  "Copied data to clipboard": "Copied data to clipboard",
+  "Failed to export quest data! Please sync quest data first": "Failed to export quest data! Please sync quest data first",
   "": ""
 }

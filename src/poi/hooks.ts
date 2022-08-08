@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { name as PACKAGE_NAME } from '../../package.json'
-import { observePluginStore, observePoiStore } from './store'
+import {
+  exportPoiState,
+  importPoiState,
+  observePluginStore,
+  observePoiStore,
+} from './store'
 import { GameQuest, PoiQuestState, PoiState, QuestTab } from './types'
 
 export const activeQuestsSelector = (state: PoiState): PoiQuestState =>
@@ -64,4 +69,51 @@ const useActiveTab = () => {
 export const useIsQuestPluginTab = () => {
   const activeMainTab = useActiveTab()
   return activeMainTab === PACKAGE_NAME
+}
+
+const checkQuestList = (questList: unknown): questList is GameQuest[] => {
+  if (!Array.isArray(questList)) {
+    return false
+  }
+  // just a simple check
+  return questList.every((q) => q && q.api_no)
+}
+
+export const useStateExporter = () => {
+  const exportQuestDataToClipboard = async () => {
+    const state = await exportPoiState()
+    if (!state?.ext[PACKAGE_NAME]._.questList) {
+      console.error('poi state', state)
+      throw new Error('Failed to export quest data! questList not found!')
+    }
+    return navigator.clipboard.writeText(
+      JSON.stringify(state?.ext[PACKAGE_NAME]._.questList)
+    )
+  }
+  const importAsPoiState = (stateString: string) => {
+    const maybeQuestList: unknown = JSON.parse(stateString)
+
+    if (!checkQuestList(maybeQuestList)) {
+      console.error(maybeQuestList)
+      throw new Error('Failed to import quest state! Incorrect data format!')
+    }
+
+    importPoiState({
+      ext: {
+        [PACKAGE_NAME]: {
+          _: { questList: maybeQuestList, tabId: QuestTab.ALL },
+        },
+      },
+      ui: {
+        activeMainTab: '',
+        activeFleetId: undefined,
+        activePluginName: undefined,
+      },
+      plugins: [],
+    })
+  }
+  return {
+    exportQuestDataToClipboard,
+    importAsPoiState,
+  }
 }

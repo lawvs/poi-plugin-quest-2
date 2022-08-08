@@ -1,15 +1,25 @@
-import React, { StrictMode, useCallback } from 'react'
-import { Button, AnchorButton, Text, Checkbox } from '@blueprintjs/core'
-import { IconNames } from '@blueprintjs/icons'
-import styled from 'styled-components'
-import { version as PACKAGE_VERSION, homepage } from '../package.json'
-import { version as DATA_VERSION } from '../build/kcanotifyGamedata'
-import { usePluginTranslation } from './poi/hooks'
 import {
-  useRemoveStorage,
+  AnchorButton,
+  Button,
+  Checkbox,
+  Intent,
+  Text,
+  TextArea,
+} from '@blueprintjs/core'
+import { IconNames } from '@blueprintjs/icons'
+import type { ChangeEvent } from 'react'
+import React, { StrictMode, useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { version as DATA_VERSION } from '../build/kcanotifyGamedata'
+import { homepage, version as PACKAGE_VERSION } from '../package.json'
+import { IN_POI } from './poi/env'
+import { usePluginTranslation, useStateExporter } from './poi/hooks'
+import { tips } from './poi/utils'
+import {
   StoreProvider,
   useLanguage,
   usePreferKcwiki,
+  useRemoveStorage,
 } from './store'
 
 const Container = styled.div`
@@ -24,6 +34,53 @@ const Container = styled.div`
 `
 
 const useIsSimplifiedChinese = () => useLanguage() === 'zh-CN'
+
+const DataExportArea = () => {
+  const [text, setText] = useState<string>('')
+  const { t } = usePluginTranslation()
+  const { exportQuestDataToClipboard, importAsPoiState } = useStateExporter()
+
+  const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
+    setText(e.target.value)
+  }, [])
+
+  const handleImportData = useCallback(() => {
+    importAsPoiState(text)
+    setText('')
+    tips.success(t('Import data success'))
+  }, [importAsPoiState, t, text])
+
+  const handleExportData = useCallback(async () => {
+    try {
+      await exportQuestDataToClipboard()
+      tips.success(t('Copied data to clipboard'))
+    } catch (error) {
+      console.error(error)
+      tips.error(t('Failed to export quest data! Please sync quest data first'))
+    }
+  }, [exportQuestDataToClipboard, t])
+
+  return IN_POI ? (
+    <Button
+      icon={IconNames.EXPORT}
+      text={t('Export quest data')}
+      onClick={handleExportData}
+    />
+  ) : (
+    <>
+      <TextArea
+        growVertically={false}
+        intent={Intent.PRIMARY}
+        onChange={handleChange}
+      />
+      <Button
+        icon={IconNames.IMPORT}
+        text={t('Import quest data')}
+        onClick={handleImportData}
+      />
+    </>
+  )
+}
 
 const SettingsMain = () => {
   const { t } = usePluginTranslation()
@@ -52,13 +109,15 @@ const SettingsMain = () => {
         text={t('View source code on GitHub')}
         href={homepage}
         target="_blank"
-      ></AnchorButton>
+      />
 
       <Button
         icon={IconNames.TRASH}
         text={t('Restore defaults')}
         onClick={removeStorage}
-      ></Button>
+      />
+
+      <DataExportArea />
     </>
   )
 }

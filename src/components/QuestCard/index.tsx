@@ -19,7 +19,6 @@ import {
   TagsWrapper,
 } from './styles'
 import { questIconMap, questStatusMap } from './utils'
-import { IN_POI } from '../../poi/env'
 
 export type QuestCardProps = {
   gameId: number
@@ -71,7 +70,6 @@ export const QuestCard = forwardRef<
   const status = useQuestStatus(gameId)
   const headIcon = questIconMap[guessQuestCategory(code).type]
   const TailIcon = questStatusMap[status]
-  const inPoi = IN_POI
 
   return (
     <FlexCard
@@ -90,7 +88,9 @@ export const QuestCard = forwardRef<
         <CardAction gameId={gameId}></CardAction>
       </CardBody>
 
-      <CardTail>{inPoi && <TailIcon />}</CardTail>
+      <CardTail>
+        <TailIcon />
+      </CardTail>
     </FlexCard>
   )
 })
