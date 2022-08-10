@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { usePluginTranslation } from '../poi/hooks'
 import {
   DocQuest,
@@ -13,7 +12,7 @@ import {
 } from '../questHelper'
 import { useGlobalGameQuest } from './gameQuest'
 import { checkIsKcwikiSupportedLanguages, useKcwikiData } from './kcwiki'
-import { useStore, useSyncWithGame } from './store'
+import { useSyncWithGame } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
 
@@ -101,50 +100,38 @@ export const useQuestByCode = (code: string) => {
   return null
 }
 
-export const useQuestStatus = (gameId: number | null) => {
+export const useQuestStatusSearcher = () => {
   const gameQuest = useGlobalGameQuest()
-
-  if (!gameId) {
-    return QUEST_STATUS.UNKNOWN
-  }
-  const theGameQuest = gameQuest.find((quest) => quest.api_no === gameId)
-  if (theGameQuest) {
-    // the quest is in game
-    return questApiStateToQuestStatus(theGameQuest.api_state)
-  }
 
   const gameQuestId = gameQuest.map((quest) => quest.api_no)
   const completedQuest = getCompletedQuest(gameQuestId)
   const lockedQuest = getLockedQuest(gameQuestId)
 
-  if (gameId in lockedQuest) {
-    return QUEST_STATUS.LOCKED
+  return (gameId: number | null) => {
+    if (!gameId) {
+      return QUEST_STATUS.UNKNOWN
+    }
+
+    const theGameQuest = gameQuest.find((quest) => quest.api_no === gameId)
+    if (theGameQuest) {
+      // the quest is in game
+      return questApiStateToQuestStatus(theGameQuest.api_state)
+    }
+
+    if (gameId in lockedQuest) {
+      return QUEST_STATUS.LOCKED
+    }
+    if (gameId in completedQuest) {
+      return QUEST_STATUS.ALREADY_COMPLETED
+    }
+    return QUEST_STATUS.UNKNOWN
   }
-  if (gameId in completedQuest) {
-    return QUEST_STATUS.ALREADY_COMPLETED
-  }
-  return QUEST_STATUS.UNKNOWN
 }
 
 /**
- * @deprecated Not large card now
+ * Get the completion status of a specific game quest
  */
-export const useLargeCard = () => {
-  const {
-    store: { largeCard },
-    updateStore,
-  } = useStore()
-  const setLarge = useCallback(
-    (gameId: string) => updateStore({ largeCard: gameId }),
-    [updateStore]
-  )
-  const setMinimal = useCallback(
-    () => updateStore({ largeCard: null }),
-    [updateStore]
-  )
-  return {
-    largeCard,
-    setLarge,
-    setMinimal,
-  }
+export const useQuestStatus = (gameId: number | null) => {
+  const searcher = useQuestStatusSearcher()
+  return searcher(gameId)
 }

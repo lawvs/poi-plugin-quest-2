@@ -19,7 +19,10 @@ export const initialState = {
   categoryTags: {
     [ALL_CATEGORY_TAG.name]: true,
   } as Record<string, boolean>,
-  largeCard: null as null | string,
+  /**
+   * @deprecated
+   */
+  largeCard: null as unknown,
   syncWithGame: false,
   preferKcwikiData: true,
 }

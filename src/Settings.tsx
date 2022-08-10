@@ -72,6 +72,7 @@ const DataExportArea = () => {
         growVertically={false}
         intent={Intent.PRIMARY}
         onChange={handleChange}
+        value={text}
       />
       <Button
         icon={IconNames.IMPORT}

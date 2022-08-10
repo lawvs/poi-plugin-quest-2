@@ -32,7 +32,7 @@ export const useFilterTags = () => {
     },
     [updateStore]
   )
-  const manualSetTypeTags = useCallback(
+  const setMultiTypeTags = useCallback(
     (data: Record<string, boolean>) => {
       updateStore({ typeTags: data })
     },
@@ -49,11 +49,14 @@ export const useFilterTags = () => {
     setCategoryTags,
     setCategoryTagsAll,
     setTypeTags,
-    manualSetTypeTags,
+    setMultiTypeTags,
     setTypeTagsAll,
   }
 }
 
+/**
+ * @deprecated Should not update state when render
+ */
 export const useSyncGameTagEffect = () => {
   const { syncWithGame } = useSyncWithGame()
   const filterTags = useFilterTags()
@@ -80,7 +83,7 @@ export const useSyncGameTagEffect = () => {
         filterTags.setTypeTags('In Progress')
         break
       case QuestTab.OTHERS:
-        filterTags.manualSetTypeTags({ Quarterly: true, Yearly: true })
+        filterTags.setMultiTypeTags({ Quarterly: true, Yearly: true })
         break
       case QuestTab.ONCE:
         filterTags.setTypeTags('One-time')

@@ -73,6 +73,7 @@ export const SearchInput: React.FC = () => {
 }
 
 export const Toolbar = () => {
+  // TODO remove
   useSyncGameTagEffect()
 
   return (
@@ -111,7 +112,7 @@ const useInputStringFilter = () => {
 }
 
 const useToolbarFilter = () => {
-  const stringFilter = useInputStringFilter()
+  const searchFilter = useInputStringFilter()
   const { typeTags, categoryTags } = useFilterTags()
 
   const typeTagsFilter = Or(
@@ -122,7 +123,7 @@ const useToolbarFilter = () => {
       (tag) => tag.filter
     )
   )
-  const toolbarFilter = And(stringFilter, typeTagsFilter, categoryTagsFilter)
+  const toolbarFilter = And(searchFilter, typeTagsFilter, categoryTagsFilter)
   return toolbarFilter
 }
 

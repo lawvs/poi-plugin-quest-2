@@ -14,6 +14,11 @@ export const GameQuestProvider = ({ children }: { children?: ReactNode }) => {
   )
 }
 
+/**
+ * Get the questList from poi.
+ *
+ * Same as {@link useGameQuest}, but singleton
+ */
 export const useGlobalGameQuest = () => {
   const gameQuest = useContext(GameQuestContext)
   return gameQuest
