@@ -1,12 +1,9 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
+  "editor.codeActionsOnSave": [
+    "source.organizeImports",
+    "source.fixAll.eslint"
+  ],
   "npm.packageManager": "npm",
-  "cSpell.words": [
-    "Kcanotify",
-    "Kcwiki",
-    "moize"
-  ]
+  "cSpell.words": ["Kcanotify", "Kcwiki", "moize"]
 }
