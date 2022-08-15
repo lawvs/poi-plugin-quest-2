@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { usePluginTranslation } from '../poi/hooks'
 import {
   DocQuest,
@@ -100,32 +101,36 @@ export const useQuestByCode = (code: string) => {
   return null
 }
 
+// TODO lift up to context
 export const useQuestStatusSearcher = () => {
   const gameQuest = useGlobalGameQuest()
 
-  const gameQuestId = gameQuest.map((quest) => quest.api_no)
-  const completedQuest = getCompletedQuest(gameQuestId)
-  const lockedQuest = getLockedQuest(gameQuestId)
+  const searcher = useMemo(() => {
+    const gameQuestId = gameQuest.map((quest) => quest.api_no)
+    const completedQuest = getCompletedQuest(gameQuestId)
+    const lockedQuest = getLockedQuest(gameQuestId)
+    return (gameId: number | null) => {
+      if (!gameId) {
+        return QUEST_STATUS.UNKNOWN
+      }
 
-  return (gameId: number | null) => {
-    if (!gameId) {
+      const theGameQuest = gameQuest.find((quest) => quest.api_no === gameId)
+      if (theGameQuest) {
+        // the quest is in game
+        return questApiStateToQuestStatus(theGameQuest.api_state)
+      }
+
+      if (gameId in lockedQuest) {
+        return QUEST_STATUS.LOCKED
+      }
+      if (gameId in completedQuest) {
+        return QUEST_STATUS.ALREADY_COMPLETED
+      }
       return QUEST_STATUS.UNKNOWN
     }
+  }, [gameQuest])
 
-    const theGameQuest = gameQuest.find((quest) => quest.api_no === gameId)
-    if (theGameQuest) {
-      // the quest is in game
-      return questApiStateToQuestStatus(theGameQuest.api_state)
-    }
-
-    if (gameId in lockedQuest) {
-      return QUEST_STATUS.LOCKED
-    }
-    if (gameId in completedQuest) {
-      return QUEST_STATUS.ALREADY_COMPLETED
-    }
-    return QUEST_STATUS.UNKNOWN
-  }
+  return searcher
 }
 
 /**
