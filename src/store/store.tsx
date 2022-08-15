@@ -8,8 +8,22 @@ import React, {
 } from 'react'
 import { useMount, useUpdateEffect } from 'react-use'
 import { name as PACKAGE_NAME } from '../../package.json'
-import { ALL_CATEGORY_TAG, ALL_TYPE_TAG } from '../tags'
+import { yes } from '../utils'
 import { GameQuestProvider } from './gameQuest'
+
+export const ALL_CATEGORY_TAG = {
+  name: 'All',
+  filter: yes,
+} as const
+
+export const ALL_TYPE_TAG = ALL_CATEGORY_TAG
+
+export enum PROGRESS_TAG {
+  All = 'All',
+  InProgress = 'InProgress',
+  Locked = 'Locked',
+  AlreadyCompleted = 'AlreadyCompleted',
+}
 
 export const initialState = {
   searchInput: '',
@@ -19,10 +33,7 @@ export const initialState = {
   categoryTags: {
     [ALL_CATEGORY_TAG.name]: true,
   } as Record<string, boolean>,
-  /**
-   * @deprecated
-   */
-  largeCard: null as unknown,
+  progressTags: PROGRESS_TAG.All,
   syncWithGame: false,
   preferKcwikiData: true,
 }
@@ -42,7 +53,7 @@ const useStorage = <T,>(initialValue: T) => {
         return
       }
       const parsedStorage: T = JSON.parse(stringStore)
-      setState(parsedStorage)
+      setState({ ...initialState, ...parsedStorage })
     } catch (error) {
       console.error('Failed to load storage', error)
     }

@@ -24,17 +24,14 @@ import {
   isYearlyQuest,
   newQuestNumber,
 } from './questHelper'
-import { useSyncWithGame } from './store'
-import { useFilterTags } from './store/filterTags'
+import {
+  ALL_CATEGORY_TAG,
+  ALL_TYPE_TAG,
+  PROGRESS_TAG,
+  useSyncWithGame,
+} from './store'
+import { useFilterProgressTag, useFilterTags } from './store/filterTags'
 import { useGlobalGameQuest } from './store/gameQuest'
-import { yes } from './utils'
-
-export const ALL_CATEGORY_TAG = {
-  name: 'All',
-  filter: yes,
-} as const
-
-export const ALL_TYPE_TAG = ALL_CATEGORY_TAG
 
 const withDocQuest =
   <T,>(filterFn: (q: UnionQuest['docQuest']) => T) =>
@@ -77,7 +74,20 @@ export const TYPE_TAGS = [
   { name: 'Yearly', filter: isYearlyQuest },
 ] as const
 
-// TODO tag Lock / Completed
+const QUEST_PROGRESS_TAGS = [
+  {
+    name: 'In Progress',
+    key: PROGRESS_TAG.InProgress,
+  },
+  {
+    name: 'Locked',
+    key: PROGRESS_TAG.Locked,
+  },
+  {
+    name: 'Already Completed',
+    key: PROGRESS_TAG.AlreadyCompleted,
+  },
+] as const
 
 const TagsWrapper = styled.div`
   margin-left: -4px;
@@ -90,8 +100,9 @@ const TagsWrapper = styled.div`
 
 export const CategoryTags = () => {
   const { t } = usePluginTranslation()
-
   const { categoryTags, setCategoryTags } = useFilterTags()
+  const { progressTags, toggleTag } = useFilterProgressTag()
+
   return (
     <TagsWrapper>
       {CATEGORY_TAGS.map(({ name }) => (
@@ -106,6 +117,19 @@ export const CategoryTags = () => {
           }
           interactive={true}
           key={name}
+        >
+          {t(name)}
+        </Tag>
+      ))}
+
+      {QUEST_PROGRESS_TAGS.map(({ name, key }) => (
+        <Tag
+          key={key}
+          onClick={() => {
+            toggleTag(key)
+          }}
+          intent={progressTags === key ? 'primary' : 'none'}
+          interactive={true}
         >
           {t(name)}
         </Tag>

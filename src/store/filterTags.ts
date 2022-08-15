@@ -2,13 +2,14 @@ import { useCallback } from 'react'
 import { useUpdateEffect } from 'react-use'
 import { useGameTab } from '../poi/hooks'
 import { QuestTab } from '../poi/types'
+import { CATEGORY_TAGS, TYPE_TAGS } from '../tags'
 import {
   ALL_CATEGORY_TAG,
   ALL_TYPE_TAG,
-  CATEGORY_TAGS,
-  TYPE_TAGS,
-} from '../tags'
-import { useStore, useSyncWithGame } from './store'
+  PROGRESS_TAG,
+  useStore,
+  useSyncWithGame,
+} from './store'
 
 export const useFilterTags = () => {
   const {
@@ -51,6 +52,29 @@ export const useFilterTags = () => {
     setTypeTags,
     setMultiTypeTags,
     setTypeTagsAll,
+  }
+}
+
+export const useFilterProgressTag = () => {
+  const {
+    store: { progressTags },
+    updateStore,
+  } = useStore()
+
+  const toggleTag = useCallback(
+    (tag: PROGRESS_TAG) => {
+      if (progressTags === tag) {
+        updateStore({ progressTags: PROGRESS_TAG.All })
+        return
+      }
+      updateStore({ progressTags: tag })
+    },
+    [progressTags, updateStore]
+  )
+
+  return {
+    progressTags,
+    toggleTag,
   }
 }
 
