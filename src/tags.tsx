@@ -101,7 +101,7 @@ const TagsWrapper = styled.div`
 export const CategoryTags = () => {
   const { t } = usePluginTranslation()
   const { categoryTags, setCategoryTags } = useFilterTags()
-  const { progressTags, toggleTag } = useFilterProgressTag()
+  const { progressTag, toggleTag } = useFilterProgressTag()
 
   return (
     <TagsWrapper>
@@ -128,7 +128,7 @@ export const CategoryTags = () => {
           onClick={() => {
             toggleTag(key)
           }}
-          intent={progressTags === key ? 'primary' : 'none'}
+          intent={progressTag === key ? 'success' : 'none'}
           interactive={true}
         >
           {t(name)}

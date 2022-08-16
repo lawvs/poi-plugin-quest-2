@@ -57,23 +57,23 @@ export const useFilterTags = () => {
 
 export const useFilterProgressTag = () => {
   const {
-    store: { progressTags },
+    store: { progressTag },
     updateStore,
   } = useStore()
 
   const toggleTag = useCallback(
     (tag: PROGRESS_TAG) => {
-      if (progressTags === tag) {
-        updateStore({ progressTags: PROGRESS_TAG.All })
+      if (progressTag === tag) {
+        updateStore({ progressTag: PROGRESS_TAG.All })
         return
       }
-      updateStore({ progressTags: tag })
+      updateStore({ progressTag: tag })
     },
-    [progressTags, updateStore]
+    [progressTag, updateStore]
   )
 
   return {
-    progressTags,
+    progressTag,
     toggleTag,
   }
 }
