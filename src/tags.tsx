@@ -32,7 +32,7 @@ import {
   useSyncWithGame,
 } from './store'
 import { useFilterProgressTag, useFilterTags } from './store/filterTags'
-import { useGlobalGameQuest } from './store/gameQuest'
+import { useGlobalGameQuest, useGlobalQuestStatusNum } from './store/gameQuest'
 
 const withDocQuest =
   <T,>(filterFn: (q: UnionQuest['docQuest']) => T) =>
@@ -86,40 +86,43 @@ const TagsWrapper = styled.div`
   }
 `
 
-const QUEST_PROGRESS_TAGS = [
-  {
-    name: 'Locked',
-    key: PROGRESS_TAG.Locked,
-  },
-  {
-    name: 'Unlocked',
-    key: PROGRESS_TAG.Unlocked,
-  },
-  {
-    name: 'Already Completed',
-    key: PROGRESS_TAG.AlreadyCompleted,
-  },
-] as const
-
 export const ProgressTags = () => {
   const { t } = usePluginTranslation()
   const { progressTag, toggleTag } = useFilterProgressTag()
-
+  const { lockedQuestNum, unlockedQuestNum, completedQuestNum } =
+    useGlobalQuestStatusNum()
   return (
     <>
-      {QUEST_PROGRESS_TAGS.map(({ name, key }) => (
-        <Tag
-          key={key}
-          icon={key === PROGRESS_TAG.Unlocked ? IconNames.EXCHANGE : undefined}
-          onClick={() => {
-            toggleTag(key)
-          }}
-          intent={progressTag === key ? 'success' : 'none'}
-          interactive={true}
-        >
-          {t(name)}
-        </Tag>
-      ))}
+      <Tag
+        onClick={() => {
+          toggleTag(PROGRESS_TAG.Locked)
+        }}
+        intent={progressTag === PROGRESS_TAG.Locked ? 'success' : 'none'}
+        interactive={true}
+      >
+        {t('Locked', { number: lockedQuestNum })}
+      </Tag>
+      <Tag
+        icon={IconNames.EXCHANGE}
+        onClick={() => {
+          toggleTag(PROGRESS_TAG.Unlocked)
+        }}
+        intent={progressTag === PROGRESS_TAG.Unlocked ? 'success' : 'none'}
+        interactive={true}
+      >
+        {t('Unlocked', { number: unlockedQuestNum })}
+      </Tag>
+      <Tag
+        onClick={() => {
+          toggleTag(PROGRESS_TAG.AlreadyCompleted)
+        }}
+        intent={
+          progressTag === PROGRESS_TAG.AlreadyCompleted ? 'success' : 'none'
+        }
+        interactive={true}
+      >
+        {t('Already Completed', { number: completedQuestNum })}
+      </Tag>
     </>
   )
 }
