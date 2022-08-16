@@ -4,6 +4,7 @@
   "Search": "검색",
   "All": "전체",
   "Locked": "잠김",
+  "Unlocked": "잠김 풀림",
   "In Progress": "진행 중 {{number}}",
   "Completed": "달성",
   "Already Completed": "완료",

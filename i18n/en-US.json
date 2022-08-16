@@ -19,6 +19,7 @@
   "Yearly": "Yearly",
   "One-time": "One-time",
   "Locked": "Locked",
+  "Unlocked": "Unlocked",
   "In Progress": "In Progress {{number}}",
   "Completed": "Completed",
   "Already Completed": "Already Completed",

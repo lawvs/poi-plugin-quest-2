@@ -19,6 +19,7 @@
   "Yearly": "年常",
   "One-time": "单次",
   "Locked": "未解锁",
+  "Unlocked": "已解锁",
   "In Progress": "进行中 {{number}}",
   "Completed": "达成",
   "Already Completed": "已完成",
