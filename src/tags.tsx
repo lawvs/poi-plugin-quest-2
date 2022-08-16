@@ -1,4 +1,5 @@
 import { Tag } from '@blueprintjs/core'
+import { IconNames } from '@blueprintjs/icons'
 import React from 'react'
 import styled from 'styled-components'
 import { useGameTab, usePluginTranslation } from './poi/hooks'
@@ -74,6 +75,17 @@ export const TYPE_TAGS = [
   { name: 'Yearly', filter: isYearlyQuest },
 ] as const
 
+const TagsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -4px;
+  margin-right: -4px;
+
+  & > * {
+    margin: 4px;
+  }
+`
+
 const QUEST_PROGRESS_TAGS = [
   {
     name: 'Locked',
@@ -89,19 +101,32 @@ const QUEST_PROGRESS_TAGS = [
   },
 ] as const
 
-const TagsWrapper = styled.div`
-  margin-left: -4px;
-  margin-right: -4px;
+export const ProgressTags = () => {
+  const { t } = usePluginTranslation()
+  const { progressTag, toggleTag } = useFilterProgressTag()
 
-  & > * {
-    margin: 4px;
-  }
-`
+  return (
+    <>
+      {QUEST_PROGRESS_TAGS.map(({ name, key }) => (
+        <Tag
+          key={key}
+          icon={key === PROGRESS_TAG.Unlocked ? IconNames.EXCHANGE : undefined}
+          onClick={() => {
+            toggleTag(key)
+          }}
+          intent={progressTag === key ? 'success' : 'none'}
+          interactive={true}
+        >
+          {t(name)}
+        </Tag>
+      ))}
+    </>
+  )
+}
 
 export const CategoryTags = () => {
   const { t } = usePluginTranslation()
   const { categoryTags, setCategoryTags } = useFilterTags()
-  const { progressTag, toggleTag } = useFilterProgressTag()
 
   return (
     <TagsWrapper>
@@ -122,18 +147,7 @@ export const CategoryTags = () => {
         </Tag>
       ))}
 
-      {QUEST_PROGRESS_TAGS.map(({ name, key }) => (
-        <Tag
-          key={key}
-          onClick={() => {
-            toggleTag(key)
-          }}
-          intent={progressTag === key ? 'success' : 'none'}
-          interactive={true}
-        >
-          {t(name)}
-        </Tag>
-      ))}
+      <ProgressTags />
     </TagsWrapper>
   )
 }
