@@ -160,6 +160,8 @@ export const TypeTags = () => {
   const gameTab = useGameTab()
   const { syncWithGame } = useSyncWithGame()
   const gameQuests = useGlobalGameQuest()
+  const { progressTag } = useFilterProgressTag()
+
   const inProgressQuest = gameQuests.filter((gameQuest) =>
     isInProgressQuest(gameQuest)
   )
@@ -178,7 +180,14 @@ export const TypeTags = () => {
       </Tag>
 
       <Tag
-        intent={typeTags['In Progress'] ? 'primary' : 'none'}
+        intent={
+          typeTags['In Progress']
+            ? progressTag === PROGRESS_TAG.AlreadyCompleted ||
+              progressTag === PROGRESS_TAG.Locked
+              ? 'warning'
+              : 'primary'
+            : 'none'
+        }
         interactive={true}
         onClick={() => setTypeTags('In Progress')}
       >
