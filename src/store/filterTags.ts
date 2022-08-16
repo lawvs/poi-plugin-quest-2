@@ -3,13 +3,7 @@ import { useUpdateEffect } from 'react-use'
 import { useGameTab } from '../poi/hooks'
 import { QuestTab } from '../poi/types'
 import { CATEGORY_TAGS, TYPE_TAGS } from '../tags'
-import {
-  ALL_CATEGORY_TAG,
-  ALL_TYPE_TAG,
-  PROGRESS_TAG,
-  useStore,
-  useSyncWithGame,
-} from './store'
+import { ALL_CATEGORY_TAG, ALL_TYPE_TAG, PROGRESS_TAG, useStore } from './store'
 
 export const useFilterTags = () => {
   const {
@@ -82,12 +76,12 @@ export const useFilterProgressTag = () => {
  * @deprecated Should not update state when render
  */
 export const useSyncGameTagEffect = () => {
-  const { syncWithGame } = useSyncWithGame()
+  const { progressTag } = useFilterProgressTag()
   const filterTags = useFilterTags()
   const tab = useGameTab()
 
   useUpdateEffect(() => {
-    if (!syncWithGame) {
+    if (progressTag !== PROGRESS_TAG.Unlocked) {
       return
     }
     switch (tab) {
@@ -115,5 +109,5 @@ export const useSyncGameTagEffect = () => {
       default:
         break
     }
-  }, [syncWithGame, tab])
+  }, [tab])
 }
