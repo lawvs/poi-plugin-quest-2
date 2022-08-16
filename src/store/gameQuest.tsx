@@ -11,18 +11,14 @@ import {
 
 export const GameQuestContext = createContext<{
   gameQuest: GameQuest[]
-  questStatusQuery: (gameId: number | null) => QUEST_STATUS
+  questStatusQuery: (gameId: number) => QUEST_STATUS
 }>({} as any)
 
 const useQuestStatusQuery = (gameQuest: GameQuest[]) => {
   const gameQuestId = gameQuest.map((quest) => quest.api_no)
   const completedQuest = getCompletedQuest(gameQuestId)
   const lockedQuest = getLockedQuest(gameQuestId)
-  return (gameId: number | null) => {
-    if (!gameId) {
-      return QUEST_STATUS.UNKNOWN
-    }
-
+  return (gameId: number) => {
     const theGameQuest = gameQuest.find((quest) => quest.api_no === gameId)
     if (theGameQuest) {
       // the quest is in game

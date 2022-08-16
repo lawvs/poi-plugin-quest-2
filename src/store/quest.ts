@@ -4,6 +4,7 @@ import {
   getCategory,
   getKcanotifyQuestData,
   getQuestIdByCode,
+  QUEST_STATUS,
   UnionQuest,
 } from '../questHelper'
 import { useGlobalGameQuest, useGlobalQuestStatusQuery } from './gameQuest'
@@ -101,5 +102,8 @@ export const useQuestByCode = (code: string) => {
  */
 export const useQuestStatus = (gameId: number | null) => {
   const searcher = useGlobalQuestStatusQuery()
+  if (!gameId) {
+    return QUEST_STATUS.UNKNOWN
+  }
   return searcher(gameId)
 }
