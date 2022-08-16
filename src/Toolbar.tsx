@@ -5,9 +5,14 @@ import React, { useCallback } from 'react'
 import { useThrottle } from 'react-use'
 import styled from 'styled-components'
 import { usePluginTranslation } from './poi/hooks'
-import type { UnionQuest } from './questHelper'
-import { useQuest, useSyncWithGame } from './store'
-import { useFilterTags, useSyncGameTagEffect } from './store/filterTags'
+import { QUEST_STATUS, UnionQuest } from './questHelper'
+import { PROGRESS_TAG, useQuest, useSyncWithGame } from './store'
+import {
+  useFilterProgressTag,
+  useFilterTags,
+  useSyncGameTagEffect,
+} from './store/filterTags'
+import { useGlobalQuestStatusQuery } from './store/gameQuest'
 import { useSearchInput } from './store/search'
 import { CategoryTags, CATEGORY_TAGS, TypeTags, TYPE_TAGS } from './tags'
 import { And, Or } from './utils'
@@ -111,9 +116,42 @@ const useInputStringFilter = () => {
   return stringFilter
 }
 
-const useToolbarFilter = () => {
+const useToolbarFilter = (): ((quest: UnionQuest) => boolean) => {
   const searchFilter = useInputStringFilter()
   const { typeTags, categoryTags } = useFilterTags()
+
+  const { progressTag } = useFilterProgressTag()
+  const questStatusQuery = useGlobalQuestStatusQuery()
+
+  const progressTagFilter = useCallback(
+    (quest: UnionQuest): boolean => {
+      const questStatus = questStatusQuery(quest.gameId)
+      switch (progressTag) {
+        case PROGRESS_TAG.All:
+          return true
+        case PROGRESS_TAG.Locked:
+          return (
+            questStatus === QUEST_STATUS.LOCKED ||
+            questStatus === QUEST_STATUS.UNKNOWN
+          )
+        case PROGRESS_TAG.Unlocked:
+          return (
+            questStatus === QUEST_STATUS.DEFAULT ||
+            questStatus === QUEST_STATUS.IN_PROGRESS ||
+            questStatus === QUEST_STATUS.COMPLETED
+          )
+        case PROGRESS_TAG.AlreadyCompleted:
+          return (
+            questStatus === QUEST_STATUS.COMPLETED ||
+            questStatus === QUEST_STATUS.ALREADY_COMPLETED
+          )
+        default:
+          console.warn('Unknown progressTag type!', progressTag)
+      }
+      return true
+    },
+    [progressTag, questStatusQuery]
+  )
 
   const typeTagsFilter = Or(
     ...TYPE_TAGS.filter((tag) => typeTags[tag.name]).map((tag) => tag.filter)
@@ -123,7 +161,14 @@ const useToolbarFilter = () => {
       (tag) => tag.filter
     )
   )
-  const toolbarFilter = And(searchFilter, typeTagsFilter, categoryTagsFilter)
+
+  const toolbarFilter = And(
+    searchFilter,
+    typeTagsFilter,
+    categoryTagsFilter,
+    progressTagFilter
+  )
+
   return toolbarFilter
 }
 

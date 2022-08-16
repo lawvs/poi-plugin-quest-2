@@ -20,7 +20,7 @@ export const ALL_TYPE_TAG = ALL_CATEGORY_TAG
 
 export enum PROGRESS_TAG {
   All = 'All',
-  InProgress = 'InProgress',
+  Unlocked = 'Unlocked',
   Locked = 'Locked',
   AlreadyCompleted = 'AlreadyCompleted',
 }
@@ -33,7 +33,7 @@ export const initialState = {
   categoryTags: {
     [ALL_CATEGORY_TAG.name]: true,
   } as Record<string, boolean>,
-  progressTags: PROGRESS_TAG.All,
+  progressTag: PROGRESS_TAG.All,
   syncWithGame: false,
   preferKcwikiData: true,
 }

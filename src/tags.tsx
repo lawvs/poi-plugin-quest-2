@@ -76,12 +76,12 @@ export const TYPE_TAGS = [
 
 const QUEST_PROGRESS_TAGS = [
   {
-    name: 'In Progress',
-    key: PROGRESS_TAG.InProgress,
-  },
-  {
     name: 'Locked',
     key: PROGRESS_TAG.Locked,
+  },
+  {
+    name: 'Unlocked',
+    key: PROGRESS_TAG.Unlocked,
   },
   {
     name: 'Already Completed',
