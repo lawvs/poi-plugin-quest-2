@@ -45,7 +45,7 @@ export const questStatusMap: Record<QUEST_STATUS, React.FC> = {
   [QUEST_STATUS.ALREADY_COMPLETED]: function AlreadyCompleted() {
     const { t } = usePluginTranslation()
     return (
-      <Tooltip content={t('Already Completed')}>
+      <Tooltip content={t('Already Completed', { number: '' })}>
         <Icon icon={IconNames.TICK} iconSize={Icon.SIZE_LARGE}></Icon>
       </Tooltip>
     )
