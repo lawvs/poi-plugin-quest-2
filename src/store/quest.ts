@@ -1,17 +1,12 @@
-import { useMemo } from 'react'
 import { usePluginTranslation } from '../poi/hooks'
 import {
   DocQuest,
   getCategory,
-  getCompletedQuest,
   getKcanotifyQuestData,
-  getLockedQuest,
   getQuestIdByCode,
-  questApiStateToQuestStatus,
-  QUEST_STATUS,
   UnionQuest,
 } from '../questHelper'
-import { useGlobalGameQuest } from './gameQuest'
+import { useGlobalGameQuest, useGlobalQuestStatusQuery } from './gameQuest'
 import { checkIsKcwikiSupportedLanguages, useKcwikiData } from './kcwiki'
 import { useSyncWithGame } from './store'
 
@@ -101,42 +96,10 @@ export const useQuestByCode = (code: string) => {
   return null
 }
 
-// TODO lift up to context
-export const useQuestStatusSearcher = () => {
-  const gameQuest = useGlobalGameQuest()
-
-  const searcher = useMemo(() => {
-    const gameQuestId = gameQuest.map((quest) => quest.api_no)
-    const completedQuest = getCompletedQuest(gameQuestId)
-    const lockedQuest = getLockedQuest(gameQuestId)
-    return (gameId: number | null) => {
-      if (!gameId) {
-        return QUEST_STATUS.UNKNOWN
-      }
-
-      const theGameQuest = gameQuest.find((quest) => quest.api_no === gameId)
-      if (theGameQuest) {
-        // the quest is in game
-        return questApiStateToQuestStatus(theGameQuest.api_state)
-      }
-
-      if (gameId in lockedQuest) {
-        return QUEST_STATUS.LOCKED
-      }
-      if (gameId in completedQuest) {
-        return QUEST_STATUS.ALREADY_COMPLETED
-      }
-      return QUEST_STATUS.UNKNOWN
-    }
-  }, [gameQuest])
-
-  return searcher
-}
-
 /**
  * Get the completion status of a specific game quest
  */
 export const useQuestStatus = (gameId: number | null) => {
-  const searcher = useQuestStatusSearcher()
+  const searcher = useGlobalQuestStatusQuery()
   return searcher(gameId)
 }
