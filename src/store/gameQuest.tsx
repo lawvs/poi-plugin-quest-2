@@ -15,7 +15,13 @@ export const GameQuestContext = createContext<{
   lockedQuestNum: number
   unlockedQuestNum: number
   completedQuestNum: number
-}>({} as any)
+}>({
+  gameQuest: [],
+  questStatusQuery: () => QUEST_STATUS.UNKNOWN,
+  lockedQuestNum: 0,
+  unlockedQuestNum: 0,
+  completedQuestNum: 0,
+})
 
 const useQuestStatusQuery = (gameQuest: GameQuest[]) => {
   const gameQuestId = gameQuest.map((quest) => quest.api_no)
