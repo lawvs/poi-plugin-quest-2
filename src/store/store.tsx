@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { useMount, useUpdateEffect } from 'react-use'
 import { name as PACKAGE_NAME } from '../../package.json'
-import { yes } from '../utils'
+import { noop, yes } from '../utils'
 import { GameQuestProvider } from './gameQuest'
 
 export const ALL_CATEGORY_TAG = {
@@ -34,7 +34,7 @@ export const initialState = {
     [ALL_CATEGORY_TAG.name]: true,
   } as Record<string, boolean>,
   progressTag: PROGRESS_TAG.All,
-  syncWithGame: false,
+  syncWithGame: false as const,
   preferKcwikiData: true,
 }
 
@@ -111,22 +111,14 @@ export const useRemoveStorage = () => {
   }
 }
 
+/**
+ * @deprecated Use progress tag
+ */
 export const useSyncWithGame = () => {
-  const {
-    store: { syncWithGame },
-    updateStore,
-  } = useStore()
-  const setSyncWithGame = useCallback(
-    (value: boolean) => {
-      updateStore({ syncWithGame: value })
-    },
-    [updateStore]
-  )
-  const toggleSyncWithGame = useCallback(() => {
-    setSyncWithGame(!syncWithGame)
-  }, [setSyncWithGame, syncWithGame])
+  const setSyncWithGame = noop
+  const toggleSyncWithGame = noop
   return {
-    syncWithGame,
+    syncWithGame: false as const,
     setSyncWithGame,
     toggleSyncWithGame,
   }

@@ -25,7 +25,6 @@
   "Already Completed": "完了",
   "Unknown": "状態不明",
   "TotalQuests": "全て {{number}} 個の任務",
-  "Sync with game": "ゲームと連動(インゲームクエストのみ表示する)",
   "Version": "バージョン: {{version}}",
   "Data Version": "データ バージョン: {{version}}",
   "View source code on GitHub": "GitHubでソースコードを表示",

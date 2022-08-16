@@ -1,4 +1,4 @@
-import { Button, InputGroup, Intent, Tooltip } from '@blueprintjs/core'
+import { Button, InputGroup } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import type { ChangeEvent } from 'react'
 import React, { useCallback } from 'react'
@@ -6,7 +6,7 @@ import { useThrottle } from 'react-use'
 import styled from 'styled-components'
 import { usePluginTranslation } from './poi/hooks'
 import { QUEST_STATUS, UnionQuest } from './questHelper'
-import { PROGRESS_TAG, useQuest, useSyncWithGame } from './store'
+import { PROGRESS_TAG, useQuest } from './store'
 import {
   useFilterProgressTag,
   useFilterTags,
@@ -26,25 +26,6 @@ const ToolbarWrapper = styled.div`
     margin-top: 8px;
   }
 `
-
-const SyncButton = () => {
-  const { t } = usePluginTranslation()
-  const { searchInput } = useSearchInput()
-  const { syncWithGame, toggleSyncWithGame } = useSyncWithGame()
-  const handleClick = useCallback(() => {
-    toggleSyncWithGame()
-  }, [toggleSyncWithGame])
-  const intent = syncWithGame
-    ? searchInput
-      ? Intent.WARNING
-      : Intent.SUCCESS
-    : Intent.NONE
-  return (
-    <Tooltip content={t('Sync with game')}>
-      <Button icon={IconNames.EXCHANGE} intent={intent} onClick={handleClick} />
-    </Tooltip>
-  )
-}
 
 export const SearchInput: React.FC = () => {
   const { t } = usePluginTranslation()
@@ -69,7 +50,6 @@ export const SearchInput: React.FC = () => {
           {!!searchInput && (
             <Button icon={IconNames.CROSS} onClick={handleClear} />
           )}
-          <SyncButton></SyncButton>
         </>
       }
       type="text"

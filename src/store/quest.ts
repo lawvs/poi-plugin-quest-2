@@ -1,7 +1,6 @@
 import { usePluginTranslation } from '../poi/hooks'
 import {
   DocQuest,
-  getCategory,
   getKcanotifyQuestData,
   getQuestIdByCode,
   QUEST_STATUS,
@@ -9,7 +8,6 @@ import {
 } from '../questHelper'
 import { useGlobalGameQuest, useGlobalQuestStatusQuery } from './gameQuest'
 import { checkIsKcwikiSupportedLanguages, useKcwikiData } from './kcwiki'
-import { useSyncWithGame } from './store'
 
 const DEFAULT_LANG = 'ja-JP'
 
@@ -49,40 +47,27 @@ const useQuestMap = (): Record<string, DocQuest> => {
 export const useQuest = (): UnionQuest[] => {
   const docQuestMap = useQuestMap()
   const gameQuest = useGlobalGameQuest()
-  const { syncWithGame } = useSyncWithGame()
-
-  if (syncWithGame && gameQuest.length) {
-    return gameQuest.map((quest) => {
-      const gameId = quest.api_no
-      if (gameId in docQuestMap) {
-        return {
-          gameId,
-          gameQuest: quest,
-          docQuest: docQuestMap[String(gameId) as keyof typeof docQuestMap],
-        }
-      }
-
-      // Not yet recorded quest
-      // May be a new quest
-      return {
-        gameId,
-        gameQuest: quest,
-        docQuest: {
-          code: `${getCategory(quest.api_category).wikiSymbol}?`,
-          name: quest.api_title,
-          desc: quest.api_detail,
-        },
-      }
-    })
-  } else {
-    // Return all recorded quests
-    return Object.entries(docQuestMap).map(([gameId, val]) => ({
-      gameId: +gameId,
-      // Maybe empty
-      gameQuest: gameQuest.find((quest) => quest.api_no === Number(gameId))!,
-      docQuest: val,
-    }))
-  }
+  // TODO extract new quest from game quest
+  // Not yet recorded quest
+  // May be a new quest
+  // if (!(gameId in docQuestMap)) {
+  //   return {
+  //     gameId,
+  //     gameQuest: quest,
+  //     docQuest: {
+  //       code: `${getCategory(quest.api_category).wikiSymbol}?`,
+  //       name: quest.api_title,
+  //       desc: quest.api_detail,
+  //     },
+  //   }
+  // }
+  // Return all recorded quests
+  return Object.entries(docQuestMap).map(([gameId, val]) => ({
+    gameId: +gameId,
+    // Maybe empty
+    gameQuest: gameQuest.find((quest) => quest.api_no === Number(gameId))!,
+    docQuest: val,
+  }))
 }
 
 export const useQuestByCode = (code: string) => {
