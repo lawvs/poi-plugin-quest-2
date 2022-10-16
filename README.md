@@ -5,7 +5,7 @@
 
 A [poi](https://github.com/poooi/poi) plugin that helps you view quest info. Data maintained by [kcanotify-gamedata](https://github.com/antest1/kcanotify-gamedata) & [kc3-translations](https://github.com/KC3Kai/kc3-translations) & [kcQuests](https://github.com/kcwikizh/kcQuests).
 
-![image](https://user-images.githubusercontent.com/18554747/143771661-00965277-5c45-454d-b4f0-57083ec3065d.png)
+<img width="700" alt="demo" src="https://user-images.githubusercontent.com/18554747/196052461-97d36ffe-8be4-4618-80ed-459e97085454.png">
 
 ## Installation
 
@@ -15,11 +15,12 @@ Paste `poi-plugin-quest-info-2` in the plugins tab and click the install button.
 
 ## Features
 
-- Translated quest info.(English/Simplified Chinese/Traditional Chinese/Korean)
+- Translated quest info (English/Simplified Chinese/Traditional Chinese/Korean).
 - Task panel translation.
 - Quest search and filter.
 - Sync with game quest data.
 - Auto switch to quest tab when enter quest views.
+- Export quest data to json file.
 
 ## Development
 
