@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.9.1
+
+### Patch Changes
+
+- 47c8cc8: fix changesets publish
+
 ## 0.9.0
 
 ### Minor Changes
