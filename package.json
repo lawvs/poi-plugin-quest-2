@@ -31,7 +31,8 @@
     "storybook": "start-storybook -p 6006",
     "test": "jest",
     "typeCheck": "tsc --noEmit",
-    "update": "npm run downloadKcanotifyData && npm run downloadKcQuestsData && npm run genQuestData"
+    "update": "npm run downloadKcanotifyData && npm run downloadKcQuestsData && npm run genQuestData",
+    "changeset": "npx changeset"
   },
   "dependencies": {
     "moize": "^6.1.1",
@@ -42,6 +43,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@blueprintjs/core": "^3.52.0",
+    "@changesets/cli": "^2.25.0",
     "@storybook/addon-actions": "^6.3.4",
     "@storybook/addon-essentials": "^6.3.4",
     "@storybook/addon-links": "^6.3.4",
