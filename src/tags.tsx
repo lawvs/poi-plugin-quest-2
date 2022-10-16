@@ -89,8 +89,16 @@ const TagsWrapper = styled.div`
 export const ProgressTags = () => {
   const { t } = usePluginTranslation()
   const { progressTag, toggleTag } = useFilterProgressTag()
-  const { lockedQuestNum, unlockedQuestNum, completedQuestNum } =
-    useGlobalQuestStatusNum()
+  const {
+    lockedQuestNum,
+    unlockedQuestNum,
+    completedQuestNum,
+    alreadyCompletedQuestNum,
+  } = useGlobalQuestStatusNum()
+  const completedQuestSuffix =
+    completedQuestNum > 0
+      ? `${alreadyCompletedQuestNum} + ${completedQuestNum}`
+      : alreadyCompletedQuestNum
   return (
     <>
       <Tag
@@ -121,7 +129,9 @@ export const ProgressTags = () => {
         }
         interactive={true}
       >
-        {t('Already Completed', { number: completedQuestNum })}
+        {t('Already Completed', {
+          number: completedQuestSuffix,
+        })}
       </Tag>
     </>
   )

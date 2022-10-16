@@ -19,7 +19,7 @@ export const questStatusMap: Record<QUEST_STATUS, React.FC> = {
   [QUEST_STATUS.LOCKED]: function Locked() {
     const { t } = usePluginTranslation()
     return (
-      <Tooltip content={t('Locked')}>
+      <Tooltip content={t('Locked', { number: '' })}>
         <Icon icon={IconNames.LOCK} iconSize={Icon.SIZE_LARGE}></Icon>
       </Tooltip>
     )

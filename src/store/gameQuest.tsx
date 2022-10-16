@@ -15,25 +15,31 @@ export const GameQuestContext = createContext<{
   lockedQuestNum: number
   unlockedQuestNum: number
   completedQuestNum: number
+  alreadyCompletedQuestNum: number
 }>({
   gameQuest: [],
   questStatusQuery: () => QUEST_STATUS.UNKNOWN,
   lockedQuestNum: 0,
   unlockedQuestNum: 0,
   completedQuestNum: 0,
+  alreadyCompletedQuestNum: 0,
 })
 
-const useQuestStatusQuery = (gameQuest: GameQuest[]) => {
-  const gameQuestId = gameQuest.map((quest) => quest.api_no)
+const useQuestStatusQuery = (inProgressQuests: GameQuest[]) => {
+  const gameQuestIds = inProgressQuests.map((quest) => quest.api_no)
   const unlockedGameQuest = Object.fromEntries(
-    gameQuest.map((quest) => [quest.api_no, quest])
+    inProgressQuests.map((quest) => [quest.api_no, quest])
   )
-  const completedQuest = getCompletedQuest(gameQuestId)
-  const lockedQuest = getLockedQuest(gameQuestId)
+  const alreadyCompletedQuest = getCompletedQuest(gameQuestIds)
+  const lockedQuest = getLockedQuest(gameQuestIds)
+  const completedQuest = inProgressQuests
+    .map((quest) => questApiStateToQuestStatus(quest.api_state))
+    .filter((status) => status === QUEST_STATUS.COMPLETED)
   return {
     lockedQuestNum: Object.keys(lockedQuest).length,
     unlockedQuestNum: Object.keys(unlockedGameQuest).length,
-    completedQuestNum: Object.keys(completedQuest).length,
+    completedQuestNum: completedQuest.length,
+    alreadyCompletedQuestNum: Object.keys(alreadyCompletedQuest).length,
     questStatusQuery: (gameId: number) => {
       const theGameQuest = unlockedGameQuest[gameId]
       if (theGameQuest) {
@@ -44,7 +50,7 @@ const useQuestStatusQuery = (gameQuest: GameQuest[]) => {
       if (gameId in lockedQuest) {
         return QUEST_STATUS.LOCKED
       }
-      if (gameId in completedQuest) {
+      if (gameId in alreadyCompletedQuest) {
         return QUEST_STATUS.ALREADY_COMPLETED
       }
       return QUEST_STATUS.UNKNOWN
@@ -58,6 +64,7 @@ export const GameQuestProvider = ({ children }: { children?: ReactNode }) => {
     lockedQuestNum,
     unlockedQuestNum,
     completedQuestNum,
+    alreadyCompletedQuestNum,
     questStatusQuery,
   } = useQuestStatusQuery(gameQuest)
 
@@ -69,6 +76,7 @@ export const GameQuestProvider = ({ children }: { children?: ReactNode }) => {
         lockedQuestNum,
         unlockedQuestNum,
         completedQuestNum,
+        alreadyCompletedQuestNum,
       }}
     >
       {children}
@@ -100,7 +108,16 @@ export const useGlobalQuestStatusQuery = () => {
  * Get the number of quests in different states.
  */
 export const useGlobalQuestStatusNum = () => {
-  const { lockedQuestNum, unlockedQuestNum, completedQuestNum } =
-    useContext(GameQuestContext)
-  return { lockedQuestNum, unlockedQuestNum, completedQuestNum }
+  const {
+    lockedQuestNum,
+    unlockedQuestNum,
+    completedQuestNum,
+    alreadyCompletedQuestNum,
+  } = useContext(GameQuestContext)
+  return {
+    lockedQuestNum,
+    unlockedQuestNum,
+    completedQuestNum,
+    alreadyCompletedQuestNum,
+  }
 }
