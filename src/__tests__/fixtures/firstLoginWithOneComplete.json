@@ -1,0 +1,72 @@
+[
+  {
+    "api_no": 101,
+    "api_category": 1,
+    "api_type": 4,
+    "api_label_type": 1,
+    "api_state": 2,
+    "api_title": "はじめての「編成」！",
+    "api_detail": "２隻以上の艦で構成される「艦隊」を編成せよ！",
+    "api_voice_id": 0,
+    "api_get_material": [20, 20, 0, 0],
+    "api_bonus_flag": 1,
+    "api_progress_flag": 0,
+    "api_invalid_flag": 0
+  },
+  {
+    "api_no": 202,
+    "api_category": 2,
+    "api_type": 4,
+    "api_label_type": 1,
+    "api_state": 2,
+    "api_title": "はじめての「出撃」！",
+    "api_detail": "艦隊を出撃させ、敵艦隊と交戦せよ！",
+    "api_voice_id": 0,
+    "api_get_material": [20, 20, 0, 0],
+    "api_bonus_flag": 1,
+    "api_progress_flag": 0,
+    "api_invalid_flag": 0
+  },
+  {
+    "api_no": 301,
+    "api_category": 3,
+    "api_type": 4,
+    "api_label_type": 1,
+    "api_state": 3,
+    "api_title": "はじめての「演習」！",
+    "api_detail": "他の提督(プレイヤー)の艦隊と「演習」を行おう！",
+    "api_voice_id": 0,
+    "api_get_material": [10, 10, 0, 0],
+    "api_bonus_flag": 1,
+    "api_progress_flag": 0,
+    "api_invalid_flag": 0
+  },
+  {
+    "api_no": 601,
+    "api_category": 6,
+    "api_type": 4,
+    "api_label_type": 1,
+    "api_state": 2,
+    "api_title": "はじめての「建造」！",
+    "api_detail": "「工廠」で鋼材などの資材を使って新しい艦を「建造」しよう！",
+    "api_voice_id": 0,
+    "api_get_material": [50, 50, 50, 50],
+    "api_bonus_flag": 1,
+    "api_progress_flag": 0,
+    "api_invalid_flag": 0
+  },
+  {
+    "api_no": 701,
+    "api_category": 7,
+    "api_type": 4,
+    "api_label_type": 1,
+    "api_state": 1,
+    "api_title": "はじめての「近代化改修」！",
+    "api_detail": "任意の艦を近代化改修(合成)して、強化せよ！",
+    "api_voice_id": 0,
+    "api_get_material": [0, 0, 50, 30],
+    "api_bonus_flag": 1,
+    "api_progress_flag": 0,
+    "api_invalid_flag": 0
+  }
+]
