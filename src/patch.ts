@@ -1,14 +1,13 @@
-import { name as PACKAGE_NAME } from '../package.json'
-import { getPoiStore } from './poi/store'
-import { importFromPoi } from './poi/env'
+import type { i18n } from 'i18next'
 import { QuestData } from '../build/kcanotifyGamedata'
 import { KcwikiQuestData } from '../build/kcQuestsData'
+import { importFromPoi, PACKAGE_NAME } from './poi/env'
+import { getPoiStore } from './poi/store'
 import {
   checkIsKcwikiSupportedLanguages,
   getStorage,
   isSupportedLanguages,
 } from './store'
-import type { i18n } from 'i18next'
 
 const LEGACY_QUEST_PLUGIN_ID = 'poi-plugin-quest-info'
 const HACK_KEY = `__patched-from-${PACKAGE_NAME}`

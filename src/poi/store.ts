@@ -1,7 +1,6 @@
-import { name as PACKAGE_NAME } from '../../package.json'
 import type { PluginState } from '../reducer'
 import { id, noop } from '../utils'
-import { importFromPoi, IN_POI } from './env'
+import { importFromPoi, IN_POI, PACKAGE_NAME } from './env'
 import type { PoiState, Store } from './types'
 
 /**

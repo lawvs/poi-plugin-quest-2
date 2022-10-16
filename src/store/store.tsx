@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react'
 import { useMount, useUpdateEffect } from 'react-use'
-import { name as PACKAGE_NAME } from '../../package.json'
+import { PACKAGE_NAME } from '../poi/env'
 import { noop, yes } from '../utils'
 import { GameQuestProvider } from './gameQuest'
 

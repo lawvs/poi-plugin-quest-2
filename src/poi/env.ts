@@ -1,3 +1,7 @@
+import { name } from '../../package.json'
+
+export const PACKAGE_NAME = name as 'poi-plugin-quest-info-2'
+
 export const IN_POI = 'POI_VERSION' in globalThis
 /**
  * Prevent webpack early error

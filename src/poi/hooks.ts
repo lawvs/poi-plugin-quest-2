@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { name as PACKAGE_NAME } from '../../package.json'
+import { PACKAGE_NAME } from './env'
 import {
   exportPoiState,
   importPoiState,
@@ -26,6 +26,7 @@ export const useActiveQuest = () => {
 }
 
 export const usePluginTranslation = () => {
+  // @ts-expect-error we declared a incorrect types in i18n/index.ts
   return useTranslation(PACKAGE_NAME)
 }
 
