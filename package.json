@@ -32,7 +32,8 @@
     "test": "jest",
     "typeCheck": "tsc --noEmit",
     "update": "npm run downloadKcanotifyData && npm run downloadKcQuestsData && npm run genQuestData",
-    "changeset": "npx changeset"
+    "changeset": "changeset",
+    "release": "npm run build && npm publish"
   },
   "dependencies": {
     "moize": "^6.1.1",
