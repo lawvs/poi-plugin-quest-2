@@ -33,7 +33,7 @@
     "typeCheck": "tsc --noEmit",
     "update": "npm run downloadKcanotifyData && npm run downloadKcQuestsData && npm run genQuestData",
     "changeset": "changeset",
-    "release": "npm run build && npm publish"
+    "release": "npm run build && changeset publish"
   },
   "dependencies": {
     "moize": "^6.1.1",
