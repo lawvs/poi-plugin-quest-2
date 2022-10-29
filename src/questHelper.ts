@@ -22,7 +22,8 @@ export type DocQuest = {
   /**
    * Only in kcanotify
    */
-  unlock?: number[]
+  // TODO: handle the string type
+  unlock?: number[] | string | unknown
   /**
    * Only in kcanotify
    */
