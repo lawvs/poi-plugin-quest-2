@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.9.3
+
+### Patch Changes
+
+- 8ef3ce9: update kcanotify-gamedata
+
 ## 0.9.2
 
 ### Patch Changes
