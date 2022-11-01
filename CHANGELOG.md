@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.9.4
+
+### Patch Changes
+
+- dfe3985: Update quest data
+
 ## 0.9.3
 
 ### Patch Changes
