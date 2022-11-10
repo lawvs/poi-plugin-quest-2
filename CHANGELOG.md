@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.9.5
+
+### Patch Changes
+
+- cc40bb8: Update quest data
+
 ## 0.9.4
 
 ### Patch Changes
