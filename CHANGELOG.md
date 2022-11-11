@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.9.6
+
+### Patch Changes
+
+- fb93f02: Update quest data
+
 ## 0.9.5
 
 ### Patch Changes
