@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.9.10
+
+### Patch Changes
+
+- 339ffbf: Update data
+
 ## 0.9.9
 
 ### Patch Changes
