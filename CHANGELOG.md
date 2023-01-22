@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.9.11
+
+### Patch Changes
+
+- 5042236: Update quest data
+
 ## 0.9.10
 
 ### Patch Changes
