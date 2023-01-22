@@ -14,7 +14,7 @@ describe('questHelper', () => {
 
   test('should getPostQuestIds correct', () => {
     expect(getPostQuestIds(101)).toEqual([102])
-    expect(getPostQuestIds(105)).toEqual([106, 108, 254, 401, 612, 816])
+    expect(getPostQuestIds(105)).toEqual([106, 108, 174, 254, 401, 612])
     expect(getPostQuestIds(140)).toEqual([])
   })
 
