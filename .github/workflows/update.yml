@@ -40,7 +40,7 @@ jobs:
         run: npm run lint -- --max-warnings=0
 
       - name: Update
-        run: pnpm test --updateSnapshot
+        run: npm test -- --updateSnapshot
 
       - name: Push Branch
         id: push
