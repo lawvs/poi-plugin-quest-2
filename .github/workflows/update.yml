@@ -45,12 +45,12 @@ jobs:
       - name: Push Branch
         id: push
         run: |
-          git add draft
+          git add .
           # Do not proceed if there are no file differences
           COMMIT=$(git rev-parse --verify origin/$TARGET_BRANCH || echo HEAD)
           FILES_CHANGED=$(git diff-index --name-only --cached $COMMIT | wc -l)
           if [[ "$FILES_CHANGED" = "0" ]]; then
-            echo "No file changes detected in draft."
+            echo "No file changes detected."
             echo "::set-output name=skipPR::true"
             exit 0
           fi
