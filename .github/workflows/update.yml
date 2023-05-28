@@ -55,9 +55,10 @@ jobs:
             exit 0
           fi
           echo -e "---\n'poi-plugin-quest-info-2': patch\n---\n\nUpdate quest data\n" > .changeset/bot-data-update.md
+          git add .
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git commit --message $COMMIT_MESSAGE
+          git commit --message "$COMMIT_MESSAGE"
           git remote set-url origin "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
           git push --force origin HEAD:$TARGET_BRANCH
         env:
