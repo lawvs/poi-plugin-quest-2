@@ -25,7 +25,10 @@ Object {
   "1117": true,
   "1118": true,
   "112": true,
-  "1120": true,
+  "1126": true,
+  "1127": true,
+  "1128": true,
+  "1129": true,
   "113": true,
   "114": true,
   "115": true,
@@ -197,6 +200,8 @@ Object {
   "356": true,
   "358": true,
   "360": true,
+  "362": true,
+  "364": true,
   "401": true,
   "402": true,
   "403": true,
@@ -420,6 +425,8 @@ Object {
   "982": true,
   "983": true,
   "989": true,
+  "995": true,
+  "996": true,
 }
 `;
 
