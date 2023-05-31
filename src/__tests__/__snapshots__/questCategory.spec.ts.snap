@@ -438,6 +438,11 @@ Object {
       "name": "「大和型战舰」第一舰队演习开始！",
     },
     Object {
+      "code": "C72",
+      "gameId": 362,
+      "name": "特型初代 “第十一驱逐队” 演习 special！",
+    },
+    Object {
       "code": "D32",
       "gameId": 434,
       "name": "特设护卫船团司令部，开始活动！",
