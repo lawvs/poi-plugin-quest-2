@@ -1,10 +1,10 @@
-import { version, KcwikiQuestData } from '../../build/kcQuestsData'
+import { KcwikiQuestData, version } from '../../build/kcQuestsData'
 import newQuestData from '../../build/kcQuestsData/quests-scn-new.json'
 
 describe('should version correct', () => {
   test('should KcwikiQuestData Game data version correct', () => {
     expect(version).toMatchInlineSnapshot(
-      `"f30d7399e7155d871b0559f448b552923bce6841"`
+      `"54d4763eba04f51f41ca597d970f0d6d26c9ce60"`
     )
   })
 

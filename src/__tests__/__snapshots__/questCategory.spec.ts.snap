@@ -443,6 +443,11 @@ Object {
       "name": "特型初代 “第十一驱逐队” 演习 special！",
     },
     Object {
+      "code": "C78",
+      "gameId": 368,
+      "name": "“十六驱” 演习！",
+    },
+    Object {
       "code": "D32",
       "gameId": 434,
       "name": "特设护卫船团司令部，开始活动！",

@@ -8,8 +8,8 @@ describe('should questCategory correct', () => {
     expect(questCategory.weeklyQuest.length).toMatchInlineSnapshot(`17`)
     expect(questCategory.monthlyQuest.length).toMatchInlineSnapshot(`11`)
     expect(questCategory.quarterlyQuest.length).toMatchInlineSnapshot(`25`)
-    expect(questCategory.yearlyQuest.length).toMatchInlineSnapshot(`44`)
-    expect(questCategory.singleQuest.length).toMatchInlineSnapshot(`462`)
+    expect(questCategory.yearlyQuest.length).toMatchInlineSnapshot(`45`)
+    expect(questCategory.singleQuest.length).toMatchInlineSnapshot(`461`)
   })
 
   test('snapshot', () => {
