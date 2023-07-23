@@ -21,18 +21,18 @@ describe('should format correct', () => {
   test('key format', () => {
     Object.keys(KcwikiQuestData['zh-CN']).forEach((key) => {
       // gameId should not extra space
-      expect(key.trim()).toEqual(key)
+      expect(key).toEqual(key.trim())
       // gameId should be number
-      expect(String(+key)).toEqual(key)
+      expect(key).toEqual(String(+key))
     })
   })
 
   test('new quest key format', () => {
     Object.keys(newQuestData).forEach((gameId) => {
       // gameId should not extra space
-      expect(gameId.trim()).toEqual(gameId)
+      expect(gameId).toEqual(gameId.trim())
       // gameId should be number
-      expect(String(+gameId)).toEqual(gameId)
+      expect(gameId).toEqual(String(gameId))
     })
   })
 })
