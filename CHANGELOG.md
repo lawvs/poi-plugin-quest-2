@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.10.0
+
+### Minor Changes
+
+- 5e2ba3a: Highlight search results
+
 ## 0.9.15
 
 ### Patch Changes
