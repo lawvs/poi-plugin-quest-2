@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.9.15
+
+### Patch Changes
+
+- aadaa7f: Update quest data
+
 ## 0.9.14
 
 ### Patch Changes
