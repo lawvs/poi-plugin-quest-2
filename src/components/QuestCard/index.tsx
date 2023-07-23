@@ -1,13 +1,15 @@
 import { Card, Elevation, H5 } from '@blueprintjs/core'
 import React, { forwardRef } from 'react'
+import Highlighter from 'react-highlight-words'
 import type { StyledComponentProps } from 'styled-components'
 import { usePluginTranslation } from '../../poi/hooks'
 import {
+  QUEST_STATUS,
   getQuestPrePost,
   guessQuestCategory,
-  QUEST_STATUS,
 } from '../../questHelper'
 import { useQuestStatus } from '../../store/quest'
+import { useStableSearchWords } from '../../store/search'
 import { QuestTag } from '../QuestTag'
 import {
   CardActionWrapper,
@@ -24,7 +26,7 @@ export type QuestCardProps = {
   gameId: number
   code: string
   name: string
-  desc: string | JSX.Element
+  desc: string
   tip?: string
   tip2?: string
   status?: QUEST_STATUS
@@ -70,6 +72,7 @@ export const QuestCard = forwardRef<
   const status = useQuestStatus(gameId)
   const headIcon = questIconMap[guessQuestCategory(code).type]
   const TailIcon = questStatusMap[status]
+  const searchWords = useStableSearchWords()
 
   return (
     <FlexCard
@@ -80,10 +83,38 @@ export const QuestCard = forwardRef<
     >
       <CardMedia src={headIcon}></CardMedia>
       <CardBody>
-        <H5>{[code, name].filter((i) => i != undefined).join(' - ')}</H5>
-        <div>{desc}</div>
-        {tip2 && <b>{tip2}</b>}
-        {tip && <i>{tip}</i>}
+        <H5>
+          <Highlighter
+            searchWords={searchWords}
+            autoEscape={false}
+            textToHighlight={[code, name]
+              .filter((i) => i != undefined)
+              .join(' - ')}
+          />
+        </H5>
+        <Highlighter
+          searchWords={searchWords}
+          autoEscape={false}
+          textToHighlight={desc}
+        />
+        {tip2 && (
+          <b>
+            <Highlighter
+              searchWords={searchWords}
+              autoEscape={false}
+              textToHighlight={tip2}
+            />
+          </b>
+        )}
+        {tip && (
+          <i>
+            <Highlighter
+              searchWords={searchWords}
+              autoEscape={false}
+              textToHighlight={tip}
+            />
+          </i>
+        )}
 
         <CardAction gameId={gameId}></CardAction>
       </CardBody>

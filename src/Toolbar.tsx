@@ -2,7 +2,6 @@ import { Button, InputGroup } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import type { ChangeEvent } from 'react'
 import React, { useCallback } from 'react'
-import { useThrottle } from 'react-use'
 import styled from 'styled-components'
 import { usePluginTranslation } from './poi/hooks'
 import { QUEST_STATUS, UnionQuest } from './questHelper'
@@ -13,8 +12,8 @@ import {
   useSyncGameTagEffect,
 } from './store/filterTags'
 import { useGlobalQuestStatusQuery } from './store/gameQuest'
-import { useSearchInput } from './store/search'
-import { CategoryTags, CATEGORY_TAGS, TypeTags, TYPE_TAGS } from './tags'
+import { useSearchInput, useStableSearchWords } from './store/search'
+import { CATEGORY_TAGS, CategoryTags, TYPE_TAGS, TypeTags } from './tags'
 import { And, Or } from './utils'
 
 const ToolbarWrapper = styled.div`
@@ -71,14 +70,7 @@ export const Toolbar = () => {
 }
 
 const useInputStringFilter = () => {
-  const { searchInput } = useSearchInput()
-  const throttledSearchInput = useThrottle(searchInput)
-  const searchKeywords = throttledSearchInput
-    .split(' ')
-    // Remove empty string
-    .filter((i) => !!i)
-    .map((i) => i.toUpperCase())
-
+  const searchKeywords = useStableSearchWords()
   const stringFilter = useCallback(
     (quest: UnionQuest) => {
       if (!searchKeywords || !searchKeywords.length) {

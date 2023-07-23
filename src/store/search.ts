@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { useThrottle } from 'react-use'
 import { useStore } from './store'
 
 export const useSearchInput = () => {
@@ -14,4 +15,16 @@ export const useSearchInput = () => {
     searchInput,
     setSearchInput,
   }
+}
+
+export const useStableSearchWords = () => {
+  const { searchInput } = useSearchInput()
+  const throttledSearchInput = useThrottle(searchInput)
+  const searchKeywords = throttledSearchInput
+    .split(' ')
+    // Remove empty string
+    .filter((i) => !!i)
+    .map((i) => i.toUpperCase())
+
+  return searchKeywords
 }
