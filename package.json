@@ -18,6 +18,7 @@
   },
   "main": "src/index.ts",
   "scripts": {
+    "dev": "npm run storybook",
     "build": "npm run convertAssets && npm run update",
     "build-storybook": "build-storybook",
     "clean": "rm -rf build",
