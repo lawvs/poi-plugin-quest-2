@@ -1,7 +1,7 @@
 import moize from 'moize'
-import { QuestData } from '../build/kcanotifyGamedata'
 import { KcwikiQuestData } from '../build/kcQuestsData'
 import newQuestData from '../build/kcQuestsData/quests-scn-new.json'
+import { QuestData } from '../build/kcanotifyGamedata'
 import prePostQuest from '../build/prePostQuest.json'
 import questCategory from '../build/questCategory.json'
 import questCodeMap from '../build/questCodeMap.json'
@@ -14,7 +14,7 @@ export type DocQuest = {
   /**
    * Quest rewards
    */
-  memo?: string
+  rewards?: string
   /**
    * Quest details, only in KcWiki
    */

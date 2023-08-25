@@ -3,7 +3,7 @@ import { Tag, Tooltip } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import React, { forwardRef, useCallback } from 'react'
 import styled from 'styled-components'
-import { DocQuest, guessQuestCategory, QUEST_STATUS } from '../questHelper'
+import { DocQuest, QUEST_STATUS, guessQuestCategory } from '../questHelper'
 import { useFilterTags } from '../store/filterTags'
 import { useQuestByCode, useQuestStatus } from '../store/quest'
 import { useSearchInput } from '../store/search'
@@ -40,9 +40,9 @@ const QuestTooltip = forwardRef<
               <b>{quest.memo2}</b>
             </div>
           )}
-          {quest.memo && (
+          {quest.rewards && (
             <div>
-              <i>{quest.memo}</i>
+              <i>{quest.rewards}</i>
             </div>
           )}
         </>

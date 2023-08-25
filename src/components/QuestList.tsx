@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
 // https://github.com/bvaughn/react-window
-import { ListChildComponentProps, VariableSizeList as List } from 'react-window'
+import { VariableSizeList as List, ListChildComponentProps } from 'react-window'
 import styled from 'styled-components'
 import { useIsQuestPluginTab } from '../poi/hooks'
 import type { UnionQuest } from '../questHelper'
@@ -65,7 +65,7 @@ export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
 
     const quest = quests[index]
     const { gameId } = quest
-    const { code, name, desc, memo, memo2 } = quest.docQuest
+    const { code, name, desc, rewards, memo2 } = quest.docQuest
 
     useEffect(() => {
       if (rowRef.current) {
@@ -82,7 +82,7 @@ export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
             code={code}
             name={name}
             desc={desc}
-            tip={memo}
+            tip={rewards}
             tip2={memo2}
           />
         </div>

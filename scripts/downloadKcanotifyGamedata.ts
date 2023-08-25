@@ -102,7 +102,7 @@ const main = async () => {
           code: string
           name: string
           desc: string
-          memo?: string
+          rewards?: string
         }
       }
 
@@ -113,11 +113,11 @@ const main = async () => {
       }
 
       for (const gameId in json) {
-        const { name, desc, memo } = json[gameId]
+        const { name, desc, rewards } = json[gameId]
         json[gameId].name = pangu.spacing(name)
         json[gameId].desc = pangu.spacing(desc)
-        if (memo) {
-          json[gameId].memo = pangu.spacing(memo)
+        if (rewards) {
+          json[gameId].rewards = pangu.spacing(rewards)
         }
       }
 

@@ -70,6 +70,10 @@ const downloadQuestData = async () => {
       code: string
       name: string
       desc: string
+      rewards?: string
+      /**
+       * @deprecated use `rewards` instead
+       */
       memo?: string
       memo2?: string
     }
@@ -80,7 +84,7 @@ const downloadQuestData = async () => {
     json[gameId].name = pangu.spacing(name)
     json[gameId].desc = pangu.spacing(desc)
     if (memo) {
-      json[gameId].memo = pangu.spacing(memo)
+      json[gameId].rewards = pangu.spacing(memo)
     }
     if (memo2) {
       json[gameId].memo2 = pangu.spacing(memo2)
