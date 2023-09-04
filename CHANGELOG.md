@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.10.2
+
+### Patch Changes
+
+- 2edb4ad: Update quest data
+
 ## 0.10.1
 
 ### Patch Changes
