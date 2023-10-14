@@ -2,6 +2,8 @@
 
 exports[`questHelper should 101 locked quests match snapshot 1`] = `
 Object {
+  "1001": true,
+  "1002": true,
   "102": true,
   "103": true,
   "104": true,
