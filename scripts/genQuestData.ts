@@ -25,13 +25,13 @@ const genQuestCategory = async () => {
     ...new Set([
       ...kcaQuestStartsFilter('(季任)'),
       ...kcwikiDataSelector()
-        .filter(([, quest]) => quest.memo2?.includes('季常任务'))
+        .filter(([, quest]) => 'memo2' in quest && quest.memo2.includes('季常'))
         .map(([gameId]) => +gameId),
     ]),
   ].sort((a, b) => +a - +b)
   // (年任) (年任 / x 月)
   const yearlyQuest = kcwikiDataSelector()
-    .filter(([, quest]) => quest.memo2?.includes('年常任务'))
+    .filter(([, quest]) => 'memo2' in quest && quest.memo2.includes('年常任务'))
     .map(([gameId]) => +gameId)
   const singleQuest = mergeDataSelector()
     .filter(
