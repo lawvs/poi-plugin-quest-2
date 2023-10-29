@@ -75,7 +75,7 @@ const downloadQuestData = async () => {
        * @deprecated use `rewards` instead
        */
       memo?: string
-      memo2?: string
+      memo2?: string | null
     }
   }
   for (const gameId in json) {
