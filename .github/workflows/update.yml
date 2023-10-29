@@ -39,6 +39,7 @@ jobs:
         run: npm test -- --updateSnapshot
 
       - name: Push Branch
+        if: github.ref == 'refs/heads/main'
         id: push
         run: |
           git add .
@@ -47,7 +48,6 @@ jobs:
           FILES_CHANGED=$(git diff-index --name-only --cached $COMMIT | wc -l)
           if [[ "$FILES_CHANGED" = "0" ]]; then
             echo "No file changes detected."
-            echo "skipPR=true" >> $GITHUB_OUTPUT
             exit 0
           fi
           echo -e "---\n'poi-plugin-quest-info-2': patch\n---\n\nUpdate quest data\n" > .changeset/bot-data-update.md
@@ -57,6 +57,7 @@ jobs:
           git commit --message "$COMMIT_MESSAGE"
           git remote set-url origin "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
           git push --force origin HEAD:$TARGET_BRANCH
+          echo "createPR=true" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
           COMMIT_MESSAGE: 'chore: update quest data'
@@ -68,7 +69,7 @@ jobs:
 
       # see https://github.com/repo-sync/pull-request
       - name: Create Pull Request
-        if: steps.push.outputs.skipPR != 'true'
+        if: steps.push.outputs.createPR == 'true'
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: "main"
