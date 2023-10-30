@@ -18,9 +18,9 @@
   },
   "main": "src/index.ts",
   "scripts": {
-    "dev": "npm run storybook",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider npm run storybook",
     "build": "npm run convertAssets && npm run update",
-    "build-storybook": "build-storybook",
+    "build-storybook": "NODE_OPTIONS=--openssl-legacy-provider build-storybook",
     "clean": "rm -rf build",
     "convertAssets": "ts-node scripts/convertAssets.ts",
     "downloadKcQuestsData": "ts-node scripts/downloadKcQuestsData.ts",

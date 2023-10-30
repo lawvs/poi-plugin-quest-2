@@ -203,6 +203,11 @@ Object {
       "name": "强化海上通商航路警戒！",
     },
     Object {
+      "code": "Dq2",
+      "gameId": 428,
+      "name": "压制侵入近海的敌方潜艇！",
+    },
+    Object {
       "code": "Fq1",
       "gameId": 637,
       "name": "「熟练搭乘员」养成",
@@ -236,6 +241,11 @@ Object {
       "code": "Fq6",
       "gameId": 680,
       "name": "对空兵装的整备扩充",
+    },
+    Object {
+      "code": "Fq7",
+      "gameId": 686,
+      "name": "战时改修 A 型高角炮的量产",
     },
     Object {
       "code": "Fq8",
@@ -525,7 +535,7 @@ Object {
     Object {
       "code": "Gy4",
       "gameId": 717,
-      "name": "续：实施「轻巡」级改修工事",
+      "name": "续： 实施「轻巡」级改修工事",
     },
     Object {
       "code": "By1",
