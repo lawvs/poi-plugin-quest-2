@@ -59,7 +59,7 @@ const cropAndSaveImage = (
     y: number
     w: number
     h: number
-  }
+  },
 ) => {
   const filename = `${name}.${format}`
   sharp(img)

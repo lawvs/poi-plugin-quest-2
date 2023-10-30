@@ -158,8 +158,8 @@ export const getCategory = (api_category: number) => {
  * See https://wikiwiki.jp/kancolle/
  */
 export const guessQuestCategory = (
-  wikiId: string
-): typeof CategoryMap[keyof typeof CategoryMap] => {
+  wikiId: string,
+): (typeof CategoryMap)[keyof typeof CategoryMap] => {
   if (!wikiId || !wikiId.length) {
     return CategoryMap[QUEST_CATEGORY.Unknown]
   }
@@ -230,7 +230,7 @@ export const getPostQuestIds = (gameId: number): number[] =>
 
 const calcQuestMap = (
   inProgressQuests: number[],
-  next: (gameId: number) => number[]
+  next: (gameId: number) => number[],
 ) => {
   const map: Record<number, true> = {}
   const queue: number[] = inProgressQuests.flatMap(next)
@@ -260,7 +260,7 @@ export const getCompletedQuest = moize(
       }
       return cacheKeyArg === keyArg
     },
-  }
+  },
 )
 
 export const getLockedQuest = moize(
@@ -275,11 +275,11 @@ export const getLockedQuest = moize(
       }
       return cacheKeyArg === keyArg
     },
-  }
+  },
 )
 
 export const questApiStateToQuestStatus = (
-  state: QUEST_API_STATE | undefined
+  state: QUEST_API_STATE | undefined,
 ): QUEST_STATUS => {
   switch (state) {
     case QUEST_API_STATE.DEFAULT:

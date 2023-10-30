@@ -27,7 +27,7 @@ describe('should questCategory correct', () => {
             code: mergeData[String(gameId) as keyof typeof mergeData].code,
             name: mergeData[String(gameId) as keyof typeof mergeData].name,
           })),
-      ])
+      ]),
     )
 
     expect(humanReadableData).toMatchSnapshot({

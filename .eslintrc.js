@@ -18,6 +18,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:storybook/recommended',
     'prettier',
   ],
   parser: '@typescript-eslint/parser',
@@ -39,10 +40,8 @@ module.exports = {
     'prefer-const': 'error',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'prettier/prettier': 'warn',
-    // fix https://github.com/yannickcr/eslint-plugin-react/issues/2834
-    // 'react/react-in-jsx-scope': 'off',
   },
-  ignorePatterns: ['*.js', 'packages/*/build/**/*.ts', 'examples/spa/**'],
+  ignorePatterns: ['*.js', 'packages/*/build/**/*.ts'],
   settings: {
     react: {
       version: require('react').version,

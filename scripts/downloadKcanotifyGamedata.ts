@@ -51,13 +51,13 @@ const getLocalVersion = () => {
 const genTS = (version: string) => {
   const importCode = LOCALES.map(
     (locale, idx) =>
-      `import ${locale.replace('-', '_')} from './quests-${LANGS[idx]}.json'`
+      `import ${locale.replace('-', '_')} from './quests-${LANGS[idx]}.json'`,
   ).join('\n')
 
   const exportCode =
     'export const QuestData = {\n' +
     LOCALES.map((locale) => `  '${locale}': ${locale.replace('-', '_')},`).join(
-      '\n'
+      '\n',
     ) +
     '\n}'
 
@@ -123,7 +123,7 @@ const main = async () => {
 
       const data = JSON.stringify(json, undefined, 2)
       writeFileSync(`${OUTPUT_PATH}/${filename}`, data)
-    })
+    }),
   )
 
   const ts = genTS(remoteVersion)

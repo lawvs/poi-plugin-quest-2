@@ -33,7 +33,7 @@ export const SearchInput: React.FC = () => {
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
       setSearchInput(event.target.value),
-    [setSearchInput]
+    [setSearchInput],
   )
 
   const handleClear = useCallback(() => setSearchInput(''), [setSearchInput])
@@ -80,10 +80,10 @@ const useInputStringFilter = () => {
         quest.docQuest.desc
       } ${quest.docQuest.rewards ?? ''} ${quest.docQuest.memo2 ?? ''}`
       return searchKeywords.some((keyword) =>
-        text.toUpperCase().includes(keyword)
+        text.toUpperCase().includes(keyword),
       )
     },
-    [searchKeywords]
+    [searchKeywords],
   )
   return stringFilter
 }
@@ -122,23 +122,23 @@ const useToolbarFilter = (): ((quest: UnionQuest) => boolean) => {
       }
       return true
     },
-    [progressTag, questStatusQuery]
+    [progressTag, questStatusQuery],
   )
 
   const typeTagsFilter = Or(
-    ...TYPE_TAGS.filter((tag) => typeTags[tag.name]).map((tag) => tag.filter)
+    ...TYPE_TAGS.filter((tag) => typeTags[tag.name]).map((tag) => tag.filter),
   )
   const categoryTagsFilter = Or(
     ...CATEGORY_TAGS.filter((tag) => categoryTags[tag.name]).map(
-      (tag) => tag.filter
-    )
+      (tag) => tag.filter,
+    ),
   )
 
   const toolbarFilter = And(
     searchFilter,
     typeTagsFilter,
     categoryTagsFilter,
-    progressTagFilter
+    progressTagFilter,
   )
 
   return toolbarFilter

@@ -9,7 +9,7 @@ import type { PoiState, Store } from './types'
 const observeStore = <State, SelectedState = State>(
   store: Store<State>,
   onChange: (state: SelectedState) => void,
-  selector: (s: State) => SelectedState = id as any
+  selector: (s: State) => SelectedState = id as any,
 ) => {
   let currentState: SelectedState
 
@@ -28,7 +28,7 @@ const observeStore = <State, SelectedState = State>(
 
 export const observePoiStore = <SelectedState = PoiState>(
   onChange: (state: SelectedState) => void,
-  selector: (state: PoiState) => SelectedState = id as any
+  selector: (state: PoiState) => SelectedState = id as any,
 ) => {
   let valid = true
   let unsubscribe = noop
@@ -47,14 +47,14 @@ export const observePoiStore = <SelectedState = PoiState>(
 
 export const observePluginStore = <SelectedState = PluginState>(
   onChange: (state: SelectedState) => void,
-  selector: (state: PluginState) => SelectedState = id as any
+  selector: (state: PluginState) => SelectedState = id as any,
 ) => observePoiStore(onChange, (s) => selector(s?.ext[PACKAGE_NAME]))
 
 const genFallbackStore = (state?: PoiState) =>
   ({
     getState: () => state,
     subscribe: () => (() => {}) as () => () => void,
-  } as Store<PoiState>)
+  }) as Store<PoiState>
 
 let globalStore: Store<PoiState> | null = null
 /**
@@ -80,7 +80,7 @@ export const getPoiStore: () => Promise<Store<PoiState>> = async () => {
 export const exportPoiState = async () => {
   if (!IN_POI) {
     throw new Error(
-      'Failed export state from poi! You are not currently in the poi environment!'
+      'Failed export state from poi! You are not currently in the poi environment!',
     )
   }
   const { getState } = await getPoiStore()
