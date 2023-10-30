@@ -85,6 +85,7 @@ const downloadQuestData = async () => {
     json[gameId].desc = pangu.spacing(desc)
     if (memo) {
       json[gameId].rewards = pangu.spacing(memo)
+      delete json[gameId].memo
     }
     if (memo2) {
       json[gameId].memo2 = pangu.spacing(memo2)
