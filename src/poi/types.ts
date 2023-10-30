@@ -54,7 +54,7 @@ export type GameQuest = {
       api_kind: number
       api_mst_id: number
       api_no: number
-    }[]
+    }[],
   ]
   api_voice_id: 0
   api_bonus_flag: 1

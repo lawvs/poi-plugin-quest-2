@@ -18,8 +18,8 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'prettier',
     'plugin:storybook/recommended',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -41,7 +41,7 @@ module.exports = {
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'prettier/prettier': 'warn',
   },
-  ignorePatterns: ['*.js', 'packages/*/build/**/*.ts', 'examples/spa/**'],
+  ignorePatterns: ['*.js', 'packages/*/build/**/*.ts'],
   settings: {
     react: {
       version: require('react').version,

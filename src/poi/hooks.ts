@@ -60,7 +60,7 @@ const useActiveTab = () => {
     // poooi/poi/views/redux/ui.es
     return observePoiStore(
       listener,
-      (state) => state?.ui?.activeMainTab ?? UNKNOWN_TAB
+      (state) => state?.ui?.activeMainTab ?? UNKNOWN_TAB,
     )
   }, [])
 
@@ -88,7 +88,7 @@ export const useStateExporter = () => {
       throw new Error('Failed to export quest data! questList not found!')
     }
     return navigator.clipboard.writeText(
-      JSON.stringify(state?.ext[PACKAGE_NAME]._.questList)
+      JSON.stringify(state?.ext[PACKAGE_NAME]._.questList),
     )
   }
   const importAsPoiState = (stateString: string) => {

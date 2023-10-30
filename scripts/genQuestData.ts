@@ -42,7 +42,7 @@ const genQuestCategory = async () => {
           ...monthlyQuest,
           ...quarterlyQuest,
           ...yearlyQuest,
-        ].includes(+gameId)
+        ].includes(+gameId),
     )
     .map(([gameId]) => +gameId)
 
@@ -70,7 +70,7 @@ const genQuestMap = async () => {
       acc[code] = +gameId
       return acc
     },
-    {} as Record<string, number>
+    {} as Record<string, number>,
   )
   await writeFile(QUEST_CODE_MAP_OUTPUT_PATH, JSON.stringify(data, null, 2))
   console.log('Updated quest map', QUEST_CODE_MAP_OUTPUT_PATH)
@@ -107,7 +107,7 @@ const genPrePostQuestMap = async (code2IdQuestMap: Record<string, number>) => {
       })
       return acc
     },
-    {} as Record<string, { pre: string[]; post: string[] }>
+    {} as Record<string, { pre: string[]; post: string[] }>,
   )
 
   // Sort pre/post quests

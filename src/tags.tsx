@@ -173,7 +173,7 @@ export const TypeTags = () => {
   const { progressTag } = useFilterProgressTag()
 
   const inProgressQuest = gameQuests.filter((gameQuest) =>
-    isInProgressQuest(gameQuest)
+    isInProgressQuest(gameQuest),
   )
   const { typeTags, setTypeTags } = useFilterTags()
 

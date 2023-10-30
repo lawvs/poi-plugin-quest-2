@@ -46,7 +46,7 @@ const getQuestState = (maybeLanguage: string) => {
         wiki_id: data.code,
         condition: [(data as any).memo2, data.desc].filter(Boolean).join(' | '),
       },
-    ])
+    ]),
   )
 }
 
@@ -72,7 +72,7 @@ export const patchLegacyQuestPluginReducer = async () => {
 
     const reducer = (
       state = initState,
-      action: { type: string; [x: string]: any }
+      action: { type: string; [x: string]: any },
     ) => {
       switch (action.type) {
         case '@@Config':

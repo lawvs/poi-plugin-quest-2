@@ -11,10 +11,10 @@ export const useFilterTags = () => {
     updateStore,
   } = useStore()
   const setCategoryTags = useCallback(
-    (tagName: typeof CATEGORY_TAGS[number]['name']) => {
+    (tagName: (typeof CATEGORY_TAGS)[number]['name']) => {
       updateStore({ categoryTags: { [tagName]: true } })
     },
-    [updateStore]
+    [updateStore],
   )
 
   const setCategoryTagsAll = useCallback(() => {
@@ -22,16 +22,16 @@ export const useFilterTags = () => {
   }, [setCategoryTags])
 
   const setTypeTags = useCallback(
-    (tagName: typeof TYPE_TAGS[number]['name']) => {
+    (tagName: (typeof TYPE_TAGS)[number]['name']) => {
       updateStore({ typeTags: { [tagName]: true } })
     },
-    [updateStore]
+    [updateStore],
   )
   const setMultiTypeTags = useCallback(
     (data: Record<string, boolean>) => {
       updateStore({ typeTags: data })
     },
-    [updateStore]
+    [updateStore],
   )
 
   const setTypeTagsAll = useCallback(() => {
@@ -63,7 +63,7 @@ export const useFilterProgressTag = () => {
       }
       updateStore({ progressTag: tag })
     },
-    [progressTag, updateStore]
+    [progressTag, updateStore],
   )
 
   return {

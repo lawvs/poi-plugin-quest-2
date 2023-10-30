@@ -12,14 +12,14 @@ import { checkIsKcwikiSupportedLanguages, useKcwikiData } from './kcwiki'
 const DEFAULT_LANG = 'ja-JP'
 
 const checkIsKcanotifySupportedLanguages = (
-  lang: string
+  lang: string,
 ): lang is keyof typeof kcaQuestData => {
   const kcaQuestData = getKcanotifyQuestData()
   return lang in kcaQuestData
 }
 
 export const isSupportedLanguages = (
-  lang: string
+  lang: string,
 ): lang is keyof ReturnType<typeof getKcanotifyQuestData> =>
   checkIsKcanotifySupportedLanguages(lang) ||
   checkIsKcwikiSupportedLanguages(lang)

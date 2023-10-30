@@ -55,7 +55,7 @@ declare module 'views/utils/selectors' {
   export const extensionSelectorFactory: (id: string) => Selector<any, any>
   export const fcdSelector: Selector<any, IFCD>
   export const fleetInExpeditionSelectorFactory: (
-    id: number
+    id: number,
   ) => Selector<any, any>
   export const fleetShipsIdSelectorFactory: (id: number) => Selector<any, any>
   export const inRepairShipsIdSelector: Selector<any, any>
@@ -91,7 +91,7 @@ declare module 'views/utils/ship-img' {
     type: string,
     damagaed: boolean,
     ip?: string,
-    version?: number
+    version?: number,
   ) => string
 }
 

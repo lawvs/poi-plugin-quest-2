@@ -12,7 +12,7 @@ export const usePreferKcwiki = () => {
 }
 
 export const checkIsKcwikiSupportedLanguages = (
-  lang: string
+  lang: string,
 ): lang is keyof typeof kcwikiQuestData => {
   const kcwikiQuestData = getKcwikiQuestData()
   return lang in kcwikiQuestData

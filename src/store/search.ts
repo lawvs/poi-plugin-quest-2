@@ -9,7 +9,7 @@ export const useSearchInput = () => {
   } = useStore()
   const setSearchInput = useCallback(
     (value: string) => updateStore({ searchInput: value }),
-    [updateStore]
+    [updateStore],
   )
   return {
     searchInput,

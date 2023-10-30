@@ -28,7 +28,7 @@ export const GameQuestContext = createContext<{
 const useQuestStatusQuery = (inProgressQuests: GameQuest[]) => {
   const gameQuestIds = inProgressQuests.map((quest) => quest.api_no)
   const unlockedGameQuest = Object.fromEntries(
-    inProgressQuests.map((quest) => [quest.api_no, quest])
+    inProgressQuests.map((quest) => [quest.api_no, quest]),
   )
   const alreadyCompletedQuest = getCompletedQuest(gameQuestIds)
   const lockedQuest = getLockedQuest(gameQuestIds)

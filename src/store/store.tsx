@@ -97,7 +97,7 @@ export const useStore = () => {
     (newStore: Partial<State>) => {
       setStore((previousStore) => ({ ...previousStore, ...newStore }))
     },
-    [setStore]
+    [setStore],
   )
 
   return { store, setStore, updateStore }

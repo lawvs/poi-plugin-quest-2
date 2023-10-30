@@ -9,7 +9,7 @@ export type PluginState = { _: typeof initState }
 
 export const reducer = (
   state = initState,
-  action: PoiAction
+  action: PoiAction,
 ): typeof initState => {
   switch (action.type) {
     case '@@Response/kcsapi/api_get_member/questlist': {
