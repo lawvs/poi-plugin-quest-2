@@ -6,14 +6,14 @@ test('should Kcanotify Game data version correct', () => {
 
 test('should Kcanotify Game data keys correct', () => {
   expect(Object.keys(QuestData)).toMatchInlineSnapshot(`
-Array [
-  "zh-CN",
-  "zh-TW",
-  "ja-JP",
-  "en-US",
-  "ko-KR",
-]
-`)
+   [
+     "zh-CN",
+     "zh-TW",
+     "ja-JP",
+     "en-US",
+     "ko-KR",
+   ]
+  `)
 })
 
 describe('should format correct', () => {

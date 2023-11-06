@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`questHelper should 101 locked quests match snapshot 1`] = `
-Object {
+{
   "1001": true,
-  "1002": true,
   "102": true,
   "103": true,
   "104": true,
@@ -447,7 +446,7 @@ Object {
 `;
 
 exports[`questHelper should 196 getLockedQuest correct 1`] = `
-Object {
+{
   "197": true,
   "346": true,
   "892": true,
@@ -456,7 +455,7 @@ Object {
 `;
 
 exports[`questHelper should 236 getCompletedQuest correct 1`] = `
-Object {
+{
   "101": true,
   "102": true,
   "103": true,
@@ -485,7 +484,7 @@ Object {
 `;
 
 exports[`questHelper should getCompletedQuest quest match snapshot 1`] = `
-Object {
+{
   "101": true,
   "102": true,
   "103": true,
