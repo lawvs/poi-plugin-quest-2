@@ -1,5 +1,6 @@
 import { Card, Elevation, H5 } from '@blueprintjs/core'
 import React, { forwardRef } from 'react'
+// https://github.com/bvaughn/react-highlight-words
 import Highlighter from 'react-highlight-words'
 import type { StyledComponentProps } from 'styled-components'
 import { usePluginTranslation } from '../../poi/hooks'
@@ -86,7 +87,7 @@ export const QuestCard = forwardRef<
         <H5>
           <Highlighter
             searchWords={searchWords}
-            autoEscape={false}
+            autoEscape={true}
             textToHighlight={[code, name]
               .filter((i) => i != undefined)
               .join(' - ')}
@@ -94,14 +95,14 @@ export const QuestCard = forwardRef<
         </H5>
         <Highlighter
           searchWords={searchWords}
-          autoEscape={false}
+          autoEscape={true}
           textToHighlight={desc}
         />
         {tip2 && (
           <b>
             <Highlighter
               searchWords={searchWords}
-              autoEscape={false}
+              autoEscape={true}
               textToHighlight={tip2}
             />
           </b>
@@ -110,7 +111,7 @@ export const QuestCard = forwardRef<
           <i>
             <Highlighter
               searchWords={searchWords}
-              autoEscape={false}
+              autoEscape={true}
               textToHighlight={tip}
             />
           </i>
