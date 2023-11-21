@@ -1,5 +1,12 @@
 # poi-plugin-quest-info-2
 
+## 0.10.5
+
+### Patch Changes
+
+- cb49c3a: Update quest data
+- f7c1489: Fix search not working
+
 ## 0.10.4
 
 ### Patch Changes
