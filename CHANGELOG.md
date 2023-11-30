@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.10.6
+
+### Patch Changes
+
+- ee390f1: Update quest data
+
 ## 0.10.5
 
 ### Patch Changes
