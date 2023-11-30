@@ -4,7 +4,8 @@
 
 ### Patch Changes
 
-- ee390f1: Update quest data
+- fb21611: Add Xmas限定任務 quest data
+- 789259b: Remove 鎮守府秋刀魚祭 quest data
 
 ## 0.10.5
 
