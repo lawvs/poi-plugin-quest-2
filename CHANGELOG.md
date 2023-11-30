@@ -1,5 +1,12 @@
 # poi-plugin-quest-info-2
 
+## 0.10.6
+
+### Patch Changes
+
+- fb21611: Add Xmas限定任務 quest data
+- 789259b: Remove 鎮守府秋刀魚祭 quest data
+
 ## 0.10.5
 
 ### Patch Changes
