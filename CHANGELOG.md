@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.10.7
+
+### Patch Changes
+
+- 18c4f9b: Update Xmas拡張作戦 quest data
+
 ## 0.10.6
 
 ### Patch Changes
