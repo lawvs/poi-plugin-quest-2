@@ -2,5 +2,5 @@
 'poi-plugin-quest-info-2': patch
 ---
 
-Update quest data
+Update Xmas拡張作戦 quest data
 
