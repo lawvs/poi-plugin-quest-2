@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.10.8
+
+### Patch Changes
+
+- de953f0: Fix kcwiki quest data
+
 ## 0.10.7
 
 ### Patch Changes
