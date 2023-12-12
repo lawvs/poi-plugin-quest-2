@@ -27,9 +27,9 @@ const PoiPluginCard = styled(Card)`
 
 const POI_THEMES = {
   'Poi dark': {
-    background: '#30404d',
+    background: 'rgb(47, 52, 60)',
     container: ({ children }) => (
-      <PoiPluginContainer className="bp3-dark">
+      <PoiPluginContainer className="bp4-dark">
         <PoiPluginCard>{children}</PoiPluginCard>
       </PoiPluginContainer>
     ),

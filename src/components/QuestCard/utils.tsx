@@ -1,4 +1,4 @@
-import { Icon, Tooltip } from '@blueprintjs/core'
+import { Icon, IconSize, Tooltip } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import React from 'react'
 import {
@@ -20,7 +20,7 @@ export const questStatusMap: Record<QUEST_STATUS, React.FC> = {
     const { t } = usePluginTranslation()
     return (
       <Tooltip content={t('Locked', { number: '' })}>
-        <Icon icon={IconNames.LOCK} iconSize={Icon.SIZE_LARGE}></Icon>
+        <Icon icon={IconNames.LOCK} size={IconSize.LARGE}></Icon>
       </Tooltip>
     )
   },
@@ -46,7 +46,7 @@ export const questStatusMap: Record<QUEST_STATUS, React.FC> = {
     const { t } = usePluginTranslation()
     return (
       <Tooltip content={t('Already Completed', { number: '' })}>
-        <Icon icon={IconNames.TICK} iconSize={Icon.SIZE_LARGE}></Icon>
+        <Icon icon={IconNames.TICK} size={IconSize.LARGE}></Icon>
       </Tooltip>
     )
   },
@@ -54,7 +54,7 @@ export const questStatusMap: Record<QUEST_STATUS, React.FC> = {
     const { t } = usePluginTranslation()
     return (
       <Tooltip content={t('Unknown')}>
-        <Icon icon={IconNames.HELP} iconSize={Icon.SIZE_LARGE}></Icon>
+        <Icon icon={IconNames.HELP} size={IconSize.LARGE}></Icon>
       </Tooltip>
     )
   },
