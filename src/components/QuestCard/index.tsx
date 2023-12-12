@@ -3,7 +3,9 @@ import {
   Card,
   Elevation,
   H5,
+  Icon,
   Menu,
+  MenuDivider,
   MenuItem,
   Popover,
 } from '@blueprintjs/core'
@@ -167,6 +169,15 @@ export const MoreOptions = forwardRef<
         text={t('Search in KanColle Wiki')}
         tagName="a"
         href={`https://kancolle.fandom.com/wiki/Quests#:~:text=${code}`}
+        target="_blank"
+      />
+      <MenuDivider />
+      <MenuItem
+        icon={IconNames.Heart}
+        labelElement={<Icon icon="share" />}
+        text={t('Star project, support the author')}
+        tagName="a"
+        href={`https://github.com/lawvs/poi-plugin-quest-2`}
         target="_blank"
       />
     </Menu>
