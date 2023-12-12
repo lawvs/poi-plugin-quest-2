@@ -1,5 +1,15 @@
 # poi-plugin-quest-info-2
 
+## 0.11.0
+
+### Minor Changes
+
+- ce38a9c: New jump search feature
+
+### Patch Changes
+
+- af55338: Update quest data
+
 ## 0.10.8
 
 ### Patch Changes
