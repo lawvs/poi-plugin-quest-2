@@ -1,4 +1,4 @@
-import { Card } from '@blueprintjs/core'
+import { Button, Card } from '@blueprintjs/core'
 import styled from 'styled-components'
 
 export const FlexCard = styled(Card)`
@@ -32,13 +32,29 @@ export const CardBody = styled.div`
 `
 
 export const CardTail = styled.div`
+  align-self: stretch;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 
   img {
     height: 20px;
   }
+`
+
+export const MoreButton = styled(Button)`
+  opacity: 0;
+
+  ${FlexCard}:hover & {
+    opacity: 1;
+  }
+`
+
+export const TailIconWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 export const CardActionWrapper = styled.div`

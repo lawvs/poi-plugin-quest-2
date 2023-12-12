@@ -32,5 +32,8 @@
   "Use Kcwiki data": "使用 Kcwiki 的数据",
   "Requires": "前置",
   "Unlocks": "后置",
+  "Search in wikiwiki": "在 艦これ攻略Wiki 搜索该任务",
+  "Search in Kcwiki": "在 舰娘百科 搜索该任务",
+  "Search in KanColle Wiki": "在 英wiki 搜索该任务",
   "": ""
 }
