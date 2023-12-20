@@ -1,5 +1,15 @@
 # poi-plugin-quest-info-2
 
+## 0.12.0
+
+### Minor Changes
+
+- 7ba3993: Check the quest chain full completed
+
+### Patch Changes
+
+- d80267b: Update quest data
+
 ## 0.11.0
 
 ### Minor Changes
