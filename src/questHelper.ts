@@ -211,6 +211,24 @@ export const getQuestPrePost = (gameId: number) => {
   return prePostQuest[String(gameId) as keyof typeof prePostQuest]
 }
 
+const getNoPostQuestIds = (): number[] => {
+  const noPostQuestIds = []
+  for (const [gameId, { post }] of Object.entries(prePostQuest)) {
+    if (!post.length) {
+      noPostQuestIds.push(+gameId)
+    }
+  }
+  return noPostQuestIds
+}
+
+/**
+ * Get quest id by quest code
+ *
+ * @example
+ * ```ts
+ * getQuestIdByCode('A1') // 101
+ * ```
+ */
 export const getQuestIdByCode = (code: string) => {
   if (code in questCodeMap) {
     return questCodeMap[code as keyof typeof questCodeMap]
@@ -218,11 +236,53 @@ export const getQuestIdByCode = (code: string) => {
   return null
 }
 
+export const getQuestCodeByGameId = (gameId: number) => {
+  const questCode = Object.entries(questCodeMap).find(([, id]) => id === gameId)
+  if (!questCode) {
+    return null
+  }
+  return questCode[0]
+}
+
+/**
+ * Get pre quest ids by quest id
+ *
+ * @example
+ * ```ts
+ * // Quest id A2's pre quest id is A1
+ * getPreQuestIds(102) // [101]
+ * ```
+ */
 export const getPreQuestIds = (gameId: number): number[] =>
   getQuestPrePost(gameId)
     .pre.map((code) => getQuestIdByCode(code))
     .filter(Boolean) as number[]
 
+const getAllPreQuestIds = (gameId: number): number[] => {
+  const set = new Set<number>()
+  const queue = [gameId]
+  while (queue.length) {
+    const gameId = queue.shift()!
+    getPreQuestIds(gameId).forEach((preGameId) => {
+      if (set.has(preGameId)) {
+        return
+      }
+      set.add(preGameId)
+      queue.push(preGameId)
+    })
+  }
+  return Array.from(set)
+}
+
+/**
+ * Get post quest ids by quest id
+ *
+ * @example
+ * ```ts
+ * // Quest id A1's post quest id is A2
+ * getPreQuestIds(101) // [102]
+ * ```
+ */
 export const getPostQuestIds = (gameId: number): number[] =>
   getQuestPrePost(gameId)
     .post.map((code) => getQuestIdByCode(code))
@@ -251,6 +311,33 @@ const calcQuestMap = (
 export const getCompletedQuest = moize(
   (inProgressQuest: number[]) => {
     const completedQuest = calcQuestMap(inProgressQuest, getPreQuestIds)
+    // Check if the quest chain had completed
+    // See https://github.com/lawvs/poi-plugin-quest-2/issues/83
+    const noPostQuestIds = getNoPostQuestIds()
+    noPostQuestIds.forEach((gameId) => {
+      if (inProgressQuest.includes(gameId) || completedQuest[gameId]) {
+        return
+      }
+      const preQuestIds = getAllPreQuestIds(gameId)
+      const hasInProgressPreQuest = preQuestIds.some((preGameId) =>
+        inProgressQuest.includes(preGameId),
+      )
+      if (hasInProgressPreQuest) {
+        // The quest chain is not completed
+        return
+      }
+      const hasCompletedPreQuest = preQuestIds.some(
+        (preGameId) => completedQuest[preGameId],
+      )
+      if (!hasCompletedPreQuest) {
+        // The quest chain is not unlocked
+        return
+      }
+      preQuestIds.forEach((preGameId) => {
+        completedQuest[preGameId] = true
+      })
+      completedQuest[gameId] = true
+    })
     return completedQuest
   },
   {
