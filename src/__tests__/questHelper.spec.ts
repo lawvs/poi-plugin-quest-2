@@ -1,11 +1,18 @@
 import {
+  calcQuestMap,
   getCompletedQuest,
   getLockedQuest,
   getPostQuestIds,
   getPreQuestIds,
+  getQuestCodeByGameId,
 } from '../questHelper'
 
 describe('questHelper', () => {
+  test('should getQuestCodeByGameId correct', () => {
+    expect(getQuestCodeByGameId(0)).toEqual(null)
+    expect(getQuestCodeByGameId(101)).toEqual('A1')
+  })
+
   test('should getPreQuestIds correct', () => {
     expect(getPreQuestIds(101)).toEqual([])
     expect(getPreQuestIds(102)).toEqual([101])
@@ -23,11 +30,11 @@ describe('questHelper', () => {
   })
 
   test('should getCompletedQuest quest match snapshot', () => {
-    expect(getCompletedQuest([817])).toMatchSnapshot()
+    expect(calcQuestMap([817], getPreQuestIds)).toMatchSnapshot()
   })
 
   test('should 236 getCompletedQuest correct', () => {
-    expect(getCompletedQuest([236])).toMatchSnapshot()
+    expect(calcQuestMap([236], getPreQuestIds)).toMatchSnapshot()
   })
 
   test('should 101 locked quests match snapshot', () => {

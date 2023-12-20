@@ -288,7 +288,10 @@ export const getPostQuestIds = (gameId: number): number[] =>
     .post.map((code) => getQuestIdByCode(code))
     .filter(Boolean) as number[]
 
-const calcQuestMap = (
+/**
+ * @internal Export for test
+ */
+export const calcQuestMap = (
   inProgressQuests: number[],
   next: (gameId: number) => number[],
 ) => {
