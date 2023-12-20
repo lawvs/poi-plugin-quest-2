@@ -72,6 +72,8 @@ typings/
 # Serverless directories
 .serverless
 
+.DS_Store
+
 build/
 storybook-static/
 assets/index.ts
