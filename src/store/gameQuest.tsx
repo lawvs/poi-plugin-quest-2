@@ -3,10 +3,10 @@ import React, { createContext, useContext } from 'react'
 import { useGameQuest } from '../poi/hooks'
 import { GameQuest } from '../poi/types'
 import {
+  QUEST_STATUS,
   getCompletedQuest,
   getLockedQuest,
   questApiStateToQuestStatus,
-  QUEST_STATUS,
 } from '../questHelper'
 
 export const GameQuestContext = createContext<{
@@ -47,11 +47,11 @@ const useQuestStatusQuery = (inProgressQuests: GameQuest[]) => {
         return questApiStateToQuestStatus(theGameQuest.api_state)
       }
 
-      if (gameId in lockedQuest) {
-        return QUEST_STATUS.LOCKED
-      }
       if (gameId in alreadyCompletedQuest) {
         return QUEST_STATUS.ALREADY_COMPLETED
+      }
+      if (gameId in lockedQuest) {
+        return QUEST_STATUS.LOCKED
       }
       return QUEST_STATUS.UNKNOWN
     },

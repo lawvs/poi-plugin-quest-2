@@ -353,6 +353,8 @@ export const getCompletedQuest = moize(
   },
 )
 
+// TODO fix https://github.com/lawvs/poi-plugin-quest-2/issues/87
+// Since we check the quest chain in getCompletedQuest, we need to update the locked quest map
 export const getLockedQuest = moize(
   (inProgressQuest: number[]) => {
     const lockedQuest = calcQuestMap(inProgressQuest, getPostQuestIds)
