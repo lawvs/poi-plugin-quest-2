@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.1
+
+### Patch Changes
+
+- 8224a06: Fix locked quest status bug
+
 ## 0.12.0
 
 ### Minor Changes
