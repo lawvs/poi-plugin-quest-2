@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.2
+
+### Patch Changes
+
+- cf28588: Update quest data
+
 ## 0.12.1
 
 ### Patch Changes
