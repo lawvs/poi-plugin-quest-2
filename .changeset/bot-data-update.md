@@ -2,5 +2,5 @@
 'poi-plugin-quest-info-2': patch
 ---
 
-Update quest data
+Remove 圣诞限定 quests
 
