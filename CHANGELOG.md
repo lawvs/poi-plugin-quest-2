@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.3
+
+### Patch Changes
+
+- d008d12: Remove 圣诞限定 quests
+
 ## 0.12.2
 
 ### Patch Changes
