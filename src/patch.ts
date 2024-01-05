@@ -19,7 +19,7 @@ const isLegacyQuestPluginEnabled = async () => {
   const poiStore = await getPoiStore()
   const legacyQuestPlugin = poiStore
     .getState()
-    .plugins.find((i) => i.id === LEGACY_QUEST_PLUGIN_ID)
+    .plugins?.find((i) => i.id === LEGACY_QUEST_PLUGIN_ID)
   if (legacyQuestPlugin && legacyQuestPlugin.enabled) {
     return true
   }
@@ -40,13 +40,21 @@ const getQuestState = (maybeLanguage: string) => {
       : QuestData[maybeLanguage]
 
   return Object.fromEntries(
-    Object.entries(data).map(([apiNo, data]) => [
-      apiNo,
-      {
-        wiki_id: data.code,
-        condition: [(data as any).memo2, data.desc].filter(Boolean).join(' | '),
-      },
-    ]),
+    Object.entries(data).map(([apiNo, d]) => {
+      const typedData = d as (typeof data)[keyof typeof data]
+      return [
+        apiNo,
+        {
+          wiki_id: typedData.code,
+          condition: [
+            'memo2' in typedData ? typedData.memo2 : undefined,
+            typedData.desc,
+          ]
+            .filter(Boolean)
+            .join(' | '),
+        },
+      ]
+    }),
   )
 }
 
@@ -57,7 +65,7 @@ const getQuestState = (maybeLanguage: string) => {
  */
 export const patchLegacyQuestPluginReducer = async () => {
   if (await isLegacyQuestPluginEnabled()) {
-    // no clear if legacy quest plugin enabled
+    // skip patch if legacy quest plugin enabled
     return
   }
 
@@ -102,13 +110,13 @@ export const patchLegacyQuestPluginReducer = async () => {
  */
 export const clearPatchLegacyQuestPluginReducer = async () => {
   if (await isLegacyQuestPluginEnabled()) {
-    // no clear if legacy quest plugin enabled
+    // skip clear if legacy quest plugin enabled
     return
   }
   try {
     const { extendReducer } = await importFromPoi('views/create-store')
     const clearReducer = undefined
-    extendReducer('poi-plugin-quest-info', clearReducer)
+    extendReducer(LEGACY_QUEST_PLUGIN_ID, clearReducer)
   } catch (e) {
     console.error('Clear hack quest plugin reducer error', e)
   }
