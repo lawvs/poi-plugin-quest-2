@@ -255,7 +255,7 @@ exports[`should questCategory correct snapshot 1`] = `
     {
       "code": "Bq1",
       "gameId": 822,
-      "name": "冲之岛海域迎击战！",
+      "name": "冲之岛海域迎击战",
     },
     {
       "code": "Bq12",
@@ -393,7 +393,7 @@ exports[`should questCategory correct snapshot 1`] = `
     {
       "code": "Fw2",
       "gameId": 638,
-      "name": "对空机枪量产！",
+      "name": "对空机枪量产",
     },
     {
       "code": "Gw1",
