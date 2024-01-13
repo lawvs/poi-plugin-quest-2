@@ -70,8 +70,12 @@ export const patchLegacyQuestPluginReducer = async () => {
   }
 
   try {
-    const i18next: i18n = await importFromPoi('views/env-parts/i18next')
-    const language = i18next.language
+    const i18next: i18n | { default: i18n; __esModule: true } =
+      await importFromPoi('views/env-parts/i18next')
+    // Fix https://github.com/poooi/poi/issues/2539
+    const language =
+      '__esModule' in i18next ? i18next.default.language : i18next.language
+
     const initState = {
       [HACK_KEY]: true,
       quests: getQuestState(language),
