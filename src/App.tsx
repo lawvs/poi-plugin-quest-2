@@ -1,11 +1,11 @@
-import styled from 'styled-components'
-import React, { StrictMode } from 'react'
 import { Text } from '@blueprintjs/core'
+import React, { StrictMode } from 'react'
+import styled from 'styled-components'
 
 import { Toolbar, useFilterQuest } from './Toolbar'
-import { StoreProvider } from './store'
-import { usePluginTranslation } from './poi/hooks'
 import { QuestList } from './components/QuestList'
+import { usePluginTranslation } from './poi/hooks'
+import { StoreProvider } from './store'
 
 const Container = styled.div`
   display: flex;
