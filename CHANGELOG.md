@@ -1,5 +1,12 @@
 # poi-plugin-quest-info-2
 
+## 0.12.4
+
+### Patch Changes
+
+- ec63397: Update quest data
+- a122fd7: Compatible esModule import in poi v11.0.0-beta.2
+
 ## 0.12.3
 
 ### Patch Changes
