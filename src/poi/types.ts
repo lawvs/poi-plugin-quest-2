@@ -9,6 +9,9 @@ export enum QUEST_API_STATE {
 // See https://github.com/poooi/poi/blob/master/views/redux/info/quests.es
 export type GameQuest = {
   api_state: QUEST_API_STATE
+  /**
+   * Game ID, for example 101, 102
+   */
   api_no: number
   api_title: string
   api_detail: string

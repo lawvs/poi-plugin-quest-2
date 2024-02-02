@@ -65,7 +65,7 @@ export const useQuest = (): UnionQuest[] => {
   return Object.entries(docQuestMap).map(([gameId, val]) => ({
     gameId: +gameId,
     // Maybe empty
-    gameQuest: gameQuest.find((quest) => quest.api_no === Number(gameId))!,
+    gameQuest: gameQuest.find((quest) => quest.api_no === Number(gameId)),
     docQuest: val,
   }))
 }

@@ -8,6 +8,9 @@ import questCodeMap from '../build/questCodeMap.json'
 import { GameQuest, QUEST_API_STATE } from './poi/types'
 
 export type DocQuest = {
+  /**
+   * Wiki ID, for example 'A1'
+   */
   code: string
   name: string
   desc: string
@@ -34,6 +37,9 @@ export type DocQuest = {
 }
 
 export type UnionQuest = {
+  /**
+   * Same as {@link GameQuest.api_no}
+   */
   gameId: number
   gameQuest?: GameQuest
   docQuest: DocQuest

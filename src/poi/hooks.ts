@@ -30,7 +30,12 @@ export const usePluginTranslation = () => {
   return useTranslation(PACKAGE_NAME)
 }
 
-const emptyArray = [] as GameQuest[]
+const emptyArray: GameQuest[] = []
+/**
+ * Use `useGlobalGameQuest` instead
+ *
+ * Only use this hook to set context
+ */
 export const useGameQuest = () => {
   const [quests, setQuests] = useState<GameQuest[]>([])
   useEffect(() => {
