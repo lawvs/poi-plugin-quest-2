@@ -598,6 +598,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "精锐「第十九驱逐队」，全力出击！",
     },
     {
+      "code": "By13",
+      "gameId": 1005,
+      "name": "精强 “第七驱逐队” 紧急出动！",
+    },
+    {
       "code": "Fy5",
       "gameId": 1103,
       "name": "量产潜水舰强化兵装",
