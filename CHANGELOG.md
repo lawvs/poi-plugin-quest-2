@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.6
+
+### Patch Changes
+
+- d803fdb: Update 節分任務 data
+
 ## 0.12.5
 
 ### Patch Changes
