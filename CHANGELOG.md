@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.7
+
+### Patch Changes
+
+- 380bcb6: Update quest data
+
 ## 0.12.6
 
 ### Patch Changes
