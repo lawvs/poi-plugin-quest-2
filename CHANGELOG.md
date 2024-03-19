@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.9
+
+### Patch Changes
+
+- 225f7b7: Fix the problem that some task categories are not correct
+
 ## 0.12.8
 
 ### Patch Changes
