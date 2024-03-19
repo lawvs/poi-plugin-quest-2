@@ -1,38 +1,32 @@
 /* eslint-disable no-console */
 import { writeFile } from 'fs/promises'
 import path from 'path'
-import { QuestData } from '../build/kcanotifyGamedata'
 import { KcwikiQuestData } from '../build/kcQuestsData'
+import { QuestData } from '../build/kcanotifyGamedata'
+import { parseQuestCode } from './utils'
 
 const CATEGORY_OUTPUT_PATH = path.resolve('build', 'questCategory.json')
 const QUEST_CODE_MAP_OUTPUT_PATH = path.resolve('build', 'questCodeMap.json')
 const PRE_POST_QUEST_OUTPUT_PATH = path.resolve('build', 'prePostQuest.json')
 
-const kcaQuestStartsFilter = (str: string) =>
-  Object.entries(QuestData['zh-CN'])
-    .filter(([, quest]) => quest.name.startsWith(str))
+const kcwikiQuestCodeFilter = (
+  predicate: (parsedCode: { type: string; number: number }) => boolean,
+) =>
+  Object.entries(KcwikiQuestData['zh-CN'])
+    .filter(([, quest]) => predicate(parseQuestCode(quest.code)))
     .map(([gameId]) => +gameId)
 
-const kcwikiDataSelector = () => Object.entries(KcwikiQuestData['zh-CN'])
 const mergeDataSelector = () =>
   Object.entries({ ...QuestData['zh-CN'], ...KcwikiQuestData['zh-CN'] })
 
 const genQuestCategory = async () => {
-  const dailyQuest = kcaQuestStartsFilter('(日任)')
-  const weeklyQuest = kcaQuestStartsFilter('(周任)')
-  const monthlyQuest = kcaQuestStartsFilter('(月任)')
-  const quarterlyQuest = [
-    ...new Set([
-      ...kcaQuestStartsFilter('(季任)'),
-      ...kcwikiDataSelector()
-        .filter(([, quest]) => 'memo2' in quest && quest.memo2.includes('季常'))
-        .map(([gameId]) => +gameId),
-    ]),
-  ].sort((a, b) => +a - +b)
-  // (年任) (年任 / x 月)
-  const yearlyQuest = kcwikiDataSelector()
-    .filter(([, quest]) => 'memo2' in quest && quest.memo2.includes('年常任务'))
-    .map(([gameId]) => +gameId)
+  const dailyQuest = kcwikiQuestCodeFilter((code) => code.type.endsWith('d'))
+  const weeklyQuest = kcwikiQuestCodeFilter((code) => code.type.endsWith('w'))
+  const monthlyQuest = kcwikiQuestCodeFilter((code) => code.type.endsWith('m'))
+  const quarterlyQuest = kcwikiQuestCodeFilter((code) =>
+    code.type.endsWith('q'),
+  )
+  const yearlyQuest = kcwikiQuestCodeFilter((code) => code.type.endsWith('y'))
   const singleQuest = mergeDataSelector()
     .filter(
       ([gameId]) =>
