@@ -166,6 +166,21 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "精锐舰队演习",
     },
     {
+      "code": "Cm2",
+      "gameId": 318,
+      "name": "给粮舰 “伊良湖” 的支援",
+    },
+    {
+      "code": "Dm1",
+      "gameId": 424,
+      "name": "强化输送船队护卫！",
+    },
+    {
+      "code": "Fm1",
+      "gameId": 626,
+      "name": "精锐 “舰战” 队新编成",
+    },
+    {
       "code": "Fm2",
       "gameId": 628,
       "name": "机种转换",
@@ -181,6 +196,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Bq11",
       "gameId": 284,
       "name": "南西诸岛方面 “海上警备行动” 发令！",
+    },
+    {
+      "code": "Cq1",
+      "gameId": 330,
+      "name": "航母机动部队，开始演习！",
     },
     {
       "code": "Cq2",
@@ -394,6 +414,16 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Fw2",
       "gameId": 638,
       "name": "对空机枪量产",
+    },
+    {
+      "code": "Fw3",
+      "gameId": 676,
+      "name": "装备开发力的集中整备",
+    },
+    {
+      "code": "Fw4",
+      "gameId": 677,
+      "name": "续战支援能力的整备",
     },
     {
       "code": "Gw1",

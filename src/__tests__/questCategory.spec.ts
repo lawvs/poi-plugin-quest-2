@@ -5,11 +5,11 @@ import { QuestData as KcaQuestData } from '../../build/kcanotifyGamedata'
 describe('should questCategory correct', () => {
   test('length', () => {
     expect(questCategory.dailyQuest.length).toMatchInlineSnapshot(`23`)
-    expect(questCategory.weeklyQuest.length).toMatchInlineSnapshot(`17`)
-    expect(questCategory.monthlyQuest.length).toMatchInlineSnapshot(`11`)
-    expect(questCategory.quarterlyQuest.length).toMatchInlineSnapshot(`27`)
+    expect(questCategory.weeklyQuest.length).toMatchInlineSnapshot(`19`)
+    expect(questCategory.monthlyQuest.length).toMatchInlineSnapshot(`14`)
+    expect(questCategory.quarterlyQuest.length).toMatchInlineSnapshot(`28`)
     expect(questCategory.yearlyQuest.length).toMatchInlineSnapshot(`46`)
-    expect(questCategory.singleQuest.length).toMatchInlineSnapshot(`473`)
+    expect(questCategory.singleQuest.length).toMatchInlineSnapshot(`467`)
   })
 
   test('snapshot', () => {
