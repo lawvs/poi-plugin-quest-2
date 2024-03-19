@@ -1,0 +1,3 @@
+try{
+var h=__STORYBOOKTHEMING__,{CacheProvider:_,ClassNames:l,Global:d,ThemeProvider:O,background:g,color:T,convert:b,create:r,createCache:u,createGlobal:S,createReset:f,css:x,darken:y,ensure:C,ignoreSsrWarning:N,isPropValid:R,jsx:k,keyframes:B,lighten:D,styled:G,themes:K,typography:Y,useTheme:v,withTheme:I}=__STORYBOOKTHEMING__;var H=__STORYBOOKADDONS__,{addons:a,types:M,mockChannel:j}=__STORYBOOKADDONS__;a.setConfig({theme:r({base:"light",brandUrl:"https://github.com/poooi/poi",brandImage:"https://raw.githubusercontent.com/poooi/poi/master/assets/img/logo.png"})});
+}catch(e){ console.error("[Storybook] One of your manager-entries failed: " + import.meta.url, e); }
