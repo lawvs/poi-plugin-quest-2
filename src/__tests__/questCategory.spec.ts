@@ -9,7 +9,7 @@ describe('should questCategory correct', () => {
     expect(questCategory.monthlyQuest.length).toMatchInlineSnapshot(`11`)
     expect(questCategory.quarterlyQuest.length).toMatchInlineSnapshot(`27`)
     expect(questCategory.yearlyQuest.length).toMatchInlineSnapshot(`46`)
-    expect(questCategory.singleQuest.length).toMatchInlineSnapshot(`477`)
+    expect(questCategory.singleQuest.length).toMatchInlineSnapshot(`473`)
   })
 
   test('snapshot', () => {
