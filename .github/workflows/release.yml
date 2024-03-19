@@ -8,6 +8,9 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
+  # Provenance generation in GitHub Actions requires "write" access to the "id-token" permission
+  id-token: write
+  # Create pull requests needs "pull-requests: write" and "contents: write" permissions
   pull-requests: write
   contents: write
 
