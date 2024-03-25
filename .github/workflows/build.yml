@@ -15,6 +15,10 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ${{ matrix.os }}
 
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -42,10 +46,13 @@ jobs:
       - name: Build storybook
         run: npm run build-storybook -- --quiet
 
+      - name: Upload pages artifacts
+        # https://github.com/actions/upload-pages-artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'storybook-static'
+
       - name: Deploy GitHub Pages
         if: github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: storybook-static
-          force_orphan: true
+        # https://github.com/actions/deploy-pages
+        uses: actions/deploy-pages@v4
