@@ -9,9 +9,7 @@ import { prepareDir } from './utils'
 
 const OUTPUT_PATH = path.resolve('build', 'kcanotifyGamedata')
 const URL_PREFIX =
-  // Workaround for https://github.com/antest1/kcanotify-gamedata/issues/11
-  // 'https://raw.githubusercontent.com/antest1/kcanotify-gamedata/master'
-  'https://raw.githubusercontent.com/antest1/kcanotify-gamedata/29e2a8933c5a925e94dfc5a7444d8f9681a516aa'
+  'https://raw.githubusercontent.com/antest1/kcanotify-gamedata/master'
 const VERSION_URL = `${URL_PREFIX}/KCAINFO`
 const DATA_URL = `${URL_PREFIX}/files`
 const LANGS = ['scn', 'tcn', 'jp', 'en', 'ko'] as const
