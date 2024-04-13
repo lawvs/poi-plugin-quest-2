@@ -1,5 +1,12 @@
 # poi-plugin-quest-info-2
 
+## 0.12.10
+
+### Patch Changes
+
+- 00563ce: Add 【期間限定任務】「連山」に連なる翼
+- 18bac92: Update quest data
+
 ## 0.12.9
 
 ### Patch Changes
