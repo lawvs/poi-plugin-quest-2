@@ -488,6 +488,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "“十六驱” 演习！",
     },
     {
+      "code": "Cy12",
+      "gameId": 371,
+      "name": "春天到了！「春雨」，进行演习！",
+    },
+    {
       "code": "Dy1",
       "gameId": 434,
       "name": "特设护卫船团司令部，开始活动！",
