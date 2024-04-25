@@ -1,5 +1,12 @@
 # poi-plugin-quest-info-2
 
+## 0.12.11
+
+### Patch Changes
+
+- 43d7508: Update quest data
+- 33e22b2: Add 艦隊11周年記念任務
+
 ## 0.12.10
 
 ### Patch Changes
