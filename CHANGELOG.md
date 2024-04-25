@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.11
+
+### Patch Changes
+
+- 43d7508: Update quest data
+
 ## 0.12.10
 
 ### Patch Changes
