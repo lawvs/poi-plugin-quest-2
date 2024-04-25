@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.12
+
+### Patch Changes
+
+- 8856331: Update quest data. Fix typo in Cy12, 春雨 -> 村雨
+
 ## 0.12.11
 
 ### Patch Changes
