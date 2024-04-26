@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.13
+
+### Patch Changes
+
+- 2386535: Update 舰队11周年纪念任务
+
 ## 0.12.12
 
 ### Patch Changes
