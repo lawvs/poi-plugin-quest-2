@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.14
+
+### Patch Changes
+
+- bddacf0: Add 【舰队11周年纪念任务】资源输出
+
 ## 0.12.13
 
 ### Patch Changes
