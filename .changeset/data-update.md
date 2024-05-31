@@ -2,5 +2,4 @@
 'poi-plugin-quest-info-2': patch
 ---
 
-Update quest data
-
+Add 梅雨限定任务
