@@ -638,6 +638,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "精强 “第七驱逐队” 紧急出动！",
     },
     {
+      "code": "By14",
+      "gameId": 1012,
+      "name": "鹈来型海防舰，保卫平静的海洋吧！",
+    },
+    {
       "code": "Fy5",
       "gameId": 1103,
       "name": "量产潜水舰强化兵装",
