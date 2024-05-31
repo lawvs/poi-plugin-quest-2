@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.16
+
+### Patch Changes
+
+- 2205a87: Add 梅雨限定任务
+
 ## 0.12.15
 
 ### Patch Changes
