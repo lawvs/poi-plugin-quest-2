@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.12.17
+
+### Patch Changes
+
+- 7880ce1: Update quest data
+
 ## 0.12.16
 
 ### Patch Changes
