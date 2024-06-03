@@ -1,5 +1,12 @@
 # poi-plugin-quest-info-2
 
+## 0.12.18
+
+### Patch Changes
+
+- 83e6238: Update 梅雨限定任务's prerequisite data
+- ef2bc74: Fix quest data 梅雨限定任务
+
 ## 0.12.17
 
 ### Patch Changes
