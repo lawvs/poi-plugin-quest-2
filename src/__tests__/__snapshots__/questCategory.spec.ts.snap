@@ -493,6 +493,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "春天到了！「春雨」，进行演习！",
     },
     {
+      "code": "Cy13",
+      "gameId": 372,
+      "name": "实施水上舰 “舰队防空演习”！",
+    },
+    {
       "code": "Dy1",
       "gameId": 434,
       "name": "特设护卫船团司令部，开始活动！",
@@ -671,6 +676,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Fy10",
       "gameId": 1123,
       "name": "增加改良三座水上偵察機",
+    },
+    {
+      "code": "Fy11",
+      "gameId": 1138,
+      "name": "【高射装置量产】94 式高射装置的追加配备",
     },
   ],
 }
