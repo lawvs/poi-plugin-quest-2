@@ -1,5 +1,14 @@
 # poi-plugin-quest-info-2
 
+## 0.12.19
+
+### Patch Changes
+
+- 71ddf0a: Update quest data
+- 7676ccf: Update quest data
+
+  Rename 梅雨限定任务 to 梅雨扩张任务
+
 ## 0.12.18
 
 ### Patch Changes
