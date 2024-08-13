@@ -498,6 +498,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "实施水上舰 “舰队防空演习”！",
     },
     {
+      "code": "Cy14",
+      "gameId": 373,
+      "name": "【法国舰队】演习！",
+    },
+    {
       "code": "Dy1",
       "gameId": 434,
       "name": "特设护卫船团司令部，开始活动！",
