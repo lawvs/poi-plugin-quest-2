@@ -11,7 +11,7 @@ import type { ChangeEvent } from 'react'
 import React, { StrictMode, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { version as DATA_VERSION } from '../build/kcanotifyGamedata'
-import { homepage, version as PACKAGE_VERSION } from '../package.json'
+import PKG from '../package.json'
 import { IN_POI } from './poi/env'
 import { usePluginTranslation, useStateExporter } from './poi/hooks'
 import { tips } from './poi/utils'
@@ -102,13 +102,13 @@ const SettingsMain = () => {
         onChange={handleEnabledChange}
       />
 
-      <Text>{t('Version', { version: PACKAGE_VERSION })}</Text>
+      <Text>{t('Version', { version: PKG.version })}</Text>
       <Text>{t('Data Version', { version: DATA_VERSION })}</Text>
       <AnchorButton
         icon={IconNames.CODE}
         rightIcon={IconNames.SHARE}
         text={t('View source code on GitHub')}
-        href={homepage}
+        href={PKG.homepage}
         target="_blank"
       />
 

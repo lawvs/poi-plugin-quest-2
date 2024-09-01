@@ -5,5 +5,12 @@
     "source.fixAll": "explicit"
   },
   "npm.packageManager": "npm",
-  "cSpell.words": ["Kcanotify", "Kcwiki", "moize"]
+  "cSpell.words": [
+    "Kcanotify",
+    "Kcwiki",
+    "moize"
+  ],
+  "i18n-ally.localesPaths": [
+    "i18n"
+  ]
 }
