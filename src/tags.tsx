@@ -1,5 +1,4 @@
 import { Tag } from '@blueprintjs/core'
-import { IconNames } from '@blueprintjs/icons'
 import React from 'react'
 import styled from 'styled-components'
 import { useGameTab, usePluginTranslation } from './poi/hooks'
@@ -111,7 +110,6 @@ export const ProgressTags = () => {
         {t('Locked', { number: lockedQuestNum })}
       </Tag>
       <Tag
-        icon={IconNames.EXCHANGE}
         onClick={() => {
           toggleTag(PROGRESS_TAG.Unlocked)
         }}
