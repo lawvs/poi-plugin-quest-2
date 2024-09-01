@@ -1,5 +1,15 @@
 # poi-plugin-quest-info-2
 
+## 0.13.0
+
+### Minor Changes
+
+- 0ca1322: Support jump to Richelieu Manager
+
+### Patch Changes
+
+- e4b0971: Update quest data
+
 ## 0.12.22
 
 ### Patch Changes
