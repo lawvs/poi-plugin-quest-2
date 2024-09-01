@@ -58,7 +58,7 @@ const genQuestMap = async () => {
   const data = Object.entries(KcwikiQuestData['zh-CN']).reduce(
     (acc, [gameId, { code }]) => {
       if (code in acc) {
-        console.warn(`Duplicate quest code: ${code}`)
+        console.warn(`Duplicate quest code: ${code}`, acc[code], gameId)
         process.exitCode = 1
       }
       acc[code] = +gameId
