@@ -171,6 +171,13 @@ export const MoreOptions = forwardRef<
         href={`https://kancolle.fandom.com/wiki/Quests#:~:text=${code}`}
         target="_blank"
       />
+      <MenuItem
+        icon={IconNames.Control}
+        text={t('Search in Richelieu Manager')}
+        tagName="a"
+        href={`https://richelieu-manager.net/quest/${code}`}
+        target="_blank"
+      />
       <MenuDivider />
       <MenuItem
         icon={IconNames.Heart}
