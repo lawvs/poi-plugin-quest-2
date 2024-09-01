@@ -10,10 +10,9 @@ import {
   Popover,
 } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import React, { forwardRef } from 'react'
+import React, { ComponentPropsWithoutRef, forwardRef } from 'react'
 // https://github.com/bvaughn/react-highlight-words
 import Highlighter from 'react-highlight-words'
-import type { StyledComponentProps } from 'styled-components'
 import { usePluginTranslation } from '../../poi/hooks'
 import {
   QUEST_STATUS,
@@ -80,7 +79,7 @@ const CardAction = ({ gameId }: { gameId: number }) => {
 
 export const QuestCard = forwardRef<
   Card,
-  QuestCardProps & StyledComponentProps<typeof Card, any, object, never>
+  QuestCardProps & ComponentPropsWithoutRef<typeof FlexCard>
 >(({ gameId, code, name, desc, tip, tip2, ...props }, ref) => {
   const status = useQuestStatus(gameId)
   const headIcon = questIconMap[guessQuestCategory(code).type]

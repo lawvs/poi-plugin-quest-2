@@ -93,7 +93,7 @@ export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
   return (
     <QuestListWrapper>
       <AutoSizer>
-        {({ height, width }) => (
+        {({ height, width }: { height: number; width: number }) => (
           <ListWrapper
             ref={listRef}
             height={height}
