@@ -73,7 +73,6 @@
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.5.0",
     "eslint-plugin-storybook": "^0.6.15",
-    "https-proxy-agent": "^7.0.5",
     "i18next": "^19.8.5",
     "jest": "^30.0.0-alpha.1",
     "pangu": "^4.0.7",
@@ -86,7 +85,8 @@
     "storybook": "^7.5.2",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "undici": "^6.19.8"
   },
   "poiPlugin": {
     "title": "Quest Information",

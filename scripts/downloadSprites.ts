@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import path from 'path'
-import fs from 'fs'
 import crypto from 'crypto'
+import fs from 'fs'
+import path from 'path'
 // See https://sharp.pixelplumbing.com/
 import sharp from 'sharp'
 import { fetch } from './proxyFetch'
@@ -28,8 +28,9 @@ const download = async (url: string, filename?: string) => {
   }
   const filePath = path.resolve(OUTPUT_PATH, filename)
   const response = await fetch(url)
-  const buffer = await response.buffer()
-  await fs.writeFileSync(filePath, buffer)
+  const arrayBuffer = await response.arrayBuffer()
+  const buffer = Buffer.from(arrayBuffer)
+  fs.writeFileSync(filePath, buffer)
   return { filePath, buffer }
 }
 

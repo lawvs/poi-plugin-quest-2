@@ -23,7 +23,7 @@ const getRemoteVersion = async () => {
   if (!resp.ok) {
     throw new Error(`Fetch Error!\nurl: ${resp.url}\nstatus: ${resp.status}`)
   }
-  return (await resp.json()).commit.sha
+  return ((await resp.json()) as any).commit.sha
 }
 
 const getLocalVersion = () => {

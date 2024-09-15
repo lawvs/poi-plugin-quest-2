@@ -25,7 +25,7 @@ const getRemoteVersion = async () => {
     data_version: string
     kcadata_version: number
     kc_maintenance: string[]
-  } = await resp.json()
+  } = (await resp.json()) as any
 
   return String(KCAINFO.kcadata_version)
 }
