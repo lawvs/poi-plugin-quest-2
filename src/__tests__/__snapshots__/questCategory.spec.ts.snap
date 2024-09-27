@@ -503,6 +503,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "【法国舰队】演习！",
     },
     {
+      "code": "Cy15",
+      "gameId": 375,
+      "name": "“第三战队” 第二小队，演习开始！",
+    },
+    {
       "code": "Dy1",
       "gameId": 434,
       "name": "特设护卫船团司令部，开始活动！",
@@ -651,6 +656,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "By14",
       "gameId": 1012,
       "name": "鹈来型海防舰，保卫平静的海洋吧！",
+    },
+    {
+      "code": "By15",
+      "gameId": 1018,
+      "name": "“第三战队” 第二小队，前往铁底海峡！",
     },
     {
       "code": "Fy5",
