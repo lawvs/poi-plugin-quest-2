@@ -91,11 +91,7 @@ const main = async () => {
         console.error(`Fetch Error!\nurl: ${resp.url}\nstatus: ${resp.status}`)
         return
       }
-      let text = await resp.text()
-      // TODO fix source file
-      // Remove BOM(U+FEFF) from the header of the quests-ko.json
-      // See https://github.com/antest1/kcanotify-gamedata/pull/2
-      text = text.trim()
+      const text = await resp.text()
 
       const json = JSON.parse(text) as {
         [gameId: string]: {
@@ -104,12 +100,6 @@ const main = async () => {
           desc: string
           rewards?: string
         }
-      }
-
-      if ('421?' in json) {
-        // TODO fix source file
-        // See https://github.com/antest1/kcanotify-gamedata/pull/2
-        delete json['421?']
       }
 
       for (const gameId in json) {
