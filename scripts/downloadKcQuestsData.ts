@@ -51,6 +51,15 @@ const genTS = (version: string) => {
     'export const KcwikiQuestData = {',
     `  'zh-CN': zh_CN,`,
     '}',
+    '',
+    `export const kcwikiGamedata = [
+  {
+    name: '简体中文 - Kcwiki',
+    tag: 'zh-Hans',
+    flagEmoji: '🇨🇳',
+    res: zh_CN,
+  },
+]`,
   ].join('\n')
 
   const versionCode = `export const version = '${version}'`

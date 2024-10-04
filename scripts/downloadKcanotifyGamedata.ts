@@ -13,7 +13,6 @@ const URL_PREFIX =
 const VERSION_URL = `${URL_PREFIX}/KCAINFO`
 const DATA_URL = `${URL_PREFIX}/files`
 const LANGS = ['scn', 'tcn', 'jp', 'en', 'ko'] as const
-const LOCALES = ['zh-CN', 'zh-TW', 'ja-JP', 'en-US', 'ko-KR'] as const
 
 const getRemoteVersion = async () => {
   const resp = await fetch(VERSION_URL)
@@ -49,17 +48,52 @@ const getLocalVersion = () => {
  * ```
  */
 const genTS = (version: string) => {
-  const importCode = LOCALES.map(
-    (locale, idx) =>
-      `import ${locale.replace('-', '_')} from './quests-${LANGS[idx]}.json'`,
-  ).join('\n')
+  const importCode = `import en_US from './quests-en.json'
+import ja_JP from './quests-jp.json'
+import ko_KR from './quests-ko.json'
+import zh_CN from './quests-scn.json'
+import zh_TW from './quests-tcn.json'`
 
-  const exportCode =
-    'export const QuestData = {\n' +
-    LOCALES.map((locale) => `  '${locale}': ${locale.replace('-', '_')},`).join(
-      '\n',
-    ) +
-    '\n}'
+  const exportCode = `export const QuestData = {
+  'zh-CN': zh_CN,
+  'zh-TW': zh_TW,
+  'ja-JP': ja_JP,
+  'en-US': en_US,
+  'ko-KR': ko_KR,
+}
+
+export const kcanotifyGameData = [
+  {
+    name: '简体中文 - Kcanotify',
+    tag: 'zh-Hans',
+    flagEmoji: '🇨🇳',
+    res: zh_CN,
+  },
+  {
+    name: '正體中文 - Kcanotify',
+    tag: 'zh-TW',
+    flagEmoji: '🇹🇼',
+    res: zh_TW,
+  },
+  {
+    name: '日本語 - Kcanotify',
+    tag: 'ja-JP',
+    flagEmoji: '🇯🇵',
+    res: ja_JP,
+  },
+  {
+    name: 'English - Kcanotify',
+    tag: 'en-US',
+    flagEmoji: '🇺🇸',
+    res: en_US,
+  },
+  {
+    name: '한국어 - 시제 깡들리티',
+    tag: 'ko-KR',
+    flagEmoji: '🇰🇷',
+    res: ko_KR,
+  },
+]`
 
   const versionCode = `export const version = '${version}'`
   return `${importCode}\n\n${exportCode}\n\n${versionCode}\n`
