@@ -1,10 +1,11 @@
-import { Button, InputGroup } from '@blueprintjs/core'
+import { Button, InputGroup, Popover } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import type { ChangeEvent } from 'react'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { usePluginTranslation } from './poi/hooks'
 import { QUEST_STATUS, UnionQuest } from './questHelper'
+import { SettingsMain } from './Settings'
 import { PROGRESS_TAG, useQuest } from './store'
 import {
   useFilterProgressTag,
@@ -20,9 +21,15 @@ const ToolbarWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 4px 8px;
+  gap: 8px;
+`
 
-  & > * + * {
-    margin-top: 8px;
+const Wrapper = styled.div`
+  display: flex;
+  gap: 4px;
+
+  & > *:first-child {
+    flex: 1;
   }
 `
 
@@ -56,13 +63,23 @@ export const SearchInput: React.FC = () => {
   )
 }
 
+const SettingsPopover = () => {
+  return <SettingsMain />
+}
+
 export const Toolbar = () => {
   // TODO remove
   useSyncGameTagEffect()
 
   return (
     <ToolbarWrapper>
-      <SearchInput></SearchInput>
+      <Wrapper>
+        <SearchInput />
+        <Popover content={<SettingsPopover />} placement="bottom">
+          <Button icon={IconNames.Settings} />
+        </Popover>
+      </Wrapper>
+
       <CategoryTags />
       <TypeTags />
     </ToolbarWrapper>
