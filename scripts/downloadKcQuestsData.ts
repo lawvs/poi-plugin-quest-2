@@ -52,14 +52,13 @@ const genTS = (version: string) => {
     `  'zh-CN': zh_CN,`,
     '}',
     '',
-    `export const kcwikiGamedata = [
-  {
-    name: '简体中文 - Kcwiki',
-    tag: 'zh-Hans',
-    flagEmoji: '🇨🇳',
-    res: zh_CN,
-  },
-]`,
+    `export const kcwikiGameData = {
+  name: '简体中文 - Kcwiki',
+  key: 'zh-Hans-kcwiki',
+  lang: 'zh-CN',
+  flagEmoji: '🇨🇳',
+  res: zh_CN,
+} as const`,
   ].join('\n')
 
   const versionCode = `export const version = '${version}'`

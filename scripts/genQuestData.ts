@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import { writeFile } from 'fs/promises'
 import path from 'path'
-import { KcwikiQuestData } from '../build/kcQuestsData'
-import { QuestData } from '../build/kcanotifyGamedata'
+import { kcwikiGameData } from '../build/kcQuestsData'
+import { kcanotifyGameData } from '../build/kcanotifyGamedata'
 import { parseQuestCode } from './utils'
 
+const EXPORT_QUEST_PATH = path.resolve('build', 'index.ts')
 const CATEGORY_OUTPUT_PATH = path.resolve('build', 'questCategory.json')
 const QUEST_CODE_MAP_OUTPUT_PATH = path.resolve('build', 'questCodeMap.json')
 const PRE_POST_QUEST_OUTPUT_PATH = path.resolve('build', 'prePostQuest.json')
@@ -12,12 +13,22 @@ const PRE_POST_QUEST_OUTPUT_PATH = path.resolve('build', 'prePostQuest.json')
 const kcwikiQuestCodeFilter = (
   predicate: (parsedCode: { type: string; number: number }) => boolean,
 ) =>
-  Object.entries(KcwikiQuestData['zh-CN'])
+  Object.entries(kcwikiGameData.res)
     .filter(([, quest]) => predicate(parseQuestCode(quest.code)))
     .map(([gameId]) => +gameId)
 
 const mergeDataSelector = () =>
-  Object.entries({ ...QuestData['zh-CN'], ...KcwikiQuestData['zh-CN'] })
+  Object.entries({ ...kcanotifyGameData[0].res, ...kcwikiGameData.res })
+
+const genExportQuestData = async () => {
+  const code = `import { kcanotifyGameData } from './kcanotifyGamedata'
+import { kcwikiGameData } from './kcQuestsData'
+
+export const QUEST_DATA = [kcwikiGameData, ...kcanotifyGameData]
+`
+  await writeFile(EXPORT_QUEST_PATH, code)
+  console.log('Export quest data', QUEST_CODE_MAP_OUTPUT_PATH)
+}
 
 const genQuestCategory = async () => {
   const dailyQuest = kcwikiQuestCodeFilter((code) => code.type.endsWith('d'))
@@ -55,7 +66,7 @@ const genQuestCategory = async () => {
 }
 
 const genQuestMap = async () => {
-  const data = Object.entries(KcwikiQuestData['zh-CN']).reduce(
+  const data = Object.entries(kcwikiGameData.res).reduce(
     (acc, [gameId, { code }]) => {
       if (code in acc) {
         console.warn(`Duplicate quest code: ${code}`, acc[code], gameId)
@@ -80,7 +91,7 @@ const genPrePostQuestMap = async (code2IdQuestMap: Record<string, number>) => {
     return code2IdQuestMap[code1] - code2IdQuestMap[code2]
   }
 
-  const data = Object.entries(KcwikiQuestData['zh-CN']).reduce(
+  const data = Object.entries(kcwikiGameData.res).reduce(
     (acc, [gameId, { code, pre }]) => {
       if (!pre || pre.length === 0) {
         return acc
@@ -116,6 +127,7 @@ const genPrePostQuestMap = async (code2IdQuestMap: Record<string, number>) => {
 }
 
 const main = async () => {
+  await genExportQuestData()
   await genQuestCategory()
   const code2IdQuestMap = await genQuestMap()
   await genPrePostQuestMap(code2IdQuestMap)

@@ -65,35 +65,40 @@ import zh_TW from './quests-tcn.json'`
 export const kcanotifyGameData = [
   {
     name: '简体中文 - Kcanotify',
-    tag: 'zh-Hans',
+    key: 'zh-Hans-kcanotify',
+    lang: 'zh-CN',
     flagEmoji: '🇨🇳',
     res: zh_CN,
   },
   {
     name: '正體中文 - Kcanotify',
-    tag: 'zh-TW',
+    key: 'zh-TW-kcanotify',
+    lang: 'zh-TW',
     flagEmoji: '🇹🇼',
     res: zh_TW,
   },
   {
     name: '日本語 - Kcanotify',
-    tag: 'ja-JP',
+    key: 'ja-JP-kcanotify',
+    lang: 'ja-JP',
     flagEmoji: '🇯🇵',
     res: ja_JP,
   },
   {
     name: 'English - Kcanotify',
-    tag: 'en-US',
+    key: 'en-US-kcanotify',
+    lang: 'en-US',
     flagEmoji: '🇺🇸',
     res: en_US,
   },
   {
     name: '한국어 - 시제 깡들리티',
-    tag: 'ko-KR',
+    key: 'ko-KR-kcanotify',
+    lang: 'ko-KR',
     flagEmoji: '🇰🇷',
     res: ko_KR,
   },
-]`
+] as const`
 
   const versionCode = `export const version = '${version}'`
   return `${importCode}\n\n${exportCode}\n\n${versionCode}\n`
