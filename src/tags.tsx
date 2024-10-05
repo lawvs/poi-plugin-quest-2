@@ -1,8 +1,8 @@
 import { Tag } from '@blueprintjs/core'
 import React from 'react'
 import styled from 'styled-components'
-import { useGameTab, usePluginTranslation } from './poi/hooks'
-import { GameQuest, QuestTab } from './poi/types'
+import { usePluginTranslation } from './poi/hooks'
+import { GameQuest } from './poi/types'
 import type { UnionQuest } from './questHelper'
 import {
   hasNewQuest,
@@ -24,12 +24,7 @@ import {
   isYearlyQuest,
   newQuestNumber,
 } from './questHelper'
-import {
-  ALL_CATEGORY_TAG,
-  ALL_TYPE_TAG,
-  PROGRESS_TAG,
-  useSyncWithGame,
-} from './store'
+import { ALL_CATEGORY_TAG, ALL_TYPE_TAG, PROGRESS_TAG } from './store'
 import { useFilterProgressTag, useFilterTags } from './store/filterTags'
 import { useGlobalGameQuest, useGlobalQuestStatusNum } from './store/gameQuest'
 
@@ -165,8 +160,6 @@ export const CategoryTags = () => {
 
 export const TypeTags = () => {
   const { t } = usePluginTranslation()
-  const gameTab = useGameTab()
-  const { syncWithGame } = useSyncWithGame()
   const gameQuests = useGlobalGameQuest()
   const { progressTag } = useFilterProgressTag()
 
@@ -174,8 +167,6 @@ export const TypeTags = () => {
     isInProgressQuest(gameQuest),
   )
   const { typeTags, setTypeTags } = useFilterTags()
-
-  const limitSwitch = syncWithGame && gameTab !== QuestTab.ALL
 
   return (
     <TagsWrapper>
@@ -215,9 +206,7 @@ export const TypeTags = () => {
       {TYPE_TAGS.slice(3).map((tag) => (
         <Tag
           onClick={() => setTypeTags(tag.name)}
-          intent={
-            typeTags[tag.name] ? (limitSwitch ? 'warning' : 'primary') : 'none'
-          }
+          intent={typeTags[tag.name] ? 'primary' : 'none'}
           interactive={true}
           key={tag.name}
         >

@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { useMount, useUpdateEffect } from 'react-use'
 import { PACKAGE_NAME } from '../poi/env'
-import { noop, yes } from '../utils'
+import { yes } from '../utils'
 import { GameQuestProvider } from './gameQuest'
 
 export const ALL_CATEGORY_TAG = {
@@ -35,6 +35,9 @@ export const initialState = {
   } as Record<string, boolean>,
   progressTag: PROGRESS_TAG.All,
   syncWithGame: false as const,
+  /**
+   * @deprecated
+   */
   preferKcwikiData: true,
 }
 
@@ -108,18 +111,5 @@ export const useRemoveStorage = () => {
   return () => {
     localStorage.removeItem(STORAGE_KEY)
     updateStore(initialState)
-  }
-}
-
-/**
- * @deprecated Use progress tag
- */
-export const useSyncWithGame = () => {
-  const setSyncWithGame = noop
-  const toggleSyncWithGame = noop
-  return {
-    syncWithGame: false as const,
-    setSyncWithGame,
-    toggleSyncWithGame,
   }
 }
