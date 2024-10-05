@@ -1,3 +1,2 @@
-export * from './store'
 export * from './quest'
-export * from './kcwiki'
+export * from './store'

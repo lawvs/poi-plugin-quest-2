@@ -1,7 +1,5 @@
 import moize from 'moize'
-import { KcwikiQuestData } from '../build/kcQuestsData'
 import newQuestData from '../build/kcQuestsData/quests-scn-new.json'
-import { QuestData } from '../build/kcanotifyGamedata'
 import prePostQuest from '../build/prePostQuest.json'
 import questCategory from '../build/questCategory.json'
 import questCodeMap from '../build/questCodeMap.json'
@@ -44,9 +42,6 @@ export type UnionQuest = {
   gameQuest?: GameQuest
   docQuest: DocQuest
 }
-
-export const getKcwikiQuestData = () => KcwikiQuestData
-export const getKcanotifyQuestData = () => QuestData
 
 const dailyQuest = new Set(questCategory.dailyQuest)
 const weeklyQuest = new Set(questCategory.weeklyQuest)
