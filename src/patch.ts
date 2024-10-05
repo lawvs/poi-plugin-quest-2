@@ -1,13 +1,8 @@
 import type { i18n } from 'i18next'
-import { QuestData } from '../build/kcanotifyGamedata'
-import { KcwikiQuestData } from '../build/kcQuestsData'
+import { QUEST_DATA } from '../build'
 import { importFromPoi, PACKAGE_NAME } from './poi/env'
 import { getPoiStore } from './poi/store'
-import {
-  checkIsKcwikiSupportedLanguages,
-  getStorage,
-  isSupportedLanguages,
-} from './store'
+import { getStorage } from './store'
 
 const LEGACY_QUEST_PLUGIN_ID = 'poi-plugin-quest-info'
 const HACK_KEY = `__patched-from-${PACKAGE_NAME}`
@@ -27,17 +22,13 @@ const isLegacyQuestPluginEnabled = async () => {
 }
 
 const getQuestState = (maybeLanguage: string) => {
-  const supported = isSupportedLanguages(maybeLanguage)
-  if (!supported) {
+  const dataSource = getStorage()?.dataSource
+  const sourceData = QUEST_DATA.find((i) => i.key === dataSource)
+  const defaultData = QUEST_DATA.find((i) => i.lang === maybeLanguage)
+  const data = (sourceData ?? defaultData)?.res
+  if (!data) {
     return {}
   }
-  const preferKcwikiData = getStorage()?.preferKcwikiData ?? true
-  const kcwikiSupported = checkIsKcwikiSupportedLanguages(maybeLanguage)
-
-  const data =
-    preferKcwikiData && kcwikiSupported
-      ? KcwikiQuestData[maybeLanguage]
-      : QuestData[maybeLanguage]
 
   return Object.fromEntries(
     Object.entries(data).map(([apiNo, d]) => {
