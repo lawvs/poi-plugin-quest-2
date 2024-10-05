@@ -1,7 +1,7 @@
 import {
   AnchorButton,
   Button,
-  Checkbox,
+  HTMLSelect,
   Intent,
   Text,
   TextArea,
@@ -10,30 +10,22 @@ import { IconNames } from '@blueprintjs/icons'
 import type { ChangeEvent } from 'react'
 import React, { StrictMode, useCallback, useState } from 'react'
 import styled from 'styled-components'
+import { QUEST_DATA } from '../build'
 import { version as DATA_VERSION } from '../build/kcanotifyGamedata'
 import PKG from '../package.json'
 import { IN_POI } from './poi/env'
 import { usePluginTranslation, useStateExporter } from './poi/hooks'
 import { tips } from './poi/utils'
-import {
-  StoreProvider,
-  useLanguage,
-  usePreferKcwiki,
-  useRemoveStorage,
-} from './store'
+import { StoreProvider, useDataSource, useRemoveStorage } from './store'
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   user-select: text;
-
-  & > * + * {
-    margin-top: 8px;
-  }
+  gap: 8px;
+  padding: 8px;
 `
-
-const useIsSimplifiedChinese = () => useLanguage() === 'zh-CN'
 
 const DataExportArea = () => {
   const [text, setText] = useState<string>('')
@@ -83,23 +75,49 @@ const DataExportArea = () => {
   )
 }
 
-const SettingsMain = () => {
+const Group = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+`
+
+export const SettingsMain = () => {
   const { t } = usePluginTranslation()
-  const isSimplifiedChinese = useIsSimplifiedChinese()
   const removeStorage = useRemoveStorage()
-  const [preferKcwiki, setPreferKcwiki] = usePreferKcwiki()
-  const handleEnabledChange: React.FormEventHandler<HTMLInputElement> =
-    useCallback(() => {
-      setPreferKcwiki(!preferKcwiki)
-    }, [preferKcwiki, setPreferKcwiki])
+  const { dataSource, setDataSource } = useDataSource()
+
+  const handleChangeQuestSource = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      const value = e.target.value
+      if (!value) {
+        setDataSource(null)
+        return
+      }
+      setDataSource(value as any)
+    },
+    [setDataSource],
+  )
 
   return (
-    <>
-      <Checkbox
-        checked={preferKcwiki}
-        disabled={!isSimplifiedChinese}
-        label={t('Use Kcwiki data')}
-        onChange={handleEnabledChange}
+    <Container>
+      <Group>
+        <Text>{t('Data Source')}</Text>
+        <HTMLSelect value={dataSource} onChange={handleChangeQuestSource}>
+          <option value="">{t('Auto detect')}</option>
+          {QUEST_DATA.map((source) => (
+            <option key={source.key} value={source.key}>
+              {source.name} ({Object.keys(source.res).length})
+            </option>
+          ))}
+        </HTMLSelect>
+      </Group>
+
+      <Button
+        intent={Intent.WARNING}
+        icon={IconNames.TRASH}
+        text={t('Restore defaults')}
+        onClick={removeStorage}
       />
 
       <Text>{t('Version', { version: PKG.version })}</Text>
@@ -111,24 +129,15 @@ const SettingsMain = () => {
         href={PKG.homepage}
         target="_blank"
       />
-
-      <Button
-        icon={IconNames.TRASH}
-        text={t('Restore defaults')}
-        onClick={removeStorage}
-      />
-
       <DataExportArea />
-    </>
+    </Container>
   )
 }
 
 export const Settings = () => (
   <StrictMode>
     <StoreProvider>
-      <Container>
-        <SettingsMain />
-      </Container>
+      <SettingsMain />
     </StoreProvider>
   </StrictMode>
 )
