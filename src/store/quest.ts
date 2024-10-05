@@ -1,47 +1,47 @@
+import { QUEST_DATA } from '../../build'
 import { usePluginTranslation } from '../poi/hooks'
 import {
   DocQuest,
-  getKcanotifyQuestData,
   getQuestIdByCode,
   QUEST_STATUS,
   UnionQuest,
 } from '../questHelper'
 import { useGlobalGameQuest, useGlobalQuestStatusQuery } from './gameQuest'
-import { checkIsKcwikiSupportedLanguages, useKcwikiData } from './kcwiki'
+import { DataSource, useStore } from './store'
 
-const DEFAULT_LANG = 'ja-JP'
-
-const checkIsKcanotifySupportedLanguages = (
-  lang: string,
-): lang is keyof typeof kcaQuestData => {
-  const kcaQuestData = getKcanotifyQuestData()
-  return lang in kcaQuestData
-}
-
-export const isSupportedLanguages = (
-  lang: string,
-): lang is keyof ReturnType<typeof getKcanotifyQuestData> =>
-  checkIsKcanotifySupportedLanguages(lang) ||
-  checkIsKcwikiSupportedLanguages(lang)
-
-export const useLanguage = () => {
+const useLanguage = () => {
   const {
     i18n: { language },
   } = usePluginTranslation()
-  const lang = checkIsKcanotifySupportedLanguages(language)
-    ? language
-    : DEFAULT_LANG
-  return lang
+  return language
+}
+
+export const useDataSource = () => {
+  const {
+    store: { dataSource },
+    updateStore,
+  } = useStore()
+  const lang = useLanguage()
+  const setDataSource = (val: DataSource | null) =>
+    updateStore({ dataSource: val })
+  const isValid =
+    dataSource && Object.values(QUEST_DATA).find((i) => i.key === dataSource)
+  const normalizedDataSource = isValid
+    ? dataSource
+    : (QUEST_DATA.find((i) => i.lang === lang)?.key ?? QUEST_DATA[0].key)
+  return { dataSource: normalizedDataSource, setDataSource }
 }
 
 const useQuestMap = (): Record<string, DocQuest> => {
-  const lang = useLanguage()
-  const kcwikiData = useKcwikiData(lang)
-  if (kcwikiData) {
-    return kcwikiData
+  const { dataSource } = useDataSource()
+  if (!QUEST_DATA.length) {
+    throw new Error('QUEST_DATA is empty')
   }
-  const kcaQuestData = getKcanotifyQuestData()
-  return kcaQuestData[lang]
+  const data = QUEST_DATA.find((i) => i.key === dataSource)
+  if (!data) {
+    return QUEST_DATA[0].res
+  }
+  return data.res
 }
 
 export const useQuest = (): UnionQuest[] => {

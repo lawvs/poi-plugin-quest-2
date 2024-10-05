@@ -1,4 +1,4 @@
-import { KcwikiQuestData, version } from '../../build/kcQuestsData'
+import { kcwikiGameData, version } from '../../build/kcQuestsData'
 import newQuestData from '../../build/kcQuestsData/quests-scn-new.json'
 
 describe('should version correct', () => {
@@ -7,19 +7,11 @@ describe('should version correct', () => {
       `"333973e854c8d53d9adaf85ed9175ce647d58c7f"`,
     )
   })
-
-  test('should KcwikiQuestData Game data keys correct', () => {
-    expect(Object.keys(KcwikiQuestData)).toMatchInlineSnapshot(`
-     [
-       "zh-CN",
-     ]
-    `)
-  })
 })
 
 describe('should format correct', () => {
   test('key format', () => {
-    Object.keys(KcwikiQuestData['zh-CN']).forEach((key) => {
+    Object.keys(kcwikiGameData.res).forEach((key) => {
       // gameId should not extra space
       expect(key).toEqual(key.trim())
       // gameId should be number

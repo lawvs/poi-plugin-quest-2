@@ -7,6 +7,7 @@ import React, {
   useState,
 } from 'react'
 import { useMount, useUpdateEffect } from 'react-use'
+import { QUEST_DATA } from '../../build'
 import { PACKAGE_NAME } from '../poi/env'
 import { yes } from '../utils'
 import { GameQuestProvider } from './gameQuest'
@@ -25,6 +26,9 @@ export enum PROGRESS_TAG {
   AlreadyCompleted = 'AlreadyCompleted',
 }
 
+type Unpacked<T> = T extends (infer U)[] ? U : T
+export type DataSource = Unpacked<typeof QUEST_DATA>['key']
+
 export const initialState = {
   searchInput: '',
   typeTags: {
@@ -39,6 +43,7 @@ export const initialState = {
    * @deprecated
    */
   preferKcwikiData: true,
+  dataSource: null as DataSource | null,
 }
 
 export type State = typeof initialState

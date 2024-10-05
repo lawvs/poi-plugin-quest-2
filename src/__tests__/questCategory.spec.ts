@@ -1,6 +1,6 @@
+import { kcwikiGameData } from '../../build/kcQuestsData'
+import { kcanotifyGameData } from '../../build/kcanotifyGamedata'
 import questCategory from '../../build/questCategory.json'
-import { KcwikiQuestData } from '../../build/kcQuestsData'
-import { QuestData as KcaQuestData } from '../../build/kcanotifyGamedata'
 
 describe('should questCategory correct', () => {
   test('length', () => {
@@ -14,8 +14,8 @@ describe('should questCategory correct', () => {
 
   test('snapshot', () => {
     const mergeData = {
-      ...KcaQuestData['zh-CN'],
-      ...KcwikiQuestData['zh-CN'],
+      ...kcanotifyGameData[0].res,
+      ...kcwikiGameData.res,
     }
     const humanReadableData = Object.fromEntries(
       Object.entries(questCategory).map(([key, val]) => [

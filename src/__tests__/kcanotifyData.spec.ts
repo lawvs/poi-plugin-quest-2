@@ -1,25 +1,13 @@
-import { version, QuestData } from '../../build/kcanotifyGamedata'
+import { kcanotifyGameData, version } from '../../build/kcanotifyGamedata'
 
 test('should Kcanotify Game data version correct', () => {
   expect(version).toMatchInlineSnapshot(`"2024092801"`)
 })
 
-test('should Kcanotify Game data keys correct', () => {
-  expect(Object.keys(QuestData)).toMatchInlineSnapshot(`
-   [
-     "zh-CN",
-     "zh-TW",
-     "ja-JP",
-     "en-US",
-     "ko-KR",
-   ]
-  `)
-})
-
 describe('should format correct', () => {
-  Object.keys(QuestData).forEach((lang) => {
-    test(`${lang} key format`, () => {
-      Object.keys(QuestData[lang as keyof typeof QuestData]).forEach((key) => {
+  kcanotifyGameData.forEach((data) => {
+    test(`${data.key} key format`, () => {
+      Object.keys(data.res).forEach((key) => {
         // gameId should not extra space
         expect(key.trim()).toEqual(key)
         // gameId should be number
