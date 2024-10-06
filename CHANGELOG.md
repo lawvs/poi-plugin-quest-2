@@ -1,5 +1,15 @@
 # poi-plugin-quest-info-2
 
+## 0.14.0
+
+### Minor Changes
+
+- [#161](https://github.com/lawvs/poi-plugin-quest-2/pull/161) [`e3fcef0`](https://github.com/lawvs/poi-plugin-quest-2/commit/e3fcef0887ac122af365e456f62a91020b5e2086) Thanks [@lawvs](https://github.com/lawvs)! - Support for switching data sources
+
+### Patch Changes
+
+- [#158](https://github.com/lawvs/poi-plugin-quest-2/pull/158) [`2f5cc37`](https://github.com/lawvs/poi-plugin-quest-2/commit/2f5cc37255e9648400504dbf02bf8d209128207d) Thanks [@github-actions](https://github.com/apps/github-actions)! - Update quest data
+
 ## 0.13.3
 
 ### Patch Changes
