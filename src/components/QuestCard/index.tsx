@@ -3,11 +3,9 @@ import {
   Card,
   Elevation,
   H5,
-  Icon,
   Menu,
-  MenuDivider,
   MenuItem,
-  Popover,
+  Popover
 } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import React, { ComponentPropsWithoutRef, forwardRef } from 'react'
@@ -175,15 +173,6 @@ export const MoreOptions = forwardRef<
         text={t('Search in Richelieu Manager')}
         tagName="a"
         href={`https://richelieu-manager.net/quest/${code}`}
-        target="_blank"
-      />
-      <MenuDivider />
-      <MenuItem
-        icon={IconNames.Heart}
-        labelElement={<Icon icon="share" />}
-        text={t('Star project, support the author')}
-        tagName="a"
-        href={`https://github.com/lawvs/poi-plugin-quest-2`}
         target="_blank"
       />
     </Menu>

@@ -120,16 +120,24 @@ export const SettingsMain = () => {
         onClick={removeStorage}
       />
 
-      <Text>{t('Version', { version: PKG.version })}</Text>
-      <Text>{t('Data Version', { version: DATA_VERSION })}</Text>
       <AnchorButton
-        icon={IconNames.CODE}
+        icon={IconNames.Bug}
         rightIcon={IconNames.SHARE}
-        text={t('View source code on GitHub')}
+        text={t('Report issue')}
+        href={PKG.bugs.url}
+        target="_blank"
+      />
+      <AnchorButton
+        icon={IconNames.Heart}
+        rightIcon={IconNames.SHARE}
+        text={t('Star project, support the author')}
         href={PKG.homepage}
         target="_blank"
       />
       <DataExportArea />
+
+      <Text>{t('Version', { version: PKG.version })}</Text>
+      <Text>{t('Data Version', { version: DATA_VERSION })}</Text>
     </Container>
   )
 }
