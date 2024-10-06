@@ -5,7 +5,7 @@ import {
   H5,
   Menu,
   MenuItem,
-  Popover
+  Popover,
 } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import React, { ComponentPropsWithoutRef, forwardRef } from 'react'
