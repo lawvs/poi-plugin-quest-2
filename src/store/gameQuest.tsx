@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import React, { createContext, useContext } from 'react'
 import { useGameQuest } from '../poi/hooks'
-import { GameQuest } from '../poi/types'
+import type { GameQuest } from '../poi/types'
 import {
   QUEST_STATUS,
   getCompletedQuest,

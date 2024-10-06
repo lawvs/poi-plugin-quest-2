@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useUpdateEffect } from 'react-use'
 import { useGameTab } from '../poi/hooks'
 import { QuestTab } from '../poi/types'
-import { CATEGORY_TAGS, TYPE_TAGS } from '../tags'
+import type { CATEGORY_TAGS, TYPE_TAGS } from '../tags'
 import { ALL_CATEGORY_TAG, ALL_TYPE_TAG, PROGRESS_TAG, useStore } from './store'
 
 export const useFilterTags = () => {

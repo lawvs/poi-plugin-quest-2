@@ -2,7 +2,7 @@ import { Tag } from '@blueprintjs/core'
 import React from 'react'
 import styled from 'styled-components'
 import { usePluginTranslation } from './poi/hooks'
-import { GameQuest } from './poi/types'
+import type { GameQuest } from './poi/types'
 import type { UnionQuest } from './questHelper'
 import {
   hasNewQuest,

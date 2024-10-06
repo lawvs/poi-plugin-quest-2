@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react'
 import { useMount, useUpdateEffect } from 'react-use'
-import { QUEST_DATA } from '../../build'
+import type { QUEST_DATA } from '../../build'
 import { PACKAGE_NAME } from '../poi/env'
 import { yes } from '../utils'
 import { GameQuestProvider } from './gameQuest'
