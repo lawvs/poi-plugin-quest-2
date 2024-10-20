@@ -3,6 +3,7 @@
 exports[`questHelper should 101 locked quests match snapshot 1`] = `
 {
   "1001": true,
+  "1002": true,
   "1003": true,
   "1005": true,
   "1006": true,
@@ -13,6 +14,7 @@ exports[`questHelper should 101 locked quests match snapshot 1`] = `
   "1014": true,
   "1015": true,
   "102": true,
+  "1021": true,
   "103": true,
   "104": true,
   "105": true,
@@ -231,6 +233,7 @@ exports[`questHelper should 101 locked quests match snapshot 1`] = `
   "368": true,
   "371": true,
   "372": true,
+  "377": true,
   "401": true,
   "402": true,
   "403": true,
