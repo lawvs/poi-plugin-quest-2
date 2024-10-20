@@ -508,6 +508,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "“第三战队” 第二小队，演习开始！",
     },
     {
+      "code": "Cy16",
+      "gameId": 377,
+      "name": "「第二驱逐队（后期编成）」，能力提升！",
+    },
+    {
       "code": "Dy1",
       "gameId": 434,
       "name": "特设护卫船团司令部，开始活动！",
