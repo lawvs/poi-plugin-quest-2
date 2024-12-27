@@ -22,18 +22,11 @@ export const prepareDir = (dir: PathLike) => {
  * ```
  */
 export const parseQuestCode = (str: string) => {
-  if (str.length === 0) {
-    throw new Error('Empty quest code')
-  }
-
+  if (str.length === 0) return
   const number = +(str.match(/\d+$/)?.[0] ?? '')
-  if (!number || isNaN(number)) {
-    throw new Error('Invalid quest code')
-  }
+  if (!number || isNaN(number)) return
   const type = str.slice(0, -String(number).length)
-  if (type.length === 0) {
-    throw new Error('Invalid quest code')
-  }
+  if (type.length === 0) return
 
   return { type, number }
 }

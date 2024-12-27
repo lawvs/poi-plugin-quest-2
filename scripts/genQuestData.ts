@@ -14,7 +14,14 @@ const kcwikiQuestCodeFilter = (
   predicate: (parsedCode: { type: string; number: number }) => boolean,
 ) =>
   Object.entries(kcwikiGameData.res)
-    .filter(([, quest]) => predicate(parseQuestCode(quest.code)))
+    .filter(([, quest]) => {
+      const questCode = parseQuestCode(quest.code)
+      if (!questCode) {
+        console.warn('Invalid quest code in kcwikiGameData:', quest.code, quest)
+        return false
+      }
+      return predicate(questCode)
+    })
     .map(([gameId]) => +gameId)
 
 const mergeDataSelector = () =>
