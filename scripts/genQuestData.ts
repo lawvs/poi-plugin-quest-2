@@ -75,6 +75,10 @@ const genQuestCategory = async () => {
 const genQuestMap = async () => {
   const data = Object.entries(kcwikiGameData.res).reduce(
     (acc, [gameId, { code }]) => {
+      if (!code) {
+        console.warn(`Missing quest code: ${gameId}`)
+        return acc
+      }
       if (code in acc) {
         console.warn(`Duplicate quest code: ${code}`, acc[code], gameId)
         process.exitCode = 1
