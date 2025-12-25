@@ -97,5 +97,5 @@
     "priority": 2,
     "apiVer": {}
   },
-  "packageManager": "npm@10.7.0"
+  "packageManager": "npm@11.6.0"
 }
