@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.14.37
+
+### Patch Changes
+
+- [#262](https://github.com/lawvs/poi-plugin-quest-2/pull/262) [`e79c0a7`](https://github.com/lawvs/poi-plugin-quest-2/commit/e79c0a7203e2f18a20ac3c04d32ff231f962a2a0) Thanks [@github-actions](https://github.com/apps/github-actions)! - Update quest data
+
 ## 0.14.36
 
 ### Patch Changes
