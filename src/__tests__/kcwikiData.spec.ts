@@ -4,7 +4,7 @@ import newQuestData from '../../build/kcQuestsData/quests-scn-new.json'
 describe('should version correct', () => {
   test('should KcwikiQuestData Game data version correct', () => {
     expect(version).toMatchInlineSnapshot(
-      `"419b705cade0359df01b2d1ad2420f1b6860b0c7"`,
+      `"66f195a510a49a244b7ae1c3df0089826719a06c"`,
     )
   })
 })
