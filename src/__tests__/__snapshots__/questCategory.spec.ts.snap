@@ -54,11 +54,6 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "在「演习」战胜其他提督！",
     },
     {
-      "code": "2601Cd1",
-      "gameId": 329,
-      "name": "【节分任务：枡】节分演习！二〇二六",
-    },
-    {
       "code": "Dd1",
       "gameId": 402,
       "name": "「远征」3 次成功！",
@@ -434,26 +429,6 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Gw1",
       "gameId": 703,
       "name": "推进「近代化改修」、整顿战备！",
-    },
-    {
-      "code": "2601Bw1",
-      "gameId": 840,
-      "name": "【节分任务：豆】节分作战二〇二六",
-    },
-    {
-      "code": "2601Bw2",
-      "gameId": 841,
-      "name": "【节分任务：鬼】南西方面节分作战二〇二六",
-    },
-    {
-      "code": "2601Bw3",
-      "gameId": 843,
-      "name": "【节分任务：柊】节分扩张作战二〇二六、重巡出击！",
-    },
-    {
-      "code": "2601Bw4",
-      "gameId": 844,
-      "name": "【节分任务：最终扩张作战】节分二〇二六 战果扩大！",
     },
   ],
   "yearlyQuest": [
