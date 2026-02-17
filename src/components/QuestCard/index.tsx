@@ -1,14 +1,6 @@
-import {
-  Button,
-  Card,
-  Elevation,
-  H5,
-  Menu,
-  MenuItem,
-  Popover,
-} from '@blueprintjs/core'
+import { Elevation, H5, Menu, MenuItem, Popover } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import React, { ComponentPropsWithoutRef, forwardRef } from 'react'
+import React, { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 // https://github.com/bvaughn/react-highlight-words
 import Highlighter from 'react-highlight-words'
 import { usePluginTranslation } from '../../poi/hooks'
@@ -76,7 +68,7 @@ const CardAction = ({ gameId }: { gameId: number }) => {
 }
 
 export const QuestCard = forwardRef<
-  Card,
+  ElementRef<typeof FlexCard>,
   QuestCardProps & ComponentPropsWithoutRef<typeof FlexCard>
 >(({ gameId, code, name, desc, tip, tip2, ...props }, ref) => {
   const status = useQuestStatus(gameId)
@@ -140,7 +132,7 @@ export const QuestCard = forwardRef<
 })
 
 export const MoreOptions = forwardRef<
-  Button,
+  ElementRef<typeof MoreButton>,
   Pick<QuestCardProps, 'code' | 'gameId' | 'name'>
 >(({ code }, ref) => {
   const { t } = usePluginTranslation()

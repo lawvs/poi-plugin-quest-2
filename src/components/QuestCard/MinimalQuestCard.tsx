@@ -1,5 +1,5 @@
-import { Card, Elevation, Text, Tooltip } from '@blueprintjs/core'
-import React, { ComponentPropsWithoutRef, forwardRef } from 'react'
+import { Elevation, Text, Tooltip } from '@blueprintjs/core'
+import React, { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 import { guessQuestCategory, QUEST_STATUS } from '../../questHelper'
 import type { QuestCardProps } from './index'
 import { CardBody, CardTail, CatIndicator, FlexCard } from './styles'
@@ -9,7 +9,7 @@ import { questStatusMap } from './utils'
  * @deprecated
  */
 export const MinimalQuestCard = forwardRef<
-  Card,
+  ElementRef<typeof FlexCard>,
   QuestCardProps & ComponentPropsWithoutRef<typeof FlexCard>
 >(({ code, name, desc, tip, status = QUEST_STATUS.DEFAULT, ...props }, ref) => {
   const indicatorColor = guessQuestCategory(code).color

@@ -29,7 +29,7 @@ const POI_THEMES = {
   'Poi dark': {
     background: 'rgb(47, 52, 60)',
     container: ({ children }) => (
-      <PoiPluginContainer className="bp4-dark">
+      <PoiPluginContainer className="bp5-dark">
         <PoiPluginCard>{children}</PoiPluginCard>
       </PoiPluginContainer>
     ),

@@ -48,7 +48,7 @@ export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
     }
   }, [activeTab])
 
-  const setRowHeight = useCallback((index, size) => {
+  const setRowHeight = useCallback((index: number, size: number) => {
     if (rowHeights.current[index] === size) {
       return
     }
@@ -56,7 +56,7 @@ export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
     listRef.current?.resetAfterIndex(index)
   }, [])
 
-  const getRowHeight = useCallback((index) => {
+  const getRowHeight = useCallback((index: number) => {
     return rowHeights.current[index] + 8 || 200
   }, [])
 
