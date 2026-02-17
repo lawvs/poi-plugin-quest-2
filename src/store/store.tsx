@@ -44,6 +44,7 @@ export const initialState = {
    */
   preferKcwikiData: true,
   dataSource: null as DataSource | null,
+  advancedSearchMode: false,
 }
 
 export type State = typeof initialState

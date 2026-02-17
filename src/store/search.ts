@@ -38,6 +38,18 @@ export const useSearchInput = () => {
   }
 }
 
+export const useSearchMode = () => {
+  const {
+    store: { advancedSearchMode },
+    updateStore,
+  } = useStore()
+  const setAdvancedSearchMode = useCallback(
+    (val: boolean) => updateStore({ advancedSearchMode: val }),
+    [updateStore],
+  )
+  return { advancedSearchMode, setAdvancedSearchMode }
+}
+
 export const useStableSearchWords = () => {
   const { searchInput } = useSearchInput()
   const throttledSearchInput = useThrottle(searchInput)

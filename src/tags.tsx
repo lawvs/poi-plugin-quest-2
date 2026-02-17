@@ -48,7 +48,7 @@ export const CATEGORY_TAGS = [
   { name: 'Sortie', filter: withDocQuest(isSortieQuest) },
   { name: 'Exercise', filter: withDocQuest(isExerciseQuest) },
   { name: 'Expedition', filter: withDocQuest(isExpeditionQuest) },
-  { name: 'Supply / Docking', filter: withDocQuest(isSupplyOrDockingQuest) },
+  { name: 'SupplyOrDocking', filter: withDocQuest(isSupplyOrDockingQuest) },
   { name: 'Arsenal', filter: withDocQuest(isArsenalQuest) },
   { name: 'Modernization', filter: withDocQuest(isModernizationQuest) },
   { name: 'Others', filter: withDocQuest(isUnknownCategoryQuest) },

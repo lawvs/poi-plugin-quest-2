@@ -3,6 +3,10 @@ import { IconNames } from '@blueprintjs/icons'
 import type { ChangeEvent } from 'react'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
+import {
+  AdvancedFilterBuilder,
+  useAdvancedFilterPredicate,
+} from './filter-sphere'
 import { usePluginTranslation } from './poi/hooks'
 import { QUEST_STATUS, UnionQuest } from './questHelper'
 import { SettingsMain } from './Settings'
@@ -13,7 +17,11 @@ import {
   useSyncGameTagEffect,
 } from './store/filterTags'
 import { useGlobalQuestStatusQuery } from './store/gameQuest'
-import { useSearchInput, useStableSearchWords } from './store/search'
+import {
+  useSearchInput,
+  useSearchMode,
+  useStableSearchWords,
+} from './store/search'
 import { CATEGORY_TAGS, CategoryTags, TYPE_TAGS, TypeTags } from './tags'
 import { And, Or } from './utils'
 
@@ -71,17 +79,37 @@ export const Toolbar = () => {
   // TODO remove
   useSyncGameTagEffect()
 
+  const { t } = usePluginTranslation()
+  const { advancedSearchMode, setAdvancedSearchMode } = useSearchMode()
+  const handleToggleSearchMode = useCallback(
+    () => setAdvancedSearchMode(!advancedSearchMode),
+    [advancedSearchMode, setAdvancedSearchMode],
+  )
+
   return (
     <ToolbarWrapper>
       <Wrapper>
-        <SearchInput />
+        {!advancedSearchMode && <SearchInput />}
+        {advancedSearchMode && <div />}
+        <Button
+          icon={IconNames.SERIES_FILTERED}
+          active={advancedSearchMode}
+          onClick={handleToggleSearchMode}
+          title={t('Advanced Search')}
+        />
         <Popover content={<SettingsPopover />} placement="bottom">
           <Button icon={IconNames.Settings} />
         </Popover>
       </Wrapper>
 
-      <CategoryTags />
-      <TypeTags />
+      {advancedSearchMode ? (
+        <AdvancedFilterBuilder />
+      ) : (
+        <>
+          <CategoryTags />
+          <TypeTags />
+        </>
+      )}
     </ToolbarWrapper>
   )
 }
@@ -162,6 +190,13 @@ const useToolbarFilter = (): ((quest: UnionQuest) => boolean) => {
 }
 
 export const useFilterQuest = () => {
+  const { advancedSearchMode } = useSearchMode()
   const toolbarFilter = useToolbarFilter()
-  return useQuest().filter(toolbarFilter)
+  const advancedPredicate = useAdvancedFilterPredicate()
+  const quests = useQuest()
+
+  if (advancedSearchMode) {
+    return quests.filter(advancedPredicate)
+  }
+  return quests.filter(toolbarFilter)
 }
