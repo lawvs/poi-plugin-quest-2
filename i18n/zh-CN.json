@@ -7,7 +7,7 @@
   "Sortie": "出击",
   "Exercise": "演习",
   "Expedition": "远征",
-  "Supply / Docking": "补给 / 入渠",
+  "SupplyOrDocking": "补给 / 入渠",
   "Arsenal": "工厂",
   "Modernization": "改装",
   "Others": "其他",
@@ -40,5 +40,13 @@
   "Data Source": "数据源",
   "Auto detect": "自动检测",
   "Report issue": "报告问题",
+  "Advanced Search": "高级搜索",
+  "Code": "编号",
+  "Name": "名称",
+  "Description": "描述",
+  "Rewards": "奖励",
+  "Details": "详情",
+  "Category": "分类",
+  "Frequency": "频率",
   "": ""
 }

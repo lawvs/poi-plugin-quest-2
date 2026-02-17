@@ -7,7 +7,7 @@
   "Sortie": "出撃",
   "Exercise": "演習",
   "Expedition": "遠征",
-  "Supply / Docking": "補給 / 入渠",
+  "SupplyOrDocking": "補給 / 入渠",
   "Arsenal": "工廠",
   "Modernization": "改装",
   "Others": "その他",
@@ -40,5 +40,13 @@
   "Data Source": "データソース",
   "Auto detect": "自動検出",
   "Report issue": "問題を報告する",
+  "Advanced Search": "高度な検索",
+  "Code": "コード",
+  "Name": "名前",
+  "Description": "説明",
+  "Rewards": "報酬",
+  "Details": "詳細",
+  "Category": "カテゴリ",
+  "Frequency": "頻度",
   "": ""
 }

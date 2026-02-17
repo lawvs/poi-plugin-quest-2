@@ -7,7 +7,7 @@
   "Sortie": "出擊",
   "Exercise": "演習",
   "Expedition": "遠征",
-  "Supply / Docking": "補給 / 入渠",
+  "SupplyOrDocking": "補給 / 入渠",
   "Arsenal": "工廠",
   "Modernization": "改装",
   "Others": "其他",
@@ -40,5 +40,13 @@
   "Data Source": "資料來源",
   "Auto detect": "自動偵測",
   "Report issue": "報告問題",
+  "Advanced Search": "進階搜尋",
+  "Code": "編號",
+  "Name": "名稱",
+  "Description": "描述",
+  "Rewards": "獎勵",
+  "Details": "詳情",
+  "Category": "分類",
+  "Frequency": "頻率",
   "": ""
 }
