@@ -1,7 +1,7 @@
-import { Button, Tag } from '@blueprintjs/core'
+import { Button, InputGroup, Popover, Tag } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { countNumberOfRules } from '@fn-sphere/filter'
-import React, { useCallback } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { usePluginTranslation } from '../poi/hooks'
 import { toast } from '../poi/utils'
@@ -14,6 +14,87 @@ const PresetsWrapper = styled.div`
   align-items: center;
   gap: 4px;
 `
+
+const PopoverContent = styled.div`
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+`
+
+const SavePresetButton = ({ onSave }: { onSave: (name: string) => void }) => {
+  const { t } = usePluginTranslation()
+  const [isOpen, setIsOpen] = useState(false)
+  const [name, setName] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleConfirm = useCallback(() => {
+    const trimmed = name.trim()
+    if (!trimmed) return
+    onSave(trimmed)
+    setIsOpen(false)
+    setName('')
+  }, [name, onSave])
+
+  return (
+    <Popover
+      isOpen={isOpen}
+      onClose={() => setIsOpen(false)}
+      onOpened={() => inputRef.current?.focus()}
+      placement="bottom"
+      content={
+        <PopoverContent>
+          <InputGroup
+            inputRef={inputRef}
+            size="small"
+            placeholder={t('Preset name')}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => {
+              if (
+                e.key === 'Enter' &&
+                !e.shiftKey &&
+                !e.nativeEvent.isComposing
+              )
+                handleConfirm()
+            }}
+          />
+          <Button
+            size="small"
+            intent="primary"
+            icon={IconNames.TICK}
+            onClick={handleConfirm}
+          />
+        </PopoverContent>
+      }
+    >
+      <Button
+        size="small"
+        variant="minimal"
+        icon={IconNames.FLOPPY_DISK}
+        onClick={() => {
+          setName('')
+          setIsOpen(true)
+        }}
+      >
+        {t('Save Preset')}
+      </Button>
+    </Popover>
+  )
+}
+
+const UpdatePresetButton = ({ onUpdate }: { onUpdate: () => void }) => {
+  const { t } = usePluginTranslation()
+  return (
+    <Button
+      size="small"
+      variant="minimal"
+      icon={IconNames.FLOPPY_DISK}
+      onClick={onUpdate}
+    >
+      {t('Update Preset')}
+    </Button>
+  )
+}
 
 export const PresetCollection = () => {
   const { t } = usePluginTranslation()
@@ -28,16 +109,18 @@ export const PresetCollection = () => {
     clearActivePreset,
   } = useFilterPresets()
 
-  const handleSave = useCallback(() => {
-    if (activePresetId) {
-      updatePreset(activePresetId, filterRule)
-      toast(t('Preset updated'))
-      return
-    }
-    const name = prompt(t('Preset name'))
-    if (!name?.trim()) return
-    savePreset(name, filterRule)
-  }, [t, filterRule, activePresetId, savePreset, updatePreset])
+  const handleSaveNew = useCallback(
+    (name: string) => {
+      savePreset(name, filterRule)
+    },
+    [filterRule, savePreset],
+  )
+
+  const handleUpdate = useCallback(() => {
+    if (!activePresetId) return
+    updatePreset(activePresetId, filterRule)
+    toast(t('Preset updated'))
+  }, [activePresetId, filterRule, updatePreset, t])
 
   const handleSwitch = useCallback(
     (id: string) => {
@@ -73,14 +156,11 @@ export const PresetCollection = () => {
             ` (${countNumberOfRules(preset.rule)})`}
         </Tag>
       ))}
-      <Button
-        size="small"
-        variant="minimal"
-        icon={IconNames.FLOPPY_DISK}
-        onClick={handleSave}
-      >
-        {activePresetId ? t('Update Preset') : t('Save Preset')}
-      </Button>
+      {activePresetId ? (
+        <UpdatePresetButton onUpdate={handleUpdate} />
+      ) : (
+        <SavePresetButton onSave={handleSaveNew} />
+      )}
       {activePresetId && (
         <Button
           size="small"
