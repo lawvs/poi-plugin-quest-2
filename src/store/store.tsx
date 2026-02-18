@@ -7,6 +7,7 @@ import React, {
   useState,
 } from 'react'
 import { useMount, useUpdateEffect } from 'react-use'
+import type { FilterGroup } from '@fn-sphere/filter'
 import type { QUEST_DATA } from '../../build'
 import { PACKAGE_NAME } from '../poi/env'
 import { yes } from '../utils'
@@ -45,6 +46,13 @@ export const initialState = {
   preferKcwikiData: true,
   dataSource: null as DataSource | null,
   advancedSearchMode: false,
+  filterRule: null as FilterGroup | null,
+  filterPresets: [] as Array<{
+    id: string
+    name: string
+    rule: FilterGroup
+  }>,
+  activePresetId: null as string | null,
 }
 
 export type State = typeof initialState

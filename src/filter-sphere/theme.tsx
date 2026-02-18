@@ -1,6 +1,19 @@
-import { Button, HTMLSelect, InputGroup, MenuItem } from '@blueprintjs/core'
+import {
+  Button,
+  Card,
+  HTMLSelect,
+  InputGroup,
+  MenuItem,
+} from '@blueprintjs/core'
+import { IconNames } from '@blueprintjs/icons'
 import { MultiSelect } from '@blueprintjs/select'
-import { createFilterTheme, FilterTheme } from '@fn-sphere/filter'
+import {
+  createFilterTheme,
+  FilterTheme,
+  useFilterGroup,
+  useRootRule,
+  useView,
+} from '@fn-sphere/filter'
 import type { MultiSelectProps } from '@fn-sphere/filter/dist/views/components'
 import type { ChangeEvent } from 'react'
 import React, { useCallback, useMemo } from 'react'
@@ -76,9 +89,8 @@ export const blueprintTheme = createFilterTheme({
   components: {
     Button: (props) => (
       <Button
-        outlined={true}
-        small
-        minimal
+        size="small"
+        variant="outlined"
         {...(props as React.ComponentProps<typeof Button>)}
       />
     ),
@@ -91,7 +103,7 @@ export const blueprintTheme = createFilterTheme({
       )
       return (
         <InputGroup
-          small
+          size="small"
           {...(props as React.ComponentProps<typeof InputGroup>)}
           onChange={handleChange}
         />
@@ -124,5 +136,86 @@ export const blueprintTheme = createFilterTheme({
       )
     },
     MultipleSelect,
+  },
+  templates: {
+    FilterGroupContainer: ({ rule, children }) => {
+      const { getLocaleText } = useRootRule()
+      const {
+        ruleState: { isRoot, depth },
+        toggleGroupOp,
+        appendChildRule,
+        appendChildGroup,
+        removeGroup,
+      } = useFilterGroup(rule)
+      const { ErrorBoundary } = useView('components')
+
+      const text =
+        rule.op === 'or'
+          ? getLocaleText('operatorOr')
+          : getLocaleText('operatorAnd')
+
+      const handleToggleGroupOp = useCallback(() => {
+        toggleGroupOp()
+      }, [toggleGroupOp])
+
+      const handleAddCondition = useCallback(() => {
+        appendChildRule()
+      }, [appendChildRule])
+
+      const handleAddGroup = useCallback(() => {
+        appendChildGroup()
+      }, [appendChildGroup])
+
+      const handleDeleteGroup = useCallback(() => {
+        removeGroup()
+      }, [removeGroup])
+
+      return (
+        <ErrorBoundary
+          {...(!isRoot ? { onDelete: handleDeleteGroup } : undefined)}
+        >
+          <Card
+            interactive
+            compact
+            elevation={depth as 0 | 1 | 2}
+            style={{
+              display: 'flex',
+              alignItems: 'start',
+              flexDirection: 'column',
+              gap: 8,
+            }}
+          >
+            <Button icon={IconNames.Anchor} onClick={handleToggleGroupOp}>
+              {text}
+            </Button>
+            {children}
+            <div
+              className="filter-sphere-filter-group-container-actions"
+              style={{
+                display: 'flex',
+                gap: 8,
+              }}
+            >
+              <Button icon={IconNames.Add} onClick={handleAddCondition}>
+                {getLocaleText('addRule')}
+              </Button>
+              {depth < 3 && (
+                <Button icon={IconNames.FolderNew} onClick={handleAddGroup}>
+                  {getLocaleText('addGroup')}
+                </Button>
+              )}
+              {!isRoot && (
+                <Button
+                  icon="trash"
+                  intent="danger"
+                  aria-label={getLocaleText('deleteGroup')}
+                  onClick={handleDeleteGroup}
+                ></Button>
+              )}
+            </div>
+          </Card>
+        </ErrorBoundary>
+      )
+    },
   },
 })

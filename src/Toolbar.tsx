@@ -92,7 +92,7 @@ export const Toolbar = () => {
         {!advancedSearchMode && <SearchInput />}
         {advancedSearchMode && <div />}
         <Button
-          icon={IconNames.SERIES_FILTERED}
+          icon={IconNames.TH_FILTERED}
           active={advancedSearchMode}
           onClick={handleToggleSearchMode}
           title={t('Advanced Search')}
