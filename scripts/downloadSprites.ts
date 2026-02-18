@@ -29,7 +29,7 @@ const download = async (url: string, filename?: string) => {
   const filePath = path.resolve(OUTPUT_PATH, filename)
   const response = await fetch(url)
   const arrayBuffer = await response.arrayBuffer()
-  const buffer = Buffer.from(arrayBuffer)
+  const buffer = new Uint8Array(arrayBuffer)
   fs.writeFileSync(filePath, buffer)
   return { filePath, buffer }
 }
@@ -38,14 +38,14 @@ const checksumFile = (algorithm: string, path: fs.PathLike) => {
   return new Promise<string>((resolve, reject) => {
     const hash = crypto.createHash(algorithm)
     const stream = fs.createReadStream(path)
+    stream.pipe(hash)
     stream.on('error', (err) => reject(err))
-    stream.on('data', (chunk) => hash.update(chunk))
-    stream.on('end', () => resolve(hash.digest('hex')))
+    hash.on('finish', () => resolve(hash.digest('hex')))
   })
 }
 
 const cropAndSaveImage = (
-  img: Buffer,
+  img: Uint8Array,
   {
     name,
     format,
@@ -97,7 +97,7 @@ type KCS2Meta = {
   meta: any
 }
 
-const parseSprites = (sprites: Buffer, meta: KCS2Meta) => {
+const parseSprites = (sprites: Uint8Array, meta: KCS2Meta) => {
   const { frames } = meta
   for (const [name, { frame }] of Object.entries(frames)) {
     cropAndSaveImage(sprites, { ...frame, name, format: 'png' })
@@ -117,7 +117,7 @@ const main = async () => {
   console.log('File download complete')
   console.log(spritesFilename, 'MD5:', md5)
 
-  parseSprites(spritesBuffer, JSON.parse(metaBuffer.toString()))
+  parseSprites(spritesBuffer, JSON.parse(new TextDecoder().decode(metaBuffer)))
 }
 
 main()
