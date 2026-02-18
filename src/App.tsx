@@ -1,4 +1,4 @@
-import { Text } from '@blueprintjs/core'
+import { OverlaysProvider, Text } from '@blueprintjs/core'
 import React, { StrictMode } from 'react'
 import styled from 'styled-components'
 
@@ -41,11 +41,13 @@ const Main: React.FC = () => {
 export const App = () => (
   <StrictMode>
     <StoreProvider>
-      <AdvancedFilterProvider>
-        <Container>
-          <Main></Main>
-        </Container>
-      </AdvancedFilterProvider>
+      <OverlaysProvider>
+        <AdvancedFilterProvider>
+          <Container>
+            <Main></Main>
+          </Container>
+        </AdvancedFilterProvider>
+      </OverlaysProvider>
     </StoreProvider>
   </StrictMode>
 )
