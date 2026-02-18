@@ -58,6 +58,14 @@ export const useFilterPresets = () => {
     [filterPresets, activePresetId, updateStore],
   )
 
+  const renamePreset = useCallback(
+    (id: string, name: string) => {
+      const next = filterPresets.map((p) => (p.id === id ? { ...p, name } : p))
+      updateStore({ filterPresets: next })
+    },
+    [filterPresets, updateStore],
+  )
+
   const clearActivePreset = useCallback(() => {
     updateStore({ activePresetId: null })
   }, [updateStore])
@@ -67,6 +75,7 @@ export const useFilterPresets = () => {
     activePresetId,
     savePreset,
     updatePreset,
+    renamePreset,
     switchPreset,
     deletePreset,
     clearActivePreset,
