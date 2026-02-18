@@ -32,5 +32,10 @@
   "Details": "세부 사항",
   "Category": "분류",
   "Frequency": "빈도",
+  "Save Preset": "프리셋 저장",
+  "Update Preset": "프리셋 업데이트",
+  "Preset updated": "프리셋이 업데이트되었습니다",
+  "Clear": "초기화",
+  "Preset name": "프리셋 이름:",
   "": ""
 }
