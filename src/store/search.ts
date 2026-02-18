@@ -5,6 +5,7 @@ import { useStore } from './store'
 // Ported from https://hooks-guide.netlify.app/community/useThrottle
 const useThrottle = <T>(value: T, limit = 200) => {
   const [throttledValue, setThrottledValue] = useState(value)
+  // eslint-disable-next-line react-hooks/purity
   const lastRan = useRef(Date.now())
   useEffect(() => {
     const handler = setTimeout(
