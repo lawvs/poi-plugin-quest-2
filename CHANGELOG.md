@@ -1,5 +1,15 @@
 # poi-plugin-quest-info-2
 
+## 0.15.0
+
+### Minor Changes
+
+- [#280](https://github.com/lawvs/poi-plugin-quest-2/pull/280) [`d0f86f9`](https://github.com/lawvs/poi-plugin-quest-2/commit/d0f86f9626110b7378ca612077642799e237f681) Thanks [@lawvs](https://github.com/lawvs)! - Introduce advanced search capabilities with a new filter context and UI components.
+
+### Patch Changes
+
+- [`00c0cd6`](https://github.com/lawvs/poi-plugin-quest-2/commit/00c0cd66a0d2b2a5059d1f86b1cffe3131543f70) Thanks [@lawvs](https://github.com/lawvs)! - Update blueprintjs to v5
+
 ## 0.14.40
 
 ### Patch Changes
