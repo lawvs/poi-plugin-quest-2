@@ -5,6 +5,7 @@ import { useStore } from './store'
 // Ported from https://hooks-guide.netlify.app/community/useThrottle
 const useThrottle = <T>(value: T, limit = 200) => {
   const [throttledValue, setThrottledValue] = useState(value)
+  // eslint-disable-next-line react-hooks/purity
   const lastRan = useRef(Date.now())
   useEffect(() => {
     const handler = setTimeout(
@@ -36,6 +37,18 @@ export const useSearchInput = () => {
     searchInput,
     setSearchInput,
   }
+}
+
+export const useSearchMode = () => {
+  const {
+    store: { advancedSearchMode },
+    updateStore,
+  } = useStore()
+  const setAdvancedSearchMode = useCallback(
+    (val: boolean) => updateStore({ advancedSearchMode: val }),
+    [updateStore],
+  )
+  return { advancedSearchMode, setAdvancedSearchMode }
 }
 
 export const useStableSearchWords = () => {

@@ -1,9 +1,10 @@
-import { Text } from '@blueprintjs/core'
+import { OverlaysProvider, Text } from '@blueprintjs/core'
 import React, { StrictMode } from 'react'
 import styled from 'styled-components'
 
 import { Toolbar, useFilterQuest } from './Toolbar'
 import { QuestList } from './components/QuestList'
+import { AdvancedFilterProvider } from './filter-sphere'
 import { usePluginTranslation } from './poi/hooks'
 import { StoreProvider } from './store'
 
@@ -40,9 +41,13 @@ const Main: React.FC = () => {
 export const App = () => (
   <StrictMode>
     <StoreProvider>
-      <Container>
-        <Main></Main>
-      </Container>
+      <OverlaysProvider>
+        <AdvancedFilterProvider>
+          <Container>
+            <Main></Main>
+          </Container>
+        </AdvancedFilterProvider>
+      </OverlaysProvider>
     </StoreProvider>
   </StrictMode>
 )
