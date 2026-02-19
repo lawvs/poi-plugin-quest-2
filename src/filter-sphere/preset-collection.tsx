@@ -1,6 +1,7 @@
 import { Button, InputGroup, Popover, Tag } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import { countNumberOfRules, FilterGroup } from '@fn-sphere/filter'
+import { countNumberOfRules } from './vendor'
+import type { FilterGroup } from './vendor'
 import React, { cloneElement, useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { usePluginTranslation } from '../poi/hooks'

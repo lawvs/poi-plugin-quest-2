@@ -1,4 +1,4 @@
-import { FilterBuilder, FilterSphereProvider } from '@fn-sphere/filter'
+import { FilterBuilder, FilterSphereProvider } from './vendor'
 import React from 'react'
 import { useAdvancedFilterContext } from './context'
 import { PresetCollection } from './preset-collection'

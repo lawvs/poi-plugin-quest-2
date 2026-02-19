@@ -13,8 +13,8 @@ import {
   useFilterGroup,
   useRootRule,
   useView,
-} from '@fn-sphere/filter'
-import type { MultiSelectProps } from '@fn-sphere/filter/dist/views/components'
+} from './vendor'
+import type { MultiSelectProps } from './vendor'
 import type { ChangeEvent } from 'react'
 import React, { useCallback, useMemo } from 'react'
 

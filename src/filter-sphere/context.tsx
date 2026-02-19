@@ -1,5 +1,5 @@
-import type { FilterGroup, FilterSchemaContext } from '@fn-sphere/filter'
-import { defaultGetLocaleText, useFilterSphere } from '@fn-sphere/filter'
+import type { FilterGroup, FilterSchemaContext } from './vendor'
+import { defaultGetLocaleText, useFilterSphere } from './vendor'
 import React, {
   createContext,
   type ReactNode,

@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react'
 import { useMount, useUpdateEffect } from 'react-use'
-import type { FilterGroup } from '@fn-sphere/filter'
+import type { FilterGroup } from '../filter-sphere/vendor'
 import type { QUEST_DATA } from '../../build'
 import { PACKAGE_NAME } from '../poi/env'
 import { yes } from '../utils'
