@@ -3,6 +3,9 @@
 .vscode
 .storybook/
 scripts/
+.*/
+*.config.js
+*.config.ts
 
 # Build output
 assets/

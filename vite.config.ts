@@ -5,23 +5,16 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        'fn-sphere-filter': resolve(
+        'fn-sphere': resolve(
           __dirname,
           'node_modules/@fn-sphere/filter/dist/index.js',
         ),
-        'fn-sphere-locales': resolve(
-          __dirname,
-          'node_modules/@fn-sphere/filter/dist/locales/index.js',
-        ),
       },
       formats: ['cjs'],
-      fileName: (_, entryAlias) => `${entryAlias}.cjs`,
+      fileName: (_, entryAlias) => `${entryAlias}.js`,
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'zod'],
-      output: {
-        chunkFileNames: '[name]-[hash].cjs',
-      },
     },
     minify: false,
     outDir: 'build/vendor',
