@@ -1,5 +1,15 @@
 # poi-plugin-quest-info-2
 
+## 0.15.1
+
+### Patch Changes
+
+- [`88eec11`](https://github.com/lawvs/poi-plugin-quest-2/commit/88eec11ccae042e5f4940e3e0c0900ae49654f31) Thanks [@lawvs](https://github.com/lawvs)! - Fix plugin stopped working
+
+- [#282](https://github.com/lawvs/poi-plugin-quest-2/pull/282) [`e386d1d`](https://github.com/lawvs/poi-plugin-quest-2/commit/e386d1dfc61d3801a74838b5821ebfe48ad944c4) Thanks [@github-actions](https://github.com/apps/github-actions)! - Update quest data
+
+- [`305e6c2`](https://github.com/lawvs/poi-plugin-quest-2/commit/305e6c2232877e67370649b11bfee069b6ceb53b) Thanks [@lawvs](https://github.com/lawvs)! - fix: reset advanced search mode when updating search input
+
 ## 0.15.0
 
 ### Minor Changes
