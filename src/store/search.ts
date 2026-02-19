@@ -30,7 +30,8 @@ export const useSearchInput = () => {
     updateStore,
   } = useStore()
   const setSearchInput = useCallback(
-    (value: string) => updateStore({ searchInput: value }),
+    (value: string) =>
+      updateStore({ searchInput: value, advancedSearchMode: false }),
     [updateStore],
   )
   return {
