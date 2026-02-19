@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.15.2
+
+### Patch Changes
+
+- [`3905afa`](https://github.com/lawvs/poi-plugin-quest-2/commit/3905afa1c1f98c50221fda78cb518555b534607c) Thanks [@lawvs](https://github.com/lawvs)! - Pre-bundle @fn-sphere/filter as a CJS vendor module to fix compatibility with poi's CommonJS environment
+
 ## 0.15.1
 
 ### Patch Changes
