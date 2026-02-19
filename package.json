@@ -34,7 +34,9 @@
     "typeCheck": "tsc --noEmit",
     "update": "npm run downloadKcanotifyData && npm run downloadKcQuestsData && npm run genQuestData",
     "changeset": "changeset",
-    "release": "npm run build && changeset publish"
+    "build:vendor": "vite build",
+    "postinstall": "node scripts/patchFnSphere.js",
+    "release": "npm run build && npm run build:vendor && changeset publish"
   },
   "dependencies": {
     "@fn-sphere/filter": "^1.3.0",
@@ -91,7 +93,8 @@
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "undici": "^6.19.8"
+    "undici": "^6.19.8",
+    "vite": "^7.3.1"
   },
   "poiPlugin": {
     "title": "Quest Information",
