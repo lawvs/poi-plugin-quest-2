@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.15.3
+
+### Patch Changes
+
+- [`c81e22b`](https://github.com/lawvs/poi-plugin-quest-2/commit/c81e22bfe3cf7b591a9d93fa9c18f8a765358614) Thanks [@lawvs](https://github.com/lawvs)! - Add collapse/expand toggle for FilterBuilder when a preset is active. The visibility state is persisted in the store. Also migrates `moize` to `micro-memoize`.
+
 ## 0.15.2
 
 ### Patch Changes
