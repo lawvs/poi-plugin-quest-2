@@ -10,7 +10,7 @@ import {
   guessQuestCategory,
 } from '../../questHelper'
 import { useQuestStatus } from '../../store/quest'
-import { useStableSearchWords } from '../../store/search'
+import { useHighlightWords } from '../../store/search'
 import { QuestTag } from '../QuestTag'
 import {
   CardActionWrapper,
@@ -74,7 +74,7 @@ export const QuestCard = forwardRef<
   const status = useQuestStatus(gameId)
   const headIcon = questIconMap[guessQuestCategory(code).type]
   const TailIcon = questStatusMap[status]
-  const searchWords = useStableSearchWords()
+  const highlightWords = useHighlightWords()
 
   return (
     <FlexCard
@@ -87,7 +87,7 @@ export const QuestCard = forwardRef<
       <CardBody>
         <H5>
           <Highlighter
-            searchWords={searchWords}
+            searchWords={highlightWords}
             autoEscape={true}
             textToHighlight={[code, name]
               .filter((i) => i != undefined)
@@ -95,14 +95,14 @@ export const QuestCard = forwardRef<
           />
         </H5>
         <Highlighter
-          searchWords={searchWords}
+          searchWords={highlightWords}
           autoEscape={true}
           textToHighlight={desc}
         />
         {tip2 && (
           <b>
             <Highlighter
-              searchWords={searchWords}
+              searchWords={highlightWords}
               autoEscape={true}
               textToHighlight={tip2}
             />
@@ -111,7 +111,7 @@ export const QuestCard = forwardRef<
         {tip && (
           <i>
             <Highlighter
-              searchWords={searchWords}
+              searchWords={highlightWords}
               autoEscape={true}
               textToHighlight={tip}
             />

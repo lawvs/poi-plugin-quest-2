@@ -63,3 +63,11 @@ export const useStableSearchWords = () => {
 
   return searchKeywords
 }
+
+export const useHighlightWords = () => {
+  const searchWords = useStableSearchWords()
+  const { advancedSearchMode } = useSearchMode()
+  // Should not show highlight when in advanced search mode
+  const highlightWords = advancedSearchMode ? [] : searchWords
+  return highlightWords
+}
