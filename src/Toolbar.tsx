@@ -42,9 +42,9 @@ const Wrapper = styled.div`
 `
 
 // The size of the icon button is 30px height and 30px width, so we need to offset the advanced filter builder by that size to align it with the search input
-// margin right is calculated by 30px (button width) x 2  + 4px (gap) + 4px (toolbar padding)
+// The margin right is calculated by 30px (button width) x 2  + 4px (gap) + 4px (toolbar padding)
 const AdvancedFilterBuilderWrapper = styled.div`
-  margin-top: -30px;
+  margin-top: -35px;
   margin-right: 68px;
 `
 
