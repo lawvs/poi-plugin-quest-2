@@ -53,6 +53,7 @@ export const initialState = {
     rule: FilterGroup
   }>,
   activePresetId: null as string | null,
+  showFilterBuilder: true,
 }
 
 export type State = typeof initialState

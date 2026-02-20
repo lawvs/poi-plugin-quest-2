@@ -1,18 +1,6 @@
-import { useCallback } from 'react'
 import type { FilterGroup } from '../filter-sphere/vendor'
+import { useCallback } from 'react'
 import { useStore } from './store'
-
-export const useShowFilterBuilder = () => {
-  const {
-    store: { showFilterBuilder },
-    updateStore,
-  } = useStore()
-  const toggleShowFilterBuilder = useCallback(
-    () => updateStore({ showFilterBuilder: !showFilterBuilder }),
-    [showFilterBuilder, updateStore],
-  )
-  return { showFilterBuilder, toggleShowFilterBuilder }
-}
 
 export const useFilterRule = () => {
   const {
@@ -24,6 +12,18 @@ export const useFilterRule = () => {
     [updateStore],
   )
   return { filterRule, setFilterRule }
+}
+
+export const useShowFilterBuilder = () => {
+  const {
+    store: { showFilterBuilder },
+    updateStore,
+  } = useStore()
+  const toggleShowFilterBuilder = useCallback(
+    () => updateStore({ showFilterBuilder: !showFilterBuilder }),
+    [showFilterBuilder, updateStore],
+  )
+  return { showFilterBuilder, toggleShowFilterBuilder }
 }
 
 export const useFilterPresets = () => {

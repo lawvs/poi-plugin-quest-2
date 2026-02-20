@@ -1,13 +1,13 @@
 import { Button, InputGroup, Popover, Tag } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
-import { countNumberOfRules } from './vendor'
-import type { FilterGroup } from './vendor'
 import React, { cloneElement, useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { usePluginTranslation } from '../poi/hooks'
 import { toast } from '../poi/utils'
-import { useFilterPresets } from '../store/filterRule'
+import { useFilterPresets, useShowFilterBuilder } from '../store/advancedFilter'
 import { useAdvancedFilterContext } from './context'
+import type { FilterGroup } from './vendor'
+import { countNumberOfRules } from './vendor'
 
 const PresetsWrapper = styled.div`
   display: flex;
@@ -153,6 +153,7 @@ const UpdatePresetButton = ({ onUpdate }: { onUpdate: () => void }) => {
 export const PresetCollection = () => {
   const { t } = usePluginTranslation()
   const { filterRule, reset } = useAdvancedFilterContext()
+  const { showFilterBuilder, toggleShowFilterBuilder } = useShowFilterBuilder()
   const {
     presets,
     activePresetId,
@@ -225,6 +226,15 @@ export const PresetCollection = () => {
         >
           {t('Clear')}
         </Button>
+      )}
+      {(activePresetId || !showFilterBuilder) && (
+        <Button
+          size="small"
+          variant="minimal"
+          icon={showFilterBuilder ? IconNames.EyeOpen : IconNames.EyeOff}
+          active={!showFilterBuilder}
+          onClick={toggleShowFilterBuilder}
+        />
       )}
     </PresetsWrapper>
   )

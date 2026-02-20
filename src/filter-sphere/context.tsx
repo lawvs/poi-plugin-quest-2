@@ -10,7 +10,7 @@ import React, {
 import { Namespace, TFuncKey } from 'react-i18next'
 import { usePluginTranslation } from '../poi/hooks'
 import type { UnionQuest } from '../questHelper'
-import { useFilterRule } from '../store/filterRule'
+import { useFilterRule } from '../store/advancedFilter'
 import type { FilterableQuest } from './schema'
 import { filterableQuestSchema, mapQuestToFilterable } from './schema'
 
