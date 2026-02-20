@@ -7,6 +7,9 @@ import {
 } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import { MultiSelect } from '@blueprintjs/select'
+import type { ChangeEvent } from 'react'
+import React, { useCallback, useMemo } from 'react'
+import type { MultiSelectProps } from './vendor'
 import {
   createFilterTheme,
   FilterTheme,
@@ -14,9 +17,6 @@ import {
   useRootRule,
   useView,
 } from './vendor'
-import type { MultiSelectProps } from './vendor'
-import type { ChangeEvent } from 'react'
-import React, { useCallback, useMemo } from 'react'
 
 type Option<T> = { value: T; label: string }
 
@@ -175,7 +175,6 @@ export const blueprintTheme = createFilterTheme({
           {...(!isRoot ? { onDelete: handleDeleteGroup } : undefined)}
         >
           <Card
-            interactive
             compact
             elevation={depth as 0 | 1 | 2}
             style={{
