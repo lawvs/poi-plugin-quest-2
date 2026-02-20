@@ -1,4 +1,4 @@
-import moize from 'moize'
+import { memoize } from 'micro-memoize'
 import newQuestData from '../build/kcQuestsData/quests-scn-new.json'
 import prePostQuest from '../build/prePostQuest.json'
 import questCategory from '../build/questCategory.json'
@@ -312,7 +312,7 @@ export const calcQuestMap = (
   return map
 }
 
-export const getCompletedQuest = moize(
+export const getCompletedQuest = memoize(
   (inProgressQuest: number[]) => {
     const completedQuest = calcQuestMap(inProgressQuest, getPreQuestIds)
     // Check if the quest chain had completed
@@ -345,7 +345,7 @@ export const getCompletedQuest = moize(
     return completedQuest
   },
   {
-    matchesArg: (cacheKeyArg, keyArg) => {
+    isKeyItemEqual: (cacheKeyArg, keyArg) => {
       if (Array.isArray(cacheKeyArg) && Array.isArray(keyArg)) {
         return cacheKeyArg.join(',') === keyArg.join(',')
       }
@@ -354,7 +354,7 @@ export const getCompletedQuest = moize(
   },
 )
 
-export const getLockedQuest = moize(
+export const getLockedQuest = memoize(
   (inProgressQuest: number[]) => {
     const lockedQuest = calcQuestMap(inProgressQuest, getPostQuestIds)
 
@@ -369,7 +369,7 @@ export const getLockedQuest = moize(
     return lockedQuest
   },
   {
-    matchesArg: (cacheKeyArg, keyArg) => {
+    isKeyItemEqual: (cacheKeyArg, keyArg) => {
       if (Array.isArray(cacheKeyArg) && Array.isArray(keyArg)) {
         return cacheKeyArg.join(',') === keyArg.join(',')
       }

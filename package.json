@@ -38,7 +38,7 @@
     "release": "npm run build && changeset publish"
   },
   "dependencies": {
-    "moize": "^6.1.6",
+    "micro-memoize": "^5.1.1",
     "react-highlight-words": "^0.20.0",
     "react-use": "^17.5.1",
     "react-virtualized-auto-sizer": "^1.0.24",
