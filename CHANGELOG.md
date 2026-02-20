@@ -1,5 +1,11 @@
 # poi-plugin-quest-info-2
 
+## 0.15.4
+
+### Patch Changes
+
+- [`5631e6a`](https://github.com/lawvs/poi-plugin-quest-2/commit/5631e6a8eb978fad4873a21a12a1570bc336fb8f) Thanks [@lawvs](https://github.com/lawvs)! - Fix revert migrates `moize` to `micro-memoize`
+
 ## 0.15.3
 
 ### Patch Changes
