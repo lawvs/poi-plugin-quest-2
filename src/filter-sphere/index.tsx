@@ -1,9 +1,9 @@
-import { FilterBuilder, FilterSphereProvider } from './vendor'
 import React from 'react'
-import { useAdvancedFilterContext } from './context'
-import { PresetCollection } from './preset-collection'
-import { blueprintTheme } from './theme'
 import { useShowFilterBuilder } from '../store/advancedFilter'
+import { useAdvancedFilterContext } from './context'
+import { PresetCollection } from './presetCollection'
+import { blueprintTheme } from './theme'
+import { FilterBuilder, FilterSphereProvider } from './vendor'
 
 export { AdvancedFilterProvider, useAdvancedFilterContext } from './context'
 
