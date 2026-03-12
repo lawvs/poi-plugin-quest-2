@@ -1,6 +1,7 @@
 import { Icon, IconSize, Tooltip } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import React from 'react'
+import type { QuestAnalysis, QuestAnalysisStatus } from '../../analysis'
 import {
   IconArsenal,
   IconCompleted,
@@ -74,3 +75,56 @@ export const questIconMap = {
   [QUEST_CATEGORY.Modernization]: IconModernization,
   [QUEST_CATEGORY.Unknown]: PLACEHOLDER,
 } as const
+
+export const countMissingEntries = (entries: string[]) =>
+  entries.reduce((total, entry) => {
+    const matched = entry.match(/x(\d+)$/)
+    if (!matched) {
+      return total + 1
+    }
+    return total + Number(matched[1])
+  }, 0)
+
+export const getQuestAnalysisIntent = (status: QuestAnalysisStatus) => {
+  switch (status) {
+    case 'ready':
+      return 'success' as const
+    case 'missing_ships':
+    case 'missing_equipments':
+    case 'missing_inventory':
+      return 'warning' as const
+    case 'missing_both':
+      return 'danger' as const
+    case 'not_applicable':
+    case 'unsupported':
+    default:
+      return 'none' as const
+  }
+}
+
+export const getQuestAnalysisSummary = (
+  analysis: QuestAnalysis,
+  t: (key: string, options?: Record<string, unknown>) => string,
+) => {
+  switch (analysis.status) {
+    case 'ready':
+      return t('Requirement Ready')
+    case 'missing_ships':
+      return t('Missing Ships Summary', {
+        number: countMissingEntries(analysis.missingShips),
+      })
+    case 'missing_equipments':
+      return t('Missing Equipments Summary', {
+        number: countMissingEntries(analysis.missingEquipments),
+      })
+    case 'missing_both':
+      return t('Missing Ships and Equipments')
+    case 'missing_inventory':
+      return t('Inventory Missing Summary')
+    case 'not_applicable':
+      return t('Not Applicable Summary')
+    case 'unsupported':
+    default:
+      return t('Requirement Unsupported')
+  }
+}
