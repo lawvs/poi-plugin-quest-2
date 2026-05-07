@@ -118,6 +118,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "gameId": 702,
       "name": "实施舰船的「近代化改修」！",
     },
+    {
+      "code": "Fd9",
+      "gameId": 1166,
+      "name": "续：装备的改修强化",
+    },
   ],
   "monthlyQuest": [
     {
@@ -189,6 +194,16 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Fm3",
       "gameId": 645,
       "name": "“洋上补给” 物资的调拨",
+    },
+    {
+      "code": "2604Bm1",
+      "gameId": 979,
+      "name": "【13 周年纪念任务：扩张作战】强行输送作战",
+    },
+    {
+      "code": "2604Fm1",
+      "gameId": 1126,
+      "name": "【13 周年纪念任务：扩张作战】大规模工厂任务",
     },
   ],
   "quarterlyQuest": [
@@ -391,6 +406,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "大规模演习",
     },
     {
+      "code": "2604Cw1",
+      "gameId": 363,
+      "name": "【13 周年纪念任务】纪念祝贺舰队演习！",
+    },
+    {
       "code": "Dw1",
       "gameId": 404,
       "name": "大规模远征作战、宣布！",
@@ -404,6 +424,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Dw3",
       "gameId": 411,
       "name": "继续实施往南方的鼠輸送！",
+    },
+    {
+      "code": "2604Dw1",
+      "gameId": 451,
+      "name": "【13 周年纪念扩张任务】紧急资源输出输入",
     },
     {
       "code": "Fw1",
@@ -429,6 +454,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Gw1",
       "gameId": 703,
       "name": "推进「近代化改修」、整顿战备！",
+    },
+    {
+      "code": "Fw5",
+      "gameId": 1167,
+      "name": "装备的改修集中强化",
     },
   ],
   "yearlyQuest": [
@@ -666,6 +696,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "By15",
       "gameId": 1018,
       "name": "“第三战队” 第二小队，前往铁底海峡！",
+    },
+    {
+      "code": "By16",
+      "gameId": 1045,
+      "name": "“吹雪改三” 拔锚！请您见证！",
     },
     {
       "code": "Fy5",

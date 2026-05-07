@@ -4,12 +4,12 @@ import questCategory from '../../build/questCategory.json'
 
 describe('should questCategory correct', () => {
   test('length', () => {
-    expect(questCategory.dailyQuest.length).toMatchInlineSnapshot(`23`)
-    expect(questCategory.weeklyQuest.length).toMatchInlineSnapshot(`19`)
-    expect(questCategory.monthlyQuest.length).toMatchInlineSnapshot(`14`)
+    expect(questCategory.dailyQuest.length).toMatchInlineSnapshot(`24`)
+    expect(questCategory.weeklyQuest.length).toMatchInlineSnapshot(`22`)
+    expect(questCategory.monthlyQuest.length).toMatchInlineSnapshot(`16`)
     expect(questCategory.quarterlyQuest.length).toMatchInlineSnapshot(`28`)
-    expect(questCategory.yearlyQuest.length).toMatchInlineSnapshot(`54`)
-    expect(questCategory.singleQuest.length).toMatchInlineSnapshot(`520`)
+    expect(questCategory.yearlyQuest.length).toMatchInlineSnapshot(`55`)
+    expect(questCategory.singleQuest.length).toMatchInlineSnapshot(`516`)
   })
 
   test('snapshot', () => {
