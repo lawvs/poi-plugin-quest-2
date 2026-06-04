@@ -54,6 +54,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "在「演习」战胜其他提督！",
     },
     {
+      "code": "2605Cd1",
+      "gameId": 367,
+      "name": "【梅雨限定任務】海上護衛戰 雨中演習 2026",
+    },
+    {
       "code": "Dd1",
       "gameId": 402,
       "name": "「远征」3 次成功！",
@@ -196,14 +201,9 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "“洋上补给” 物资的调拨",
     },
     {
-      "code": "2604Bm1",
-      "gameId": 979,
-      "name": "【13 周年纪念任务：扩张作战】强行输送作战",
-    },
-    {
-      "code": "2604Fm1",
-      "gameId": 1126,
-      "name": "【13 周年纪念任务：扩张作战】大规模工厂任务",
+      "code": "2605Bm1",
+      "gameId": 955,
+      "name": "【梅雨任务扩张作战】南方反攻瞭望楼作战给它一击！",
     },
   ],
   "quarterlyQuest": [
@@ -406,11 +406,6 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "大规模演习",
     },
     {
-      "code": "2604Cw1",
-      "gameId": 363,
-      "name": "【13 周年纪念任务】纪念祝贺舰队演习！",
-    },
-    {
       "code": "Dw1",
       "gameId": 404,
       "name": "大规模远征作战、宣布！",
@@ -424,11 +419,6 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Dw3",
       "gameId": 411,
       "name": "继续实施往南方的鼠輸送！",
-    },
-    {
-      "code": "2604Dw1",
-      "gameId": 451,
-      "name": "【13 周年纪念扩张任务】紧急资源输出输入",
     },
     {
       "code": "Fw1",
@@ -454,6 +444,16 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Gw1",
       "gameId": 703,
       "name": "推进「近代化改修」、整顿战备！",
+    },
+    {
+      "code": "2605Bw1",
+      "gameId": 953,
+      "name": "【梅雨限定任务】雨之南西诸岛防卫战 2026",
+    },
+    {
+      "code": "2605Bw2",
+      "gameId": 954,
+      "name": "【梅雨限定任务】梅雨之海上护卫强化 2026",
     },
     {
       "code": "Fw5",
