@@ -73,3 +73,20 @@ export const TagsWrapper = styled.div`
 export const SpanText = styled.span`
   white-space: nowrap;
 `
+
+export const AnalysisBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`
+
+export const AnalysisList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+`
+
+export const AnalysisText = styled.div`
+  font-size: 12px;
+  line-height: 1.5;
+`

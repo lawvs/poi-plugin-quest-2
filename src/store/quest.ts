@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { QUEST_DATA } from '../../build'
 import { usePluginTranslation } from '../poi/hooks'
 import {
@@ -62,12 +63,16 @@ export const useQuest = (): UnionQuest[] => {
   //   }
   // }
   // Return all recorded quests
-  return Object.entries(docQuestMap).map(([gameId, val]) => ({
-    gameId: +gameId,
-    // Maybe empty
-    gameQuest: gameQuest.find((quest) => quest.api_no === Number(gameId)),
-    docQuest: val,
-  }))
+  return useMemo(
+    () =>
+      Object.entries(docQuestMap).map(([gameId, val]) => ({
+        gameId: +gameId,
+        // Maybe empty
+        gameQuest: gameQuest.find((quest) => quest.api_no === Number(gameId)),
+        docQuest: val,
+      })),
+    [docQuestMap, gameQuest],
+  )
 }
 
 export const useQuestByCode = (code: string) => {
