@@ -126,6 +126,11 @@ exports[`should questCategory correct snapshot 1`] = `
   ],
   "monthlyQuest": [
     {
+      "code": "2606Am1",
+      "gameId": 199,
+      "name": "【期间限定任务】第三十一战队特务编成！",
+    },
+    {
       "code": "Bm1",
       "gameId": 249,
       "name": "「第五战队」出击！",
@@ -176,6 +181,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "给粮舰 “伊良湖” 的支援",
     },
     {
+      "code": "2606Cm1",
+      "gameId": 382,
+      "name": "【期间限定任务】第三十一战队紧急演习！",
+    },
+    {
       "code": "Dm1",
       "gameId": 424,
       "name": "强化输送船队护卫！",
@@ -194,6 +204,16 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Fm3",
       "gameId": 645,
       "name": "“洋上补给” 物资的调拨",
+    },
+    {
+      "code": "2606Bm1",
+      "gameId": 1048,
+      "name": "【期间限定任务】战略兵站物资，紧急运输！",
+    },
+    {
+      "code": "2606Bm2",
+      "gameId": 1049,
+      "name": "【期间限定扩张任务】战略兵站物资，扩大运输！",
     },
   ],
   "quarterlyQuest": [
@@ -394,6 +414,11 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Cw1",
       "gameId": 302,
       "name": "大规模演习",
+    },
+    {
+      "code": "2606Cw1",
+      "gameId": 383,
+      "name": "【期間限定任務】法兰西艦隊、特別演習！",
     },
     {
       "code": "Dw1",
