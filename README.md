@@ -1,6 +1,6 @@
 # plugin-quest-2
 
-![build](https://github.com/lawvs/poi-plugin-quest-2/workflows/Build/badge.svg)
+[![Build](https://github.com/lawvs/poi-plugin-quest-2/actions/workflows/build.yml/badge.svg)](https://github.com/lawvs/poi-plugin-quest-2/actions/workflows/build.yml)
 [![npm](https://img.shields.io/npm/v/poi-plugin-quest-info-2)](https://www.npmjs.com/package/poi-plugin-quest-info-2)
 
 A [poi](https://github.com/poooi/poi) plugin that helps you view quest info. Data maintained by [kcanotify-gamedata](https://github.com/antest1/kcanotify-gamedata) & [kc3-translations](https://github.com/KC3Kai/kc3-translations) & [kcQuests](https://github.com/kcwikizh/kcQuests).
