@@ -1,8 +1,9 @@
-import { Elevation, H5, Menu, MenuItem, Popover } from '@blueprintjs/core'
+import { Elevation, H5, Menu, MenuItem, Popover, Tag } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
 import React, { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 // https://github.com/bvaughn/react-highlight-words
 import Highlighter from 'react-highlight-words'
+import type { QuestAnalysis } from '../../analysis'
 import { usePluginTranslation } from '../../poi/hooks'
 import {
   QUEST_STATUS,
@@ -13,6 +14,9 @@ import { useQuestStatus } from '../../store/quest'
 import { useHighlightWords } from '../../store/search'
 import { QuestTag } from '../QuestTag'
 import {
+  AnalysisBlock,
+  AnalysisList,
+  AnalysisText,
   CardActionWrapper,
   CardBody,
   CardMedia,
@@ -23,7 +27,12 @@ import {
   TagsWrapper,
   TailIconWrapper,
 } from './styles'
-import { questIconMap, questStatusMap } from './utils'
+import {
+  getQuestAnalysisIntent,
+  getQuestAnalysisSummary,
+  questIconMap,
+  questStatusMap,
+} from './utils'
 
 export type QuestCardProps = {
   gameId: number
@@ -33,6 +42,7 @@ export type QuestCardProps = {
   tip?: string
   tip2?: string
   status?: QUEST_STATUS
+  analysis?: QuestAnalysis
 }
 
 const CardAction = ({ gameId }: { gameId: number }) => {
@@ -46,7 +56,7 @@ const CardAction = ({ gameId }: { gameId: number }) => {
         {!!prePostQuests.pre.length && (
           <>
             <SpanText>{t('Requires')}</SpanText>
-            {prePostQuests.pre.map((i) => (
+            {prePostQuests.pre.map((i: string) => (
               <QuestTag key={i} code={i}></QuestTag>
             ))}
           </>
@@ -57,7 +67,7 @@ const CardAction = ({ gameId }: { gameId: number }) => {
         {!!prePostQuests.post.length && (
           <>
             <SpanText>{t('Unlocks')}</SpanText>
-            {prePostQuests.post.map((i) => (
+            {prePostQuests.post.map((i: string) => (
               <QuestTag key={i} code={i}></QuestTag>
             ))}
           </>
@@ -70,11 +80,12 @@ const CardAction = ({ gameId }: { gameId: number }) => {
 export const QuestCard = forwardRef<
   ElementRef<typeof FlexCard>,
   QuestCardProps & ComponentPropsWithoutRef<typeof FlexCard>
->(({ gameId, code, name, desc, tip, tip2, ...props }, ref) => {
+>(({ gameId, code, name, desc, tip, tip2, analysis, ...props }, ref) => {
   const status = useQuestStatus(gameId)
   const headIcon = questIconMap[guessQuestCategory(code).type]
   const TailIcon = questStatusMap[status]
   const highlightWords = useHighlightWords()
+  const { t } = usePluginTranslation()
 
   return (
     <FlexCard
@@ -116,6 +127,51 @@ export const QuestCard = forwardRef<
               textToHighlight={tip}
             />
           </i>
+        )}
+        {analysis && (
+          <AnalysisBlock>
+            <AnalysisList>
+              <Tag intent={getQuestAnalysisIntent(analysis.status)} minimal={true}>
+                {getQuestAnalysisSummary(analysis, t)}
+              </Tag>
+              {analysis.origin === 'inferred' ? (
+                <Tag intent="warning" minimal={true}>
+                  {t('Requirement Inferred')}
+                </Tag>
+              ) : null}
+            </AnalysisList>
+
+            {analysis.status === 'unsupported' ? (
+              <AnalysisText>{t('Requirement Unsupported Detail')}</AnalysisText>
+            ) : analysis.status === 'not_applicable' ? (
+              <AnalysisText>{t('Not Applicable Detail')}</AnalysisText>
+            ) : analysis.status === 'missing_inventory' ? (
+              <AnalysisText>
+                {analysis.missingInventoryParts.includes('ships') &&
+                analysis.missingInventoryParts.includes('equipments')
+                  ? t('Inventory Missing Detail Both')
+                  : analysis.missingInventoryParts.includes('ships')
+                    ? t('Inventory Missing Detail Ships')
+                    : t('Inventory Missing Detail Equipments')}
+              </AnalysisText>
+            ) : (
+              <>
+                {analysis.missingShips.length > 0 && (
+                  <AnalysisText>
+                    <b>{t('Missing Ships')}</b>: {analysis.missingShips.join('、')}
+                  </AnalysisText>
+                )}
+                {analysis.missingEquipments.length > 0 && (
+                  <AnalysisText>
+                    <b>{t('Missing Equipments')}</b>: {analysis.missingEquipments.join('、')}
+                  </AnalysisText>
+                )}
+                {analysis.notes.map((note) => (
+                  <AnalysisText key={note}>{note}</AnalysisText>
+                ))}
+              </>
+            )}
+          </AnalysisBlock>
         )}
 
         <CardAction gameId={gameId}></CardAction>

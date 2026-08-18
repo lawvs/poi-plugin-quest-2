@@ -5,6 +5,7 @@ import { VariableSizeList as List, ListChildComponentProps } from 'react-window'
 import styled from 'styled-components'
 import { useIsQuestPluginTab } from '../poi/hooks'
 import type { UnionQuest } from '../questHelper'
+import { useQuestAnalysisMap } from '../store'
 import { QuestCard } from './QuestCard'
 
 const QuestListWrapper = styled.div`
@@ -37,6 +38,7 @@ export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
   const activeTab = useIsQuestPluginTab()
   const listRef = useRef<List>(null)
   const rowHeights = useRef<Record<number, number>>({})
+  const analysisMap = useQuestAnalysisMap()
 
   useEffect(() => {
     listRef.current?.resetAfterIndex(0)
@@ -66,12 +68,13 @@ export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
     const quest = quests[index]
     const { gameId } = quest
     const { code, name, desc, rewards, memo2 } = quest.docQuest
+    const analysis = analysisMap[gameId]
 
     useEffect(() => {
       if (rowRef.current) {
         setRowHeight(index, rowRef.current.clientHeight)
       }
-    }, [index])
+    }, [analysis, code, desc, index, memo2, name, rewards, setRowHeight])
 
     return (
       <div style={style}>
@@ -84,6 +87,7 @@ export const QuestList = ({ quests }: { quests: UnionQuest[] }) => {
             desc={desc}
             tip={rewards}
             tip2={memo2}
+            analysis={analysis}
           />
         </div>
       </div>
