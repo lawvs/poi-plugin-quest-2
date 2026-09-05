@@ -1,6 +1,7 @@
 import { Tag } from '@blueprintjs/core'
 import React from 'react'
 import styled from 'styled-components'
+import { isQuestRequirementReady } from './analysis'
 import { usePluginTranslation } from './poi/hooks'
 import type { GameQuest } from './poi/types'
 import type { UnionQuest } from './questHelper'
@@ -25,6 +26,7 @@ import {
   newQuestNumber,
 } from './questHelper'
 import { ALL_CATEGORY_TAG, ALL_TYPE_TAG, PROGRESS_TAG } from './store'
+import { useQuest, useQuestAnalysisMap } from './store'
 import { useFilterProgressTag, useFilterTags } from './store/filterTags'
 import { useGlobalGameQuest, useGlobalQuestStatusNum } from './store/gameQuest'
 
@@ -59,6 +61,10 @@ export const TYPE_TAGS = [
   {
     name: 'In Progress',
     filter: withGameQuestOr(isInProgressQuest, false),
+  },
+  {
+    name: 'Requirement Ready',
+    filter: () => false,
   },
   { name: 'New', filter: isNewQuest },
   { name: 'Daily', filter: isDailyQuest },
@@ -161,11 +167,16 @@ export const CategoryTags = () => {
 export const TypeTags = () => {
   const { t } = usePluginTranslation()
   const gameQuests = useGlobalGameQuest()
+  const quests = useQuest()
+  const analysisMap = useQuestAnalysisMap()
   const { progressTag } = useFilterProgressTag()
 
   const inProgressQuest = gameQuests.filter((gameQuest) =>
     isInProgressQuest(gameQuest),
   )
+  const readyQuestCount = quests.filter((quest) =>
+    isQuestRequirementReady(analysisMap[quest.gameId]),
+  ).length
   const { typeTags, setTypeTags } = useFilterTags()
 
   return (
@@ -193,6 +204,14 @@ export const TypeTags = () => {
         {t('In Progress', { number: inProgressQuest.length })}
       </Tag>
 
+      <Tag
+        intent={typeTags['Requirement Ready'] ? 'success' : 'none'}
+        interactive={true}
+        onClick={() => setTypeTags('Requirement Ready')}
+      >
+        {t('Requirement Ready Filter', { number: readyQuestCount })}
+      </Tag>
+
       {hasNewQuest && (
         <Tag
           intent={typeTags['New'] ? 'primary' : 'none'}
@@ -203,7 +222,7 @@ export const TypeTags = () => {
         </Tag>
       )}
 
-      {TYPE_TAGS.slice(3).map((tag) => (
+      {TYPE_TAGS.slice(4).map((tag) => (
         <Tag
           onClick={() => setTypeTags(tag.name)}
           intent={typeTags[tag.name] ? 'primary' : 'none'}

@@ -106,6 +106,41 @@ export type PoiState = {
     activeFleetId?: number
     activePluginName?: string
   }
+  info?: {
+    ships?: Record<string, { api_id?: number; api_ship_id?: number }>
+    equips?: Record<
+      string,
+      {
+        api_id?: number
+        api_slotitem_id?: number
+        api_level?: number
+        api_alv?: number
+      }
+    >
+    quests?: {
+      activeQuests?: PoiQuestState
+    }
+  }
+  const?: {
+    $ships?: Record<
+      string,
+      {
+        api_name?: string
+        api_stype?: number
+        api_ctype?: number
+        api_aftershipid?: string | number
+      }
+    >
+    $equips?: Record<
+      string,
+      {
+        api_name?: string
+        api_type?: number[]
+        api_saku?: number
+        api_houm?: number
+      }
+    >
+  }
   ext: {
     // TODO fix use constant PACKAGE_NAME
     [packageName: string]: PluginState
