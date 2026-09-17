@@ -416,14 +416,19 @@ exports[`should questCategory correct snapshot 1`] = `
       "name": "大规模演习",
     },
     {
-      "code": "2609 Cw2",
-      "gameId": 313,
-      "name": "【期间限定扩张任务】秋祭扩张演习！",
-    },
-    {
       "code": "2606Cw1",
       "gameId": 383,
       "name": "【期間限定任務】法兰西艦隊、特別演習！",
+    },
+    {
+      "code": "2609 Cw1",
+      "gameId": 384,
+      "name": "【期间限定任务】与提督共度秋祭演习！",
+    },
+    {
+      "code": "2609 Cw2",
+      "gameId": 385,
+      "name": "【期间限定扩张任务】秋祭扩张演习！",
     },
     {
       "code": "Dw1",
@@ -711,6 +716,16 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "By16",
       "gameId": 1045,
       "name": "“吹雪改三” 拔锚！请您见证！",
+    },
+    {
+      "code": "By17",
+      "gameId": 1050,
+      "name": "「第九战队」拔锚！向前线展开！",
+    },
+    {
+      "code": "By18",
+      "gameId": 1051,
+      "name": "改装「1YB3H」旗舰，突破敌阵！",
     },
     {
       "code": "Fy5",
