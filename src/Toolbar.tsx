@@ -7,10 +7,11 @@ import {
   AdvancedFilterBuilder,
   useAdvancedFilterPredicate,
 } from './filter-sphere'
+import { buildReadyQuestFilter } from './analysis'
 import { usePluginTranslation } from './poi/hooks'
 import { QUEST_STATUS, UnionQuest } from './questHelper'
 import { SettingsMain } from './Settings'
-import { PROGRESS_TAG, useQuest } from './store'
+import { PROGRESS_TAG, useQuest, useQuestAnalysisMap } from './store'
 import {
   useFilterProgressTag,
   useFilterTags,
@@ -145,6 +146,7 @@ const useInputStringFilter = () => {
 const useToolbarFilter = (): ((quest: UnionQuest) => boolean) => {
   const searchFilter = useInputStringFilter()
   const { typeTags, categoryTags } = useFilterTags()
+  const analysisMap = useQuestAnalysisMap()
 
   const { progressTag } = useFilterProgressTag()
   const questStatusQuery = useGlobalQuestStatusQuery()
@@ -180,7 +182,11 @@ const useToolbarFilter = (): ((quest: UnionQuest) => boolean) => {
   )
 
   const typeTagsFilter = Or(
-    ...TYPE_TAGS.filter((tag) => typeTags[tag.name]).map((tag) => tag.filter),
+    ...TYPE_TAGS.filter((tag) => typeTags[tag.name]).map((tag) =>
+      tag.name === 'Requirement Ready'
+        ? buildReadyQuestFilter(analysisMap)
+        : tag.filter,
+    ),
   )
   const categoryTagsFilter = Or(
     ...CATEGORY_TAGS.filter((tag) => categoryTags[tag.name]).map(

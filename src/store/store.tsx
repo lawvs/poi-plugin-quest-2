@@ -8,6 +8,7 @@ import React, {
 } from 'react'
 import { useMount, useUpdateEffect } from 'react-use'
 import type { FilterGroup } from '../filter-sphere/vendor'
+import { emptyImportedInventoryState } from '../importedInventory/types'
 import type { QUEST_DATA } from '../../build'
 import { PACKAGE_NAME } from '../poi/env'
 import { yes } from '../utils'
@@ -54,6 +55,7 @@ export const initialState = {
   }>,
   activePresetId: null as string | null,
   showFilterBuilder: true,
+  importedInventory: emptyImportedInventoryState,
 }
 
 export type State = typeof initialState
