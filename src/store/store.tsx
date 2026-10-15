@@ -10,6 +10,7 @@ import { useMount, useUpdateEffect } from 'react-use'
 import type { FilterGroup } from '../filter-sphere/vendor'
 import type { QUEST_DATA } from '../../build'
 import { PACKAGE_NAME } from '../poi/env'
+import type { QuestStateCache } from '../questPeriod'
 import { yes } from '../utils'
 import { GameQuestProvider } from './gameQuest'
 
@@ -54,6 +55,13 @@ export const initialState = {
   }>,
   activePresetId: null as string | null,
   showFilterBuilder: true,
+  /**
+   * 「最后一次看到每个任务处于什么状态」的记录，按任务 id 索引并持久化。
+   *
+   * 游戏的任务列表只能反映「此刻可见」的任务，而「已完成」的任务领奖后就会消失，
+   * 所以完成状态只能靠这份记录。记录带时间戳，周期性任务跨周期后自动失效。
+   */
+  questStateCache: {} as QuestStateCache,
 }
 
 export type State = typeof initialState
@@ -99,12 +107,13 @@ const SetStateContext = createContext<Dispatch<SetStateAction<State>>>(() => {})
 
 export const StoreProvider = ({ children }: { children?: React.ReactNode }) => {
   const [state, setState] = useStorage<State>(initialState)
+  // GameQuestProvider 需要读写下面的 store，所以放在 Provider 内部
   return (
-    <GameQuestProvider>
-      <SetStateContext.Provider value={setState}>
-        <StateContext.Provider value={state}>{children}</StateContext.Provider>
-      </SetStateContext.Provider>
-    </GameQuestProvider>
+    <SetStateContext.Provider value={setState}>
+      <StateContext.Provider value={state}>
+        <GameQuestProvider>{children}</GameQuestProvider>
+      </StateContext.Provider>
+    </SetStateContext.Provider>
   )
 }
 
