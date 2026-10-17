@@ -205,16 +205,6 @@ exports[`should questCategory correct snapshot 1`] = `
       "gameId": 645,
       "name": "“洋上补给” 物资的调拨",
     },
-    {
-      "code": "2606Bm1",
-      "gameId": 1048,
-      "name": "【期间限定任务】战略兵站物资，紧急运输！",
-    },
-    {
-      "code": "2606Bm2",
-      "gameId": 1049,
-      "name": "【期间限定扩张任务】战略兵站物资，扩大运输！",
-    },
   ],
   "quarterlyQuest": [
     {
@@ -414,16 +404,6 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Cw1",
       "gameId": 302,
       "name": "大规模演习",
-    },
-    {
-      "code": "2609 Cw1",
-      "gameId": 384,
-      "name": "【期间限定任务】与提督共度秋祭演习！",
-    },
-    {
-      "code": "2609 Cw2",
-      "gameId": 385,
-      "name": "【期间限定扩张任务】秋祭扩张演习！",
     },
     {
       "code": "Dw1",
