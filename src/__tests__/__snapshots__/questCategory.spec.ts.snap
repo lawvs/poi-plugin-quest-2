@@ -126,11 +126,6 @@ exports[`should questCategory correct snapshot 1`] = `
   ],
   "monthlyQuest": [
     {
-      "code": "2606Am1",
-      "gameId": 199,
-      "name": "【期间限定任务】第三十一战队特务编成！",
-    },
-    {
       "code": "Bm1",
       "gameId": 249,
       "name": "「第五战队」出击！",
@@ -179,11 +174,6 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Cm2",
       "gameId": 318,
       "name": "给粮舰 “伊良湖” 的支援",
-    },
-    {
-      "code": "2606Cm1",
-      "gameId": 382,
-      "name": "【期间限定任务】第三十一战队紧急演习！",
     },
     {
       "code": "Dm1",
