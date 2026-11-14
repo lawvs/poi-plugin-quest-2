@@ -6,10 +6,10 @@ describe('should questCategory correct', () => {
   test('length', () => {
     expect(questCategory.dailyQuest.length).toMatchInlineSnapshot(`24`)
     expect(questCategory.weeklyQuest.length).toMatchInlineSnapshot(`20`)
-    expect(questCategory.monthlyQuest.length).toMatchInlineSnapshot(`16`)
+    expect(questCategory.monthlyQuest.length).toMatchInlineSnapshot(`14`)
     expect(questCategory.quarterlyQuest.length).toMatchInlineSnapshot(`28`)
     expect(questCategory.yearlyQuest.length).toMatchInlineSnapshot(`57`)
-    expect(questCategory.singleQuest.length).toMatchInlineSnapshot(`511`)
+    expect(questCategory.singleQuest.length).toMatchInlineSnapshot(`503`)
   })
 
   test('snapshot', () => {
