@@ -126,11 +126,6 @@ exports[`should questCategory correct snapshot 1`] = `
   ],
   "monthlyQuest": [
     {
-      "code": "2606Am1",
-      "gameId": 199,
-      "name": "【期间限定任务】第三十一战队特务编成！",
-    },
-    {
       "code": "Bm1",
       "gameId": 249,
       "name": "「第五战队」出击！",
@@ -179,11 +174,6 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Cm2",
       "gameId": 318,
       "name": "给粮舰 “伊良湖” 的支援",
-    },
-    {
-      "code": "2606Cm1",
-      "gameId": 382,
-      "name": "【期间限定任务】第三十一战队紧急演习！",
     },
     {
       "code": "Dm1",
@@ -404,6 +394,16 @@ exports[`should questCategory correct snapshot 1`] = `
       "code": "Cw1",
       "gameId": 302,
       "name": "大规模演习",
+    },
+    {
+      "code": "2611Cw1",
+      "gameId": 381,
+      "name": "【期间限定任务】秋月型演习任务 2026",
+    },
+    {
+      "code": "2611Cw2",
+      "gameId": 386,
+      "name": "【期间限定任务】秋刀鱼祭准备演习！",
     },
     {
       "code": "Dw1",

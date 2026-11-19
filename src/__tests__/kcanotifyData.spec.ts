@@ -1,7 +1,7 @@
 import { kcanotifyGameData, version } from '../../build/kcanotifyGamedata'
 
 test('should Kcanotify Game data version correct', () => {
-  expect(version).toMatchInlineSnapshot(`"2026101501"`)
+  expect(version).toMatchInlineSnapshot(`"2026111501"`)
 })
 
 describe('should format correct', () => {
