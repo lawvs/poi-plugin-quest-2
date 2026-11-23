@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import type { QuestExportPayload } from '../export'
 import { PACKAGE_NAME } from './env'
 import {
   exportPoiState,
@@ -86,16 +88,38 @@ const checkQuestList = (questList: unknown): questList is GameQuest[] => {
 }
 
 export const useStateExporter = () => {
-  const exportQuestDataToClipboard = async () => {
+  const exportQuestDataToFile = async (payload: QuestExportPayload) => {
     const state = await exportPoiState()
-    if (!state?.ext[PACKAGE_NAME]._.questList) {
+    if (!state?.ext?.[PACKAGE_NAME]?._?.questList) {
       console.error('poi state', state)
       throw new Error('Failed to export quest data! questList not found!')
     }
-    return navigator.clipboard.writeText(
-      JSON.stringify(state?.ext[PACKAGE_NAME]._.questList),
-    )
+
+    const remote = (globalThis as { remote?: any }).remote
+    if (!remote?.dialog?.showSaveDialog || !remote?.require) {
+      throw new Error('Failed to export quest data! Save dialog is unavailable!')
+    }
+
+    const fileName = `poi-quest-analysis-${new Date()
+      .toISOString()
+      .replace(/[-:]/g, '')
+      .replace(/\..+$/, '')
+      .replace('T', '-')}.json`
+    const defaultPath = `${remote.app.getPath('documents')}/${fileName}`
+    const result = await remote.dialog.showSaveDialog({
+      defaultPath,
+      filters: [{ name: 'JSON', extensions: ['json'] }],
+    })
+
+    if (result.canceled || !result.filePath) {
+      return false
+    }
+
+    const fs = remote.require('fs')
+    fs.writeFileSync(result.filePath, JSON.stringify(payload, null, 2))
+    return true
   }
+
   const importAsPoiState = (stateString: string) => {
     const maybeQuestList: unknown = JSON.parse(stateString)
 
@@ -118,8 +142,9 @@ export const useStateExporter = () => {
       plugins: [],
     })
   }
+
   return {
-    exportQuestDataToClipboard,
+    exportQuestDataToFile,
     importAsPoiState,
   }
 }

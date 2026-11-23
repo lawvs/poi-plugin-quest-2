@@ -20,7 +20,18 @@ Paste `poi-plugin-quest-info-2` in the plugins tab and click the install button.
 - Quest search and filter.
 - Sync with game quest data.
 - Auto switch to quest tab when enter quest views.
-- Export quest data to json file.
+- Export quest analysis to a JSON file.
+- Import ship and equipment CSV data for inventory auditing.
+- Show `Ready`, `Missing ships`, `Missing equipments`, and `No definitive data` summaries on quest cards.
+- Filter quests that are already inventory-ready.
+
+## Inventory Audit Limits
+
+The inventory audit is intentionally conservative.
+
+- `Ready` means the imported inventory appears to satisfy the currently modeled inventory-side conditions.
+- It does not guarantee sortie counts, map clears, victory ranks, boss kills, or every special fleet restriction are satisfied.
+- `Inferred` results come from direct quest-text parsing and are less trustworthy than curated rules.
 
 ## Development
 
