@@ -4,6 +4,7 @@ import prePostQuest from '../build/prePostQuest.json'
 import questCategory from '../build/questCategory.json'
 import questCodeMap from '../build/questCodeMap.json'
 import { GameQuest, QUEST_API_STATE } from './poi/types'
+import { getQuestPeriod } from './questPeriod'
 
 export type DocQuest = {
   /**
@@ -401,3 +402,30 @@ export enum QUEST_STATUS {
   ALREADY_COMPLETED,
   UNKNOWN,
 }
+
+/**
+ * 该任务本身以及它的全部祖先都是「不会被重置」的一次性任务时，
+ * 才允许用「后继可见 ⇒ 前置已完成」来推断它的完成状态。
+ *
+ * 一次性任务的完成是永久的，这个推理成立；
+ * 而日常 / 周常 / 月常会在周期边界重置，以它们为祖先的任务即使当前可见，
+ * 也可能只是上一周期留下的痕迹。
+ */
+export const canInferByVisibility = (gameId: number): boolean =>
+  getQuestPeriod(gameId) === 6 &&
+  getAllPreQuestIds(gameId).every(
+    (preGameId) => getQuestPeriod(preGameId) === 6,
+  )
+
+/**
+ * 「某任务当前可见 ⇒ 它的全部前置已完成」的闭包。
+ *
+ * 与 {@link getCompletedQuest} 的区别：不做链尾（noPost）推断，
+ * 因此不会出现「拿任意一个祖先当证据、再把整条祖先链一起追认完成」的污染。
+ */
+export const getVisiblePreQuestMap = (visibleQuestIds: number[]) =>
+  calcQuestMap(visibleQuestIds, getPreQuestIds)
+
+/** 「某任务当前可见 ⇒ 它的全部后置被锁定」的闭包（未剔除已完成与当前可见者） */
+export const getPostQuestMap = (visibleQuestIds: number[]) =>
+  calcQuestMap(visibleQuestIds, getPostQuestIds)
