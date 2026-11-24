@@ -9,14 +9,14 @@ import { IconNames } from '@blueprintjs/icons'
 import { MultiSelect } from '@blueprintjs/select'
 import type { ChangeEvent } from 'react'
 import React, { useCallback, useMemo } from 'react'
-import type { MultiSelectProps } from './vendor'
+import type { MultiSelectProps } from '@fn-sphere/filter/dist/views/components'
 import {
   createFilterTheme,
-  FilterTheme,
+  type FilterTheme,
   useFilterGroup,
   useRootRule,
   useView,
-} from './vendor'
+} from '@fn-sphere/filter'
 
 type Option<T> = { value: T; label: string }
 

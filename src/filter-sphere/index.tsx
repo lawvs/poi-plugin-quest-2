@@ -3,7 +3,7 @@ import { useShowFilterBuilder } from '../store/advancedFilter'
 import { useAdvancedFilterContext } from './context'
 import { PresetCollection } from './presetCollection'
 import { blueprintTheme } from './theme'
-import { FilterBuilder, FilterSphereProvider } from './vendor'
+import { FilterBuilder, FilterSphereProvider } from '@fn-sphere/filter'
 
 export { AdvancedFilterProvider, useAdvancedFilterContext } from './context'
 

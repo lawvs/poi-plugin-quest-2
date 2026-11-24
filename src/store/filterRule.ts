@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import type { FilterGroup } from '../filter-sphere/vendor'
+import type { FilterGroup } from '@fn-sphere/filter'
 import { useStore } from './store'
 
 export const useShowFilterBuilder = () => {
