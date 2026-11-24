@@ -5,7 +5,12 @@ export default defineConfig({
   outDir: 'dist',
   format: ['cjs'],
   external: [
-    /^(react|react-dom|styled-components|i18next|react-i18next)(\/|$)/,
+    'react',
+    'react/jsx-runtime',
+    'react-dom',
+    'styled-components',
+    'i18next',
+    'react-i18next',
     /^@blueprintjs\//,
   ],
   outExtensions: () => ({ js: '.js' }),
