@@ -77,3 +77,4 @@ typings/
 build/
 storybook-static/
 assets/index.ts
+dist/

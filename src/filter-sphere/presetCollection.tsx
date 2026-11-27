@@ -6,8 +6,8 @@ import { usePluginTranslation } from '../poi/hooks'
 import { toast } from '../poi/utils'
 import { useFilterPresets, useShowFilterBuilder } from '../store/advancedFilter'
 import { useAdvancedFilterContext } from './context'
-import type { FilterGroup } from './vendor'
-import { countNumberOfRules } from './vendor'
+import type { FilterGroup } from '@fn-sphere/filter'
+import { countNumberOfRules } from '@fn-sphere/filter'
 
 const PresetsWrapper = styled.div`
   display: flex;

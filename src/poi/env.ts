@@ -10,11 +10,13 @@ export const IN_POI = 'POI_VERSION' in globalThis
  * Critical dependency: the request of a dependency is an expression
  */
 
-export const importFromPoi = <T = any>(path: string): Promise<T> => {
+export const importFromPoi = async <T = any>(path: string): Promise<T> => {
   if (!IN_POI) {
     return new Promise(() => {
       // Never resolve
     })
   }
-  return import(path)
+  // poi makes views/* available through the renderer's CommonJS resolver.
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  return require(path)
 }

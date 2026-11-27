@@ -1,4 +1,4 @@
-import type { FilterGroup } from '../filter-sphere/vendor'
+import type { FilterGroup } from '@fn-sphere/filter'
 import { useCallback } from 'react'
 import { useStore } from './store'
 
